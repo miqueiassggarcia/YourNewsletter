@@ -1,0 +1,15 @@
+input {
+  appearance: none;
+	margin-top: 2vh;
+  width: 70%;
+  background: transparent;
+  text-align: center;
+	outline: none;
+	border-bottom: .2em solid rgb(6, 9, 63);
+	padding: .4em;
+	color: rgb(0, 0, 0);
+	font-size: 17px;
+	padding: .4rem .3rem;
+	border-radius: 10rem;
+	letter-spacing: 0.01em;
+}

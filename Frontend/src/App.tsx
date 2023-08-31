@@ -1,24 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Input } from './components/Input';
+import { ConfirmButton } from './components/ConfirmButton';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <form className='login-form'>
+          <h2>Cadastre-se</h2>
+          <Input type="text" name="nome" id="nome" placeholder='Digite um nome'/>
+          <Input type="email" name="email" id="email" placeholder='Digite seu email'/>
+          <Input type="text" name="name" id="senha" placeholder='Digite uma senha'/>
+          <span>Já tem uma conta: <a href="">login</a></span>
+          <ConfirmButton>Cadastre-se</ConfirmButton>
+        </form>
     </div>
   );
 }

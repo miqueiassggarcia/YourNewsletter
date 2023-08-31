@@ -1,0 +1,19 @@
+button {
+	width: 35%;
+  display: grid;
+	grid-auto-flow: column;
+	grid-gap: .5em;
+	justify-items: center;
+	align-content: center;
+	color: black;
+	border: .17em solid black;
+	background: hsl(0 0 0/0);
+	padding: .85em 1.5em;
+	color: black;
+	border-radius: 2em;
+	transition: 0.7s;
+	&:hover, &:focus, &:active {
+		background: black;
+		color: #fff;
+	}
+}
