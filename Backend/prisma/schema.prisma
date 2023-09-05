@@ -11,20 +11,20 @@ datasource db {
 }
 
 
-model Usuario {
+model User {
   id  Int @id @default(autoincrement())
-  nome String @db.VarChar(255)
-  sobrenome String @db.VarChar(255)
+  first_name String @db.VarChar(255)
+  last_name String @db.VarChar(255)
   email String @db.VarChar(255)
-  email_cofirmado Boolean
-  senha String @db.VarChar(255)
-  emailConfirmacao EmailConfirmacao[]
+  password String @db.VarChar(255)
 }
 
-model EmailConfirmacao {
+model EmailConfirmation {
   id Int @id @default(autoincrement())
-  id_usuario Int
-  usuario Usuario @relation(fields: [id_usuario], references: [id])
-  token_confirmacao String @db.VarChar(255)
-  token_data_confirmacao DateTime
+  first_name String @db.VarChar(255)
+  last_name String @db.VarChar(255)
+  email String @db.VarChar(255)
+  token_confirmation String
+  token_generate_time DateTime
+  token_expiry_time DateTime
 }
