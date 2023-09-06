@@ -21,6 +21,10 @@
     "nodemailer": "^6.9.4",
     "passport": "^0.6.0",
     "prisma": "^5.2.0",
+    "rand-token": "^1.0.1",
     "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

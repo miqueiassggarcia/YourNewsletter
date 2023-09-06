@@ -20,10 +20,9 @@ model User {
 }
 
 model EmailConfirmation {
-  id Int @id @default(autoincrement())
+  email String @id @db.VarChar(255)
   first_name String @db.VarChar(255)
   last_name String @db.VarChar(255)
-  email String @db.VarChar(255)
   token_confirmation String
   token_generate_time DateTime
   token_expiry_time DateTime

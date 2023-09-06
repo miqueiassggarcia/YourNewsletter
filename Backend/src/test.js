@@ -1,10 +1,5 @@
-const sendEmail = require("./email_service");
+require("dotenv").config();
+const randToken = require("rand-token");
 
-const options = {
-    from: "yournewsletteroficial@gmail.com",
-    to: "miqueias.lucena@aluno.uepb.edu.br",
-    subject: "Esse miqueias é gay",
-    text: "gay"
-}
-
-sendEmail(options);
+console.log(process.env.CONFIRMATION_TOKEN_DICTIONARY);
+console.log(randToken.generate(6, process.env.CONFIRMATION_TOKEN_DICTIONARY));
