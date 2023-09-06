@@ -1,15 +1,14 @@
 input {
-  appearance: none;
-	margin-top: 2vh;
-  width: 70%;
+	margin-top: .5rem;
+  width: 15rem;
   background: transparent;
   text-align: center;
 	outline: none;
-	border-bottom: .2em solid rgb(6, 9, 63);
+	border-bottom: .2em solid #0D1B1E;
 	padding: .4em;
-	color: rgb(0, 0, 0);
+	color: #0D1B1E;
 	font-size: 17px;
 	padding: .4rem .3rem;
-	border-radius: 10rem;
+	border-radius: 0.2rem;
 	letter-spacing: 0.01em;
 }
