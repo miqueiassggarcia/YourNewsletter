@@ -23,6 +23,8 @@ model EmailConfirmation {
   email String @id @db.VarChar(255)
   first_name String @db.VarChar(255)
   last_name String @db.VarChar(255)
+  password String @db.VarChar(255)
+  token_confirmed Boolean
   token_confirmation String
   token_generate_time DateTime
   token_expiry_time DateTime
