@@ -4,7 +4,7 @@ button {
 	align-content: center;
 	border: 2px solid #0D1B1E;
 	background: transparent;
-	padding: 1.2em 1.5em;
+	padding: 1em;
 	color: #0D1B1E;
 	border-radius: 5em;
 	transition: 0.7s;
@@ -14,4 +14,14 @@ button {
 	}
 	margin-bottom: 5vh;
 	margin-top: 4vh;
+	font-size: 70%;
+}
+
+@media only screen and (max-width: 600px) {
+	button {
+		padding: 3vmin;
+		width: 40%;
+		font-size: 2.5vmin;
+		margin-top: 1.5vmax;
+	}
 }

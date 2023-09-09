@@ -1,6 +1,7 @@
 import { ConfirmButton } from "../components/ConfirmButton";
 import { Input } from "../components/Input";
 import "../styles/loginPage.css"
+import "../styles/loginPageMobile.css"
 
 export function LoginPage() {
   return (
