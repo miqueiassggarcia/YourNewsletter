@@ -34,7 +34,7 @@ app.post("/register_user", async(req, res, next) => {
     });
 
     if (result) {
-        return res.status(400).json({"message": "Usuário já cadastrado"});
+        return res.status(409).json({"message": "Usuário já cadastrado"});
     } else {
         next();
     }
