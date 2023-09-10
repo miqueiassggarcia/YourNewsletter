@@ -4,12 +4,40 @@ import "./styles/global.css"
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { EmailAuthentication } from './pages/emailAuthenticationPage';
+import { HomePage } from './pages/homePage';
+import { SingUpPage } from './pages/singUpPage';
+import { Error404Page } from './pages/error404Page';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <Error404Page />,
+    children: [
+      {
+        path: "/",
+        element: <HomePage />
+      },
+      {
+        path: "/singup",
+        element: <SingUpPage />,
+      },
+      {
+        path: "/email-authentication",
+        element: <EmailAuthentication />
+      }
+    ]
+  }
+])
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
