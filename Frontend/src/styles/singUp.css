@@ -91,3 +91,9 @@ a {
   align-items: center;
   justify-content: center;
 }
+
+.show-text {
+  font-size: .8em;
+  margin-top: 2%;
+  color: rgb(255, 45, 45);
+}

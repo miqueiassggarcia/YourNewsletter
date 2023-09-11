@@ -43,11 +43,10 @@
   margin-top: .5em;
 }
 
-.errorText {
+.error-text {
   color: rgb(255, 20, 20);
 }
 
-.email-code-form a {
-  text-decoration: none;
-  cursor: pointer;
+.explain-message {
+  
 }

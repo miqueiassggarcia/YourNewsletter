@@ -17,23 +17,13 @@ export function EmailAuthentication() {
   const [email, setEmail] = useState("");
   const [emailSend, setEmailSend] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [errorText, setErrorText] = useState(false);
+  const [errorText, setErrorText] = useState("");
+  const [errorTextSwitcher, setErrorTextSwitcher] = useState(false);
 
-  const handleEmailAdd = () => {
+  const handleEmailAdd = (event: FormEvent) => {
+    event.preventDefault();
+
     setEmailSend(true);
-  }
-
-  const handleResendConfirmationCode = async () => {
-    await api.post('register_user', {
-      "first_name": "lorem ipsum",
-      "last_name": "lorem ipsum",
-      "email": email,
-      "password": "lorem ipsum"
-    }).then(() => {
-      navigate("/email-authentication")
-    }).catch((error) => {
-      alert(error);
-    }) 
   }
 
   const handleConfirmation = async (event: FormEvent) => {
@@ -48,21 +38,44 @@ export function EmailAuthentication() {
         await delay(1500);
         navigate("/");
       } else {
-        setErrorText(true);
+        setErrorTextSwitcher(true);
       }
-    }).catch((error) => {
-      alert(error);
-      setErrorText(true);
+    }).catch(async (error) => {
+      if(error.response.status === 404) {
+        setErrorText("O email informado não existe");
+        await delay(2000);
+        setEmailSend(false);
+      }
+      else if(error.response.status === 400) {
+        if(error.response.data.message.includes("token")) {
+          setErrorText("Digite o código enviado no email");
+        }
+        else if(error.response.data.message.includes("email")) {
+          setErrorText("O campo email não pode estar vazio");
+          await delay(2000);
+          setEmailSend(false);
+        }
+      }
+      else if(error.response.status === 401) {
+        if(error.response.data.message.includes("expirado")) {
+          setErrorText("O seu código de confirmação expirou");
+        }
+        else if(error.response.data.message.includes("coincidem")) {
+          setErrorText("Código incorreto, tente novamente");
+        }
+      }
+      else if(error.response.status === 409) {
+        setErrorText("Email de usuário já confirmado")
+      }
+      setErrorTextSwitcher(true);
     })
   }
 
   return (
       <>
         <div className="container">
-          <form className='email-code-form' onSubmit={handleConfirmation}>
-
             { !emailSend ?
-              <>
+              <form className='email-code-form' onSubmit={handleEmailAdd}>
                 <h1>Informe seu email</h1>
                 <Input
                   type="email"
@@ -75,11 +88,12 @@ export function EmailAuthentication() {
                       setEmail(event.target.value)
                     }
                   }
+                  required
                 />
-                <ConfirmButton type="button" onClick={handleEmailAdd}>Continuar</ConfirmButton>
-              </>
+                <ConfirmButton type="submit">Continuar</ConfirmButton>
+              </form>
               :
-              <>
+              <form className='email-code-form' onSubmit={handleConfirmation}>
                 <h1>Informe o código de confirmação</h1>
                 <Input
                   type="text"
@@ -93,17 +107,14 @@ export function EmailAuthentication() {
                     }
                   }
                 />
-                {errorText ?
-                  <><p className="errorText">Código expirado ou inválido <a onClick={handleResendConfirmationCode}> reenviar código</a></p>
-                  </>
+                {errorTextSwitcher ?
+                  <p className="error-text">{errorText}</p>
                   :
                   <p>Enviamos um código no email cadastrado.</p>
                 }
-                <ConfirmButton type="submit">Continuar</ConfirmButton>
-              </>
+                <ConfirmButton type="submit" onSubmit={handleConfirmation}>Continuar</ConfirmButton>
+              </form>
             }
-
-          </form>
         </div>
 
         {dialogOpen ?

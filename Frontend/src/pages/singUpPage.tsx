@@ -14,6 +14,7 @@ export function SingUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [showText, setShowText] = useState(false);
 
   const handleLogin = () => {
     navigate("/singin");
@@ -30,7 +31,9 @@ export function SingUpPage() {
     }).then(() => {
       navigate("/email-authentication")
     }).catch((error) => {
-      alert(error);
+      if(error.response.status === 409) {
+        setShowText(true);
+      }
     })  
   }
 
@@ -46,6 +49,7 @@ export function SingUpPage() {
           <h1>Cadastre-se</h1>
           <div className='input-container'>
             <Input
+              required
               type="text"
               name="nome"
               id="nome"
@@ -58,6 +62,7 @@ export function SingUpPage() {
               placeholder='Digite o seu primeiro nome'
             />
             <Input
+              required
               type="text"
               name="sobrenome"
               id="sobrenome"
@@ -70,6 +75,7 @@ export function SingUpPage() {
               placeholder='Digite o seu sobrenome'
             />
             <Input
+              required
               type="email"
               name="email"
               id="email"
@@ -82,6 +88,7 @@ export function SingUpPage() {
               placeholder='Digite seu email'
             />
             <Input
+              required
               type="password"
               name="name"
               id="senha"
@@ -93,8 +100,13 @@ export function SingUpPage() {
               }
               placeholder='Digite uma senha'
             />
+            { showText ?
+              <p className="show-text">Usuário já existe</p>
+              :
+              null
+            }
           </div>
-          <ConfirmButton type="submit">Cadastre-se</ConfirmButton>
+          <ConfirmButton type="submit" style={showText ? {marginTop: "2vh"}: {}}>Cadastre-se</ConfirmButton>
         </form>
       </div>
     </div>
