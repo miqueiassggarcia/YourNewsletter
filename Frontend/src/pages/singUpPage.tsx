@@ -19,27 +19,19 @@ export function SingUpPage() {
     navigate("/singin");
   }
 
-  const handleSingup = async (event: FormEvent) => {
+  async function handleSingup(event: FormEvent) {
     event.preventDefault();
 
-    const params = new URLSearchParams();
-    params.append('first_name', name);
-    params.append('last_name', lastName);
-    params.append('email', email);
-    params.append('password', password);
-
-    const result = await api.post(
-      "/register_user",
-      params
-    ).then(() => {
-      alert(result);
+    await api.post('register_user', {
+      "first_name": name,
+      "last_name": lastName,
+      "email": email,
+      "password": password
+    }).then(() => {
+      navigate("/email-authentication")
     }).catch((error) => {
-        alert(error);
-    })
-
-    window.alert(result)
-
-    navigate("/email-authentication");
+      alert(error);
+    })  
   }
 
   return (

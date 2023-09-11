@@ -46,3 +46,8 @@
 .errorText {
   color: rgb(255, 20, 20);
 }
+
+.email-code-form a {
+  text-decoration: none;
+  cursor: pointer;
+}
