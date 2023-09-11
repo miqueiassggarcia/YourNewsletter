@@ -9,6 +9,7 @@ import { EmailAuthentication } from './pages/emailAuthenticationPage';
 import { HomePage } from './pages/homePage';
 import { SingUpPage } from './pages/singUpPage';
 import { Error404Page } from './pages/error404Page';
+import { SingInPage } from './pages/singInPage';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/singup",
         element: <SingUpPage />,
+      },
+      {
+        path: "/singin",
+        element: <SingInPage />,
       },
       {
         path: "/email-authentication",
