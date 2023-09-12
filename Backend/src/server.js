@@ -183,3 +183,5 @@ app.post("/confirm_user", async (req, res, next) => {
 app.listen(process.env.PORT, () => {
     console.log("servidor rodando na porta " + process.env.PORT.toString());
 })
+
+module.exports = app;
