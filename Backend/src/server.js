@@ -184,4 +184,4 @@ app.listen(process.env.PORT, () => {
     console.log("servidor rodando na porta " + process.env.PORT.toString());
 })
 
-module.exports = app;
+module.exports = app, prisma;
