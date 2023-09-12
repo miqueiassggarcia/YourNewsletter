@@ -1,0 +1,29 @@
+@media only screen and (max-width: 600px) {
+  .float-div {
+    height: 80vh;
+    width: 60vw;
+    flex-direction: column;
+    font-size: 1vw;
+  }
+
+  .container-text {
+    width: 100%;
+    border-radius: .7rem;
+    height: 35%;
+    margin-bottom: 10%;
+  }
+
+  .login-form {
+    width: 100%;
+    border-radius: .7rem;
+    height: 55%;
+  }
+
+  h1 {
+    font-size: 3vmax;
+  }
+
+  .login-form h1 {
+    margin-bottom: 1.5vmax;
+  }
+}
