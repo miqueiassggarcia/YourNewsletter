@@ -14,32 +14,27 @@ export function SingUpPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const [showText, setShowText] = useState(false);
 
   const handleLogin = () => {
     navigate("/singin");
   }
 
-  const handleSingup = async (event: FormEvent) => {
+  async function handleSingup(event: FormEvent) {
     event.preventDefault();
 
-    const params = new URLSearchParams();
-    params.append('first_name', name);
-    params.append('last_name', lastName);
-    params.append('email', email);
-    params.append('password', password);
-
-    const result = await api.post(
-      "/register_user",
-      params
-    ).then(() => {
-      alert(result);
+    await api.post('register_user', {
+      "first_name": name,
+      "last_name": lastName,
+      "email": email,
+      "password": password
+    }).then(() => {
+      navigate("/email-authentication")
     }).catch((error) => {
-        alert(error);
-    })
-
-    window.alert(result)
-
-    navigate("/email-authentication");
+      if(error.response.status === 409) {
+        setShowText(true);
+      }
+    })  
   }
 
   return (
@@ -54,6 +49,7 @@ export function SingUpPage() {
           <h1>Cadastre-se</h1>
           <div className='input-container'>
             <Input
+              required
               type="text"
               name="nome"
               id="nome"
@@ -66,6 +62,7 @@ export function SingUpPage() {
               placeholder='Digite o seu primeiro nome'
             />
             <Input
+              required
               type="text"
               name="sobrenome"
               id="sobrenome"
@@ -78,6 +75,7 @@ export function SingUpPage() {
               placeholder='Digite o seu sobrenome'
             />
             <Input
+              required
               type="email"
               name="email"
               id="email"
@@ -90,6 +88,7 @@ export function SingUpPage() {
               placeholder='Digite seu email'
             />
             <Input
+              required
               type="password"
               name="name"
               id="senha"
@@ -101,8 +100,13 @@ export function SingUpPage() {
               }
               placeholder='Digite uma senha'
             />
+            { showText ?
+              <p className="show-text">Usuário já existe</p>
+              :
+              null
+            }
           </div>
-          <ConfirmButton type="submit">Cadastre-se</ConfirmButton>
+          <ConfirmButton type="submit" style={showText ? {marginTop: "2vh"}: {}}>Cadastre-se</ConfirmButton>
         </form>
       </div>
     </div>

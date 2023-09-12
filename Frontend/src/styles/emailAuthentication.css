@@ -43,6 +43,10 @@
   margin-top: .5em;
 }
 
-.errorText {
+.error-text {
   color: rgb(255, 20, 20);
+}
+
+.explain-message {
+  
 }
