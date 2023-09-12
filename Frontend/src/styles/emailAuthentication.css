@@ -1,0 +1,52 @@
+.float-div {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0D1B1E;
+}
+
+.email-code-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  height: 45vh;
+  width: 40vw;
+  background-color: #FCFCFC;
+  border-radius: 1.5em;
+}
+
+.email-code-form input {
+  margin: 0;
+  margin-top: 1em;
+}
+
+.email-code-form button {
+  margin: 0;
+  margin-top: 1em;
+}
+
+.email-code-form h1 {
+  font-size: 1.4em;
+  color: #0D1B1E;
+  font-weight: bolder;
+}
+
+.email-code-form p {
+  font-size: .8em;
+  margin-top: .5em;
+}
+
+.error-text {
+  color: rgb(255, 20, 20);
+}
+
+.explain-message {
+  
+}
