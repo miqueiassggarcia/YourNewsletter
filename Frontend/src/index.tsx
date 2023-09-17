@@ -21,20 +21,20 @@ const router = createBrowserRouter([
         path: "/",
         element: <HomePage />
       },
-      {
-        path: "/singup",
-        element: <SingUpPage />,
-      },
-      {
-        path: "/singin",
-        element: <SingInPage />,
-      },
-      {
-        path: "/email-authentication",
-        element: <EmailAuthentication />
-      }
     ]
-  }
+  },
+    {
+      path: "/singup",
+      element: <SingUpPage />,
+    },
+    {
+      path: "/singin",
+      element: <SingInPage />,
+    },
+    {
+      path: "/email-authentication",
+      element: <EmailAuthentication />
+    }
 ])
 
 const root = ReactDOM.createRoot(

@@ -20,6 +20,10 @@
   width: 60vw;
 }
 
+.small {
+  height: 50vh;
+}
+
 .container-text {
   display: flex;
   flex-direction: column;
