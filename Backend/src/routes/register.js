@@ -1,6 +1,7 @@
 require('dotenv').config();
 const randToken = require("rand-token");
 const sendEmail = require("../email_service");
+const time = require('../components/time.js');
 
 const register_user_schema = require("../validation/register_user.js");
 const confirm_user_schema = require("../validation/confirm_user.js");
@@ -38,7 +39,7 @@ module.exports = function (app, prisma) {
         let random_token = randToken.generate(6, process.env.CONFIRMATION_TOKEN_DICTIONARY)
         let current_date = new Date;
         let token_expiry_time = parseInt(process.env.TOKEN_EXPIRY_TIME);
-        let expiry_time = new Date(current_date.getTime() + token_expiry_time * 60000);
+        let expiry_time = time.time_in_future(current_date, token_expiry_time)
     
         try {
             const email_confirmation = await prisma.emailConfirmation.findFirst({
@@ -95,7 +96,7 @@ module.exports = function (app, prisma) {
     
     app.post("/confirm_user", async (req, res, next) => {
         // verifica se os campos são válidos
-        const {error, resposta} = confirm_user_schema .validate(req.body);
+        const {error, resposta} = confirm_user_schema.validate(req.body);
         if (error) {
             return res.status(400).json({"message": error.details[0].message})
         } else {
@@ -131,7 +132,7 @@ module.exports = function (app, prisma) {
     
         // verifica se o token já se expirou
         let current_date = new Date();
-        if (current_date > new Date(req.user_email_confirmation.token_expiry_time)) {
+        if (time.is_late(current_date, req.user_email_confirmation.token_expiry_time)) {
             return res.status(401).json({"message": "Token expirado"});
         }
     
