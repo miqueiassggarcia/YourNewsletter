@@ -2,6 +2,7 @@ require('dotenv').config();
 const randToken = require("rand-token");
 const sendEmail = require("../email_service");
 const time = require('../components/time.js');
+const bcrypt = require('bcrypt');
 
 const register_user_schema = require("../validation/register_user.js");
 const confirm_user_schema = require("../validation/confirm_user.js");
@@ -36,10 +37,12 @@ module.exports = function (app, prisma) {
 
     }, async(req, res) => {
         // cria usuário temporário (ou atualiza caso já exista) na tabela EmailConfirmation
-        let random_token = randToken.generate(6, process.env.CONFIRMATION_TOKEN_DICTIONARY)
+        let random_token = randToken.generate(6, process.env.CONFIRMATION_TOKEN_DICTIONARY);
+        const hash_random_token = bcrypt.hashSync(random_token, parseInt(process.env.SALT_BCRYPT));
         let current_date = new Date;
         let token_expiry_time = parseInt(process.env.TOKEN_EXPIRY_TIME);
-        let expiry_time = time.time_in_future(current_date, token_expiry_time)
+        let expiry_time = time.time_in_future(current_date, token_expiry_time);
+        const hash_password = bcrypt.hashSync(req.body.password, parseInt(process.env.SALT_BCRYPT));
     
         try {
             const email_confirmation = await prisma.emailConfirmation.findFirst({
@@ -54,7 +57,7 @@ module.exports = function (app, prisma) {
                         email: req.body.email
                     }, 
                     data: {
-                        token_confirmation: random_token,
+                        token_confirmation: hash_random_token,
                         token_generate_time: current_date,
                         token_expiry_time: expiry_time
                     }
@@ -66,11 +69,11 @@ module.exports = function (app, prisma) {
                         first_name: req.body.first_name,
                         last_name: req.body.last_name,
                         email: req.body.email,
-                        password: req.body.password,
+                        password: hash_password,
                         token_confirmed: false,
-                        token_confirmation: random_token,
+                        token_confirmation: hash_random_token,
                         token_generate_time: current_date,
-                        token_expiry_time: new Date(current_date.getTime() + 1 * 60000)
+                        token_expiry_time: expiry_time
                     }
                 })
             }
@@ -137,7 +140,7 @@ module.exports = function (app, prisma) {
         }
     
         // verifica se os tokens são iguais
-        if (req.user_email_confirmation.token_confirmation.toString() != req.body.token_confirmation.toString()) {
+        if (!bcrypt.compareSync(req.body.token_confirmation.toString(), req.user_email_confirmation.token_confirmation.toString())) {
             return res.status(401).json({"message": "Tokens não coincidem"});
         }
     
