@@ -29,7 +29,7 @@ export function SingUpPage() {
       "email": email,
       "password": password
     }).then(() => {
-      navigate("/email-authentication")
+      navigate("/authentication/email-authentication")
     }).catch((error) => {
       if(error.response.status === 409) {
         setShowText(true);
