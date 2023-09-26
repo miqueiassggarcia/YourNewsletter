@@ -13,7 +13,7 @@ export function SingInPage() {
   const [showText, setShowText] = useState(false);
 
   const handleLogin = () => {
-    navigate("/singup");
+    navigate("/authentication/singup");
   }
 
   async function handleSingup(event: FormEvent) {
@@ -23,7 +23,7 @@ export function SingInPage() {
       "email": email,
       "password": password
     }).then(() => {
-      navigate("/email-authentication")
+      navigate("/authentication/email-authentication")
     }).catch((error) => {
       if(error.response.status === 409) {
         setShowText(true);
@@ -32,7 +32,6 @@ export function SingInPage() {
   }
 
   return (
-    <div className="App">
       <div className="float-div small">
         <div className='container-text'>
           <h1>Ainda não tem uma conta?</h1>
@@ -77,6 +76,5 @@ export function SingInPage() {
           <ConfirmButton type="submit" style={showText ? {marginTop: "2vh"}: {}}>Entrar</ConfirmButton>
         </form>
       </div>
-    </div>
   )
 }

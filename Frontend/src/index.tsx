@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./styles/global.css"
-import App from './App';
+import Root from './Root';
 import reportWebVitals from './reportWebVitals';
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -10,11 +10,12 @@ import { HomePage } from './pages/homePage';
 import { SingUpPage } from './pages/singUpPage';
 import { Error404Page } from './pages/error404Page';
 import { SingInPage } from './pages/singInPage';
+import AuthenticationRoot from './pages/authenticationRoot';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Root />,
     errorElement: <Error404Page />,
     children: [
       {
@@ -23,18 +24,24 @@ const router = createBrowserRouter([
       },
     ]
   },
+  {
+  path: "/authentication",
+    element: <AuthenticationRoot />,
+    errorElement: <Error404Page />,
+    children: [
     {
-      path: "/singup",
+      path: "singup",
       element: <SingUpPage />,
     },
     {
-      path: "/singin",
+      path: "singin",
       element: <SingInPage />,
     },
     {
-      path: "/email-authentication",
+      path: "email-authentication",
       element: <EmailAuthentication />
     }
+  ]}
 ])
 
 const root = ReactDOM.createRoot(
