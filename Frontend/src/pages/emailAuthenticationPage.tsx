@@ -73,7 +73,7 @@ export function EmailAuthentication() {
 
   return (
       <>
-        <div className="container">
+        <div className="App">
             { !emailSend ?
               <form className='email-code-form' onSubmit={handleEmailAdd}>
                 <h1>Informe seu email</h1>

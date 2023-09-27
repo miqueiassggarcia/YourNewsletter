@@ -17,7 +17,7 @@ export function SingUpPage() {
   const [showText, setShowText] = useState(false);
 
   const handleLogin = () => {
-    navigate("/singin");
+    navigate("/authentication/singin");
   }
 
   async function handleSingup(event: FormEvent) {
@@ -29,7 +29,7 @@ export function SingUpPage() {
       "email": email,
       "password": password
     }).then(() => {
-      navigate("/email-authentication")
+      navigate("/authentication/email-authentication")
     }).catch((error) => {
       if(error.response.status === 409) {
         setShowText(true);
@@ -38,7 +38,6 @@ export function SingUpPage() {
   }
 
   return (
-    <div className="App">
       <div className="float-div">
         <div className='container-text'>
           <h1>Bem vindo de volta!</h1>
@@ -109,6 +108,5 @@ export function SingUpPage() {
           <ConfirmButton type="submit" style={showText ? {marginTop: "2vh"}: {}}>Cadastre-se</ConfirmButton>
         </form>
       </div>
-    </div>
   )
 }
