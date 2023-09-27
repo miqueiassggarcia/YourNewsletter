@@ -12,7 +12,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 65vh;
+  height: 70vh;
   width: 60vw;
 }
 
@@ -95,5 +95,11 @@ a {
 .show-text {
   font-size: .8em;
   margin-top: 2%;
+  color: rgb(255, 45, 45);
+}
+
+.feedback {
+  font-size: .6em;
+  margin-top: 1%;
   color: rgb(255, 45, 45);
 }
