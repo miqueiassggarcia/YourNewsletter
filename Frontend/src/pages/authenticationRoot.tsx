@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 
 function AuthenticationRoot() {
   return (
-    <div className="App" style={{flexDirection: "column"}}>
+    <div className="container">
       <Outlet />
     </div>
   );
