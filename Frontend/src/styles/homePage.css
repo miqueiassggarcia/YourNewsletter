@@ -41,6 +41,14 @@
     background-color: rgba(0, 0, 0, 0.45);
 }
 
+.create-text span {
+    font-size: .7rem;
+}
+
+.singup-text span {
+    font-size: .7rem;
+}
+
 .singup-text {
     display: flex;
     align-items: start;
@@ -55,7 +63,7 @@
 }
 
 .button-container button {
-    width: 20%;
+    width: 15%;
     color: white;
     border-color: white;
     font-weight: bold;

@@ -3,7 +3,7 @@
   height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
   background: #0D1B1E;
 }
