@@ -70,7 +70,7 @@
 }
 
 .button-container button:hover {
-    color: black;
+    color: #0D0106;
     border-color: white;
     background-color: white;
     cursor: pointer;
