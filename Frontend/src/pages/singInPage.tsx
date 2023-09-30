@@ -9,8 +9,9 @@ import api from "../services/api";
 export function SingInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [showText, setShowText] = useState(false);
+  
+  const navigate = useNavigate();
 
   const handleLogin = () => {
     navigate("/authentication/singup");
