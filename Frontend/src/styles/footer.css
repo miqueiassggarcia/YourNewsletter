@@ -11,3 +11,11 @@
 .app-footer span {
     font-size: .7rem;
 }
+
+.app-footer :last-child {
+    cursor: pointer;
+}
+
+.app-footer :last-child:hover {
+    color: #CCC;
+}
