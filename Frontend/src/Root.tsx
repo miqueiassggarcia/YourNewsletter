@@ -1,12 +1,36 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
+import logo from "./images/logo.png"
+import "./styles/header.css"
+import "./styles/footer.css"
 
 function Root() {
+  const navigate = useNavigate();
+
+  function navigateToSingin() {
+    navigate("/authentication/singin")
+  }
+
+  function navigateToHome() {
+    navigate("/")
+  }
+
   return (
-    <div className="App">
-      <h1>navbar</h1>
-      <a href="authentication/singup" style={{fontSize:100, margin: "30vh"}}>singup</a>
+    <div className="container">
+      <header className="app-header">
+        <div className="app-name">
+          <img src={logo} alt="yournewsletter icon" />
+          <span onClick={navigateToHome}>Yournewsletter</span>
+        </div>
+        <div className="menu-items">
+          <span onClick={navigateToSingin}>Login</span>
+          <span>Suporte</span>
+        </div>
+      </header>
       <Outlet />
-      <h1>footer</h1>
+      <footer className="app-footer">
+        <span>© 2023 Yournewsletter</span>
+        <span>Suporte</span>
+      </footer>
     </div>
   );
 }

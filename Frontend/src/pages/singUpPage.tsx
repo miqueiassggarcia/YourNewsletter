@@ -7,6 +7,7 @@ import "../styles/singUp.css"
 import "../styles/singUpMobile.css"
 import { FormEvent, useState } from "react";
 import api from "../services/api";
+import { validateEmail, validateLastName, validateName, validatePassword } from "../validation/singupFormValidation";
 
 export function SingUpPage() {
   const [name, setName] = useState("");
@@ -26,71 +27,29 @@ export function SingUpPage() {
     navigate("/authentication/singin");
   }
 
-  function validateName(name: String):void {
-    if(name.length < 3) {
-      setNameFeedback("Nome precisa conter ao menos 3 caracteres")
-    } else if(name.length > 30) {
-      setNameFeedback("Nome precisa conter menos de 30 caracteres")
-    } else {
-      setNameFeedback("");
-    }
-  }
-
-  function validateLastName(lastName: String):void {
-    if(lastName.length < 3) {
-      setLastNameFeedback("Sobrenome precisa conter ao menos 3 caracteres")
-    } else if(lastName.length > 30) {
-      setLastNameFeedback("Sobrenome precisa conter menos de 30 caracteres")
-    } else {
-      setLastNameFeedback("");
-    }
-  }
-
-  function validateEmail(email: string):void {
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if(!emailPattern.test(email)) {
-      setEmailFeedback("Formato de email inválido");
-    } else {
-      setEmailFeedback("");
-    }
-  }
-
-  function validatePassword(password: string): void {
-    const hasUppercase = /[A-Z]/.test(password);
-    const hasLowercase = /[a-z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
-    const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password);
-
-    if(!hasNumber) {
-      setPasswordFeedback("A senha precisa conter pelo menos 1 número");
-    } else if(!hasUppercase) {
-      setPasswordFeedback("A senha precisa conter pelo menos uma letra maiúscula");
-    } else if(!hasLowercase) {
-      setPasswordFeedback("A senha precisa conter pelo menos uma letra minúscula");
-    } else if(!hasSpecialChar) {
-      setPasswordFeedback("A senha precisa conter pelo menos um caractere especial");
-    } else if(password.length < 8) {
-      setPasswordFeedback("A senha precisa conter pelo menos 8 caracteres");
-    } else {
-      setPasswordFeedback("");
-    }
-  }
-
   async function handleSingup(event: FormEvent) {
     event.preventDefault();
-
-    await api.post('register_user', {
-      "first_name": name,
-      "last_name": lastName,
-      "email": email,
-      "password": password
-    }).then(() => {
-      navigate("/authentication/email-authentication")
-    }).catch((error) => {
-      if(error.response.status === 409) {
-        setShowText(true);
-      }
-    })  
+    if(
+      nameFeedback.length === 0 &&
+      lastNameFeedback.length === 0 &&
+      emailFeedback.length === 0 &&
+      passwordFeedback.length === 0
+    ) {
+      await api.post('register_user', {
+        "first_name": name,
+        "last_name": lastName,
+        "email": email,
+        "password": password
+      }).then(() => {
+        navigate("/authentication/email-authentication")
+      }).catch((error) => {
+        if(error.response.status === 409) {
+          setShowText(true);
+        }
+      })
+    } else {
+      alert("Preencha os dados corretamente antes de enviar")
+    }
   }
 
   return (
@@ -112,7 +71,7 @@ export function SingUpPage() {
               onChange={
                 (event) => {
                   setName(event.target.value)
-                  validateName(event.target.value)
+                  setNameFeedback(validateName(event.target.value))
                 }
               }
               placeholder='Digite o seu primeiro nome'
@@ -127,7 +86,7 @@ export function SingUpPage() {
               onChange={
                 (event) => {
                   setLastName(event.target.value)
-                  validateLastName(event.target.value)
+                  setLastNameFeedback(validateLastName(event.target.value))
                 }
               }
               placeholder='Digite o seu sobrenome'
@@ -142,7 +101,7 @@ export function SingUpPage() {
               onChange={
                 (event) => {
                   setEmail(event.target.value)
-                  validateEmail(event.target.value)
+                  setEmailFeedback(validateEmail(event.target.value))
                 }
               }
               placeholder='Digite seu email'
@@ -157,7 +116,7 @@ export function SingUpPage() {
               onChange={
                 (event) => {
                   setPassword(event.target.value)
-                  validatePassword(event.target.value)
+                  setPasswordFeedback(validatePassword(event.target.value))
                 }
               }
               placeholder='Digite uma senha'
