@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --runInBand --forceExit"
+    "test": "jest --runInBand --forceExit",
+    "start": "nodemon ./src/server.js"
   },
   "author": "",
   "license": "MIT",
