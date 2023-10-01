@@ -75,10 +75,8 @@ export function SingInPage() {
               }
               placeholder='Digite uma senha'
             />
-            { showText ?
+            { showText &&
               <p className="show-text">Usuário já existe</p>
-              :
-              null
             }
           </div>
           <ConfirmButton type="submit" style={showText ? {marginTop: "2vh"}: {}}>Entrar</ConfirmButton>
