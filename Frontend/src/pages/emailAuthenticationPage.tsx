@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ConfirmButton } from "../components/ConfirmButton";
 import { Input } from "../components/Input";
 import "../styles/emailAuthentication.css";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import "../styles/dialog.css"
 import api from "../services/api";
 
@@ -19,6 +19,13 @@ export function EmailAuthentication() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [errorText, setErrorText] = useState("");
   const [errorTextSwitcher, setErrorTextSwitcher] = useState(false);
+
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+    if(user) {
+      navigate("/")
+    }
+  }, [navigate])
 
   const handleEmailAdd = (event: FormEvent) => {
     event.preventDefault();

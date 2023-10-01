@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { ConfirmButton } from "../components/ConfirmButton";
 import { Input } from "../components/Input";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import api from "../services/api";
 
 export function SingInPage() {
@@ -16,6 +16,13 @@ export function SingInPage() {
   const handleLogin = () => {
     navigate("/authentication/singup");
   }
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if(user) {
+      navigate("/")
+    }
+  }, [navigate])
 
   async function handleSingup(event: FormEvent) {
     event.preventDefault();

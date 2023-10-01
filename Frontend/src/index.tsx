@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import "./styles/global.css"
 import Root from './Root';
@@ -11,6 +11,16 @@ import { SingUpPage } from './pages/singUpPage';
 import { Error404Page } from './pages/error404Page';
 import { SingInPage } from './pages/singInPage';
 import AuthenticationRoot from './pages/authenticationRoot';
+import { HomePageLogged } from './pages/homePageLogged';
+
+function ifUserLoggedIn():boolean {
+  const user = localStorage.getItem("user");
+  if(user) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 const router = createBrowserRouter([
   {
@@ -20,15 +30,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />
-      },
+        element: ifUserLoggedIn() ? <HomePageLogged /> : <HomePage />
+      }
     ]
   },
   {
   path: "/authentication",
-    element: <AuthenticationRoot />,
-    errorElement: <Error404Page />,
-    children: [
+  element: <AuthenticationRoot />,
+  errorElement: <Error404Page />,
+  children: [
     {
       path: "singup",
       element: <SingUpPage />,
@@ -46,8 +56,8 @@ const router = createBrowserRouter([
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
-);
-root.render(
+  );
+  root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>

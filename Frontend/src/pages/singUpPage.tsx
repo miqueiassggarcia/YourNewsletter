@@ -5,7 +5,7 @@ import { Input } from "../components/Input";
 
 import "../styles/singUp.css"
 import "../styles/singUpMobile.css"
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import api from "../services/api";
 import { validateEmail, validateLastName, validateName, validatePassword } from "../validation/singupFormValidation";
 
@@ -22,6 +22,13 @@ export function SingUpPage() {
   const [passwordFeedback, setPasswordFeedback] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const logged = localStorage.getItem("user");
+    if(logged) {
+      navigate("/");
+    }
+  }, [navigate])
 
   const handleLogin = ():void => {
     navigate("/authentication/singin");
@@ -40,8 +47,9 @@ export function SingUpPage() {
         "last_name": lastName,
         "email": email,
         "password": password
-      }).then(() => {
+      }).then((response) => {
         navigate("/authentication/email-authentication")
+        localStorage.setItem("user", response.data)
       }).catch((error) => {
         if(error.response.status === 409) {
           setShowText(true);
