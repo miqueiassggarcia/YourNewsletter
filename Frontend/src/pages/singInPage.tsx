@@ -18,22 +18,29 @@ export function SingInPage() {
   }
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if(user) {
+    const username = localStorage.getItem("username")
+    const name = localStorage.getItem("first_name")
+    const lastName = localStorage.getItem("last_name")
+    const email = localStorage.getItem("email")
+    const validate = localStorage.getItem("validate")
+    if(validate) {
       navigate("/")
+    } else if(username && name && lastName && email && !validate) {
+      navigate("/authentication/email-authentication")
     }
   }, [navigate])
 
   async function handleSingup(event: FormEvent) {
     event.preventDefault();
 
-    await api.post('register_user', {
+    await api.post('/login', {
       "email": email,
       "password": password
-    }).then(() => {
-      navigate("/authentication/email-authentication")
+    }).then((response) => {
+      localStorage.setItem("user", response.data)
+      navigate("/")
     }).catch((error) => {
-      if(error.response.status === 409) {
+      if(error.response.status === 404) {
         setShowText(true);
       }
     })  
@@ -76,7 +83,7 @@ export function SingInPage() {
               placeholder='Digite uma senha'
             />
             { showText ?
-              <p className="show-text">Usuário já existe</p>
+              <p className="show-text">Usuário não existe</p>
               :
               null
             }

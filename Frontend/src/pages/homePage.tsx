@@ -1,8 +1,16 @@
 import { useNavigate } from "react-router-dom"
 import "../styles/homePage.css"
+import { useEffect } from "react";
 
 export function HomePage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const validate = localStorage.getItem("validate");
+    if(validate) {
+      navigate("/home")
+    }
+  }, [navigate])
 
   function navigateToSingup() {
     navigate("/authentication/singup")
