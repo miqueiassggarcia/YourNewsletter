@@ -16,6 +16,24 @@ module.exports = function (app, prisma) {
         } else {
             next();
         }
+    }, async(req,res, next) => {
+        // verifica se já existe um usuário cadastrado com username solicitado
+        try {
+            const result = await prisma.user.findFirst({
+                where: {
+                    username: req.body.username
+                }
+            });
+
+            if (result) {
+                return res.status(409).json({"message": "Usuário já cadastrado"});
+            } else {
+                next();
+            }
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({"message": "Erro ao acessar banco de dados"});
+        }
     }, async(req, res, next) => {
         // verifica se já existe um usuário cadastrado com o email solicitado
         try {
@@ -26,7 +44,7 @@ module.exports = function (app, prisma) {
             });
         
             if (result) {
-                return res.status(409).json({"message": "Usuário já cadastrado"});
+                return res.status(409).json({"message": "Email já cadastrado"});
             } else {
                 next();
             }
@@ -47,16 +65,21 @@ module.exports = function (app, prisma) {
         try {
             const email_confirmation = await prisma.emailConfirmation.findFirst({
                 where: {
-                    email: req.body.email
+                    username: req.body.username
                 }
             })
     
             if (email_confirmation) {
                 await prisma.emailConfirmation.update({
                     where: {
-                        email: req.body.email
+                        username: req.body.username,
                     }, 
                     data: {
+                        email: req.body.email,
+                        first_name: req.body.first_name,
+                        last_name: req.body.last_name,
+                        password: hash_password,
+                        token_confirmed: false,
                         token_confirmation: hash_random_token,
                         token_generate_time: current_date,
                         token_expiry_time: expiry_time
@@ -66,9 +89,10 @@ module.exports = function (app, prisma) {
             } else {
                 await prisma.emailConfirmation.create({
                     data: {
+                        username: req.body.username,
+                        email: req.body.email,
                         first_name: req.body.first_name,
                         last_name: req.body.last_name,
-                        email: req.body.email,
                         password: hash_password,
                         token_confirmed: false,
                         token_confirmation: hash_random_token,
@@ -110,7 +134,7 @@ module.exports = function (app, prisma) {
         try {
             const email_confirmation = await prisma.emailConfirmation.findFirst({
                 where: {
-                    email: req.body.email
+                    username: req.body.username
                 }
             });
         
@@ -151,16 +175,17 @@ module.exports = function (app, prisma) {
         try {
             await prisma.user.create({
                 data: {
+                    username: req.user_email_confirmation.username,
+                    email: req.user_email_confirmation.email,
                     first_name: req.user_email_confirmation.first_name,
                     last_name: req.user_email_confirmation.last_name,
-                    email: req.user_email_confirmation.email,
                     password: req.user_email_confirmation.password
                 }
             });
     
             await prisma.emailConfirmation.update({
                 where: {
-                    email: req.user_email_confirmation.email
+                    username: req.user_email_confirmation.username
                 }, 
                 data: {
                     token_confirmed: true,

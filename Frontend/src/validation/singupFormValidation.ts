@@ -1,3 +1,17 @@
+export function validateApelido(apelido: string):string {
+  if(apelido.length < 3) {
+    return "Apelido precisa conter ao menos 3 caracteres"
+  } else if(apelido.length > 20) {
+    return "Apelido precisa conter menos de 30 caracteres"
+  } else if(
+    /[!@#$%^&*()_+{}[\]:;<>,.?~\\-]/.test(apelido)
+    ) {
+    return "Apelido não pode ter caracteres especiais"
+  } else {
+    return ""
+  }
+}
+
 export function validateName(name: string):string {
   if(name.length < 3) {
     return "Nome precisa conter ao menos 3 caracteres"

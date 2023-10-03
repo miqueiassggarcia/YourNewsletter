@@ -1,7 +1,19 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { ConfirmButton } from "../components/ConfirmButton";
 import "../styles/homePageLogged.css"
 
 export function HomePageLogged() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const validate = localStorage.getItem("validate");
+    if(!validate) {
+      navigate("/")
+    }
+  }, [navigate])
+
   return (
     <div className="home-logged-container">
       <div className="new-newsletter-container">

@@ -12,15 +12,16 @@ datasource db {
 
 
 model User {
-  id  Int @id @default(autoincrement())
+  username  String @id @db.VarChar(255)
+  email String @db.VarChar(255) @unique
   first_name String @db.VarChar(255)
   last_name String @db.VarChar(255)
-  email String @db.VarChar(255)
   password String @db.VarChar(255)
 }
 
 model EmailConfirmation {
-  email String @id @db.VarChar(255)
+  username String @id @db.VarChar(255)
+  email String @db.VarChar(255) @unique
   first_name String @db.VarChar(255)
   last_name String @db.VarChar(255)
   password String @db.VarChar(255)

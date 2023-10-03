@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./styles/global.css"
 import Root from './Root';
@@ -13,15 +13,6 @@ import { SingInPage } from './pages/singInPage';
 import AuthenticationRoot from './pages/authenticationRoot';
 import { HomePageLogged } from './pages/homePageLogged';
 
-function ifUserLoggedIn():boolean {
-  const user = localStorage.getItem("user");
-  if(user) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -30,7 +21,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: ifUserLoggedIn() ? <HomePageLogged /> : <HomePage />
+        element: <HomePage />
+      },
+      {
+        path: "/home",
+        element: <HomePageLogged />
       }
     ]
   },

@@ -7,15 +7,17 @@ import "../styles/singUp.css"
 import "../styles/singUpMobile.css"
 import { FormEvent, useEffect, useState } from "react";
 import api from "../services/api";
-import { validateEmail, validateLastName, validateName, validatePassword } from "../validation/singupFormValidation";
+import { validateApelido, validateEmail, validateLastName, validateName, validatePassword } from "../validation/singupFormValidation";
 
 export function SingUpPage() {
+  const [apelido, setApelido] = useState("");
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showText, setShowText] = useState(false);
 
+  const [apelidoFeedback, setApelidoFeedback] = useState("");
   const [nameFeedback, setNameFeedback] = useState("");
   const [lastNameFeedback, setLastNameFeedback] = useState("");
   const [emailFeedback, setEmailFeedback] = useState("");
@@ -24,9 +26,15 @@ export function SingUpPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const logged = localStorage.getItem("user");
-    if(logged) {
-      navigate("/");
+    const username = localStorage.getItem("username")
+    const name = localStorage.getItem("first_name")
+    const lastName = localStorage.getItem("last_name")
+    const email = localStorage.getItem("email")
+    const validate = localStorage.getItem("validate")
+    if(validate) {
+      navigate("/")
+    } else if(username && name && lastName && email && !validate) {
+      navigate("/authentication/email-authentication")
     }
   }, [navigate])
 
@@ -37,20 +45,27 @@ export function SingUpPage() {
   async function handleSingup(event: FormEvent) {
     event.preventDefault();
     if(
+      apelidoFeedback.length === 0 &&
       nameFeedback.length === 0 &&
       lastNameFeedback.length === 0 &&
       emailFeedback.length === 0 &&
       passwordFeedback.length === 0
     ) {
       await api.post('register_user', {
+        "username": apelido,
         "first_name": name,
         "last_name": lastName,
         "email": email,
         "password": password
-      }).then((response) => {
+      }).then(() => {
+        //Caso cadastre
+        localStorage.setItem("username", apelido)
+        localStorage.setItem("first_name", name)
+        localStorage.setItem("last_name", lastName)
+        localStorage.setItem("email", email)
         navigate("/authentication/email-authentication")
-        localStorage.setItem("user", response.data)
       }).catch((error) => {
+        //Caso usuário já exista
         if(error.response.status === 409) {
           setShowText(true);
         }
@@ -73,17 +88,32 @@ export function SingUpPage() {
             <Input
               required
               type="text"
-              name="nome"
-              id="nome"
-              value={name}
+              name="apelido"
+              id="apelido"
+              value={apelido}
               onChange={
                 (event) => {
-                  setName(event.target.value)
-                  setNameFeedback(validateName(event.target.value))
+                  setApelido(event.target.value)
+                  setApelidoFeedback(validateApelido(event.target.value))
                 }
               }
-              placeholder='Digite o seu primeiro nome'
+              placeholder='Digite um apelido para o seu usuário'
             />
+            <p className="feedback">{apelidoFeedback}</p>
+              <Input
+                required
+                type="text"
+                name="nome"
+                id="nome"
+                value={name}
+                onChange={
+                  (event) => {
+                    setName(event.target.value)
+                    setNameFeedback(validateName(event.target.value))
+                  }
+                }
+                placeholder='Digite o seu primeiro nome'
+              />
             <p className="feedback">{nameFeedback}</p>
             <Input
               required
