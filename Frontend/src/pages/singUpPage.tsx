@@ -160,10 +160,8 @@ export function SingUpPage() {
               placeholder='Digite uma senha'
             />
             <p className="feedback">{passwordFeedback}</p>
-            { showText ?
+            { showText &&
               <p className="show-text">Usuário já existe</p>
-              :
-              <></>
             }
           </div>
           <ConfirmButton type="submit" style={showText ? {marginTop: "2vh"}: {}}>Cadastre-se</ConfirmButton>
