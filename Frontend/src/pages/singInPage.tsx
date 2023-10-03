@@ -7,9 +7,10 @@ import { FormEvent, useEffect, useState } from "react";
 import api from "../services/api";
 
 export function SingInPage() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showText, setShowText] = useState(false);
+  const [errorText, setErrorText] = useState("");
   
   const navigate = useNavigate();
 
@@ -34,13 +35,24 @@ export function SingInPage() {
     event.preventDefault();
 
     await api.post('/login', {
-      "email": email,
+      "username": username,
       "password": password
     }).then((response) => {
-      localStorage.setItem("user", response.data)
+      localStorage.setItem("username", response.data.username)
+      localStorage.setItem("name", response.data.first_name)
+      localStorage.setItem("lastName", response.data.last_name)
+      localStorage.setItem("email", response.data.email)
+      localStorage.setItem("validate", "validated user")
       navigate("/")
     }).catch((error) => {
       if(error.response.status === 404) {
+        setErrorText("Usuário não cadastrado")
+        setShowText(true);
+      } else if(error.response.status === 401) {
+        setErrorText("Ocorreu um erro, tente novamente")
+        setShowText(true);
+      } else if(error.response.status === 400) {
+        setErrorText("Dados inválidos, tente novamente")
         setShowText(true);
       }
     })  
@@ -58,16 +70,16 @@ export function SingInPage() {
           <div className='input-container'>
             <Input
               required
-              type="email"
-              name="email"
-              id="email"
-              value={email}
+              type="username"
+              name="username"
+              id="username"
+              value={username}
               onChange={
                 (event) => {
-                  setEmail(event.target.value)
+                  setUsername(event.target.value)
                 }
               }
-              placeholder='Digite seu email'
+              placeholder='Digite seu apelido'
             />
             <Input
               required
@@ -82,8 +94,10 @@ export function SingInPage() {
               }
               placeholder='Digite uma senha'
             />
-            { showText &&
-              <p className="show-text">Usuário já existe</p>
+            { showText ?
+              <p className="show-text">{errorText}</p>
+              :
+              null
             }
           </div>
           <ConfirmButton type="submit" style={showText ? {marginTop: "2vh"}: {}}>Entrar</ConfirmButton>
