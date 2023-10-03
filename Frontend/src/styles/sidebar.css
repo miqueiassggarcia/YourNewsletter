@@ -11,12 +11,44 @@
   width: 20vw;
 }
 
-.close-button {
-  margin-top: .8rem;
-  margin-right: 1.5rem;
+.sidebar-container span {
+  margin: 0;
+}
+
+.sidebar-container span:hover {
   color: white;
-  height: 8%;
-  width: 8%;
+}
+
+.close-button {
+  color: white;
+}
+
+.logout-button {
+  color: white;
+}
+
+.sidebar-buttons {
+  width: 100%;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  border-radius: .4rem;
+  padding: .4rem;
+}
+
+.logout:hover {
+  background-color: #779197;
+}
+
+.logout span {
+  margin-left: .4rem;
 }
 
 .sidebar-items {
@@ -44,11 +76,6 @@
 
 .items-elements span {
   font-size: 1rem;
-  margin-bottom: .3rem;
-}
-
-.items-elements span:hover {
-  color: white;
 }
 
 .sidebar-items-icons {
