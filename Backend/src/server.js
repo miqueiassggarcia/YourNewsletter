@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 
 const router_register = require('./routes/register.js');
 const router_login = require('./routes/login.js');
+const router_newsletter = require('./routes/newsletter.js');
 const auth = require('./auth.js');
 
 const { PrismaClient } = require("@prisma/client");
@@ -30,7 +31,9 @@ app.use(cors());
 // rotas
 router_register(app, prisma);
 router_login(app, prisma);
+router_newsletter(app, prisma);
 auth(app, prisma);
+
 
 
 app.listen(process.env.PORT, () => {
