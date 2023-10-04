@@ -57,6 +57,9 @@ export function SingUpPage() {
         "last_name": lastName,
         "email": email,
         "password": password
+      },
+      {
+        withCredentials: true
       }).then(() => {
         //Caso cadastre
         localStorage.setItem("username", apelido)
@@ -65,10 +68,12 @@ export function SingUpPage() {
         localStorage.setItem("email", email)
         navigate("/authentication/email-authentication")
       }).catch((error) => {
+        alert(error)
+
         //Caso usuário já exista
-        if(error.response.status === 409) {
-          setShowText(true);
-        }
+        // if(error.response.status === 409) {
+        //   setShowText(true);
+        // }
       })
     } else {
       alert("Preencha os dados corretamente antes de enviar")

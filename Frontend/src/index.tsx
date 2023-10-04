@@ -12,6 +12,7 @@ import { Error404Page } from './pages/error404Page';
 import { SingInPage } from './pages/singInPage';
 import AuthenticationRoot from './pages/authenticationRoot';
 import { HomePageLogged } from './pages/homePageLogged';
+import { CreateNewsletterPage } from './pages/createNewsletterPage';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/home",
         element: <HomePageLogged />
+      },
+      {
+        path: "/create-newsletter",
+        element: <CreateNewsletterPage />
       }
     ]
   },

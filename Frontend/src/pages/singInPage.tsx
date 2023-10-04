@@ -37,6 +37,9 @@ export function SingInPage() {
     await api.post('/login', {
       "username": username,
       "password": password
+    },
+    {
+      withCredentials: true
     }).then((response) => {
       localStorage.setItem("username", response.data.username)
       localStorage.setItem("name", response.data.first_name)

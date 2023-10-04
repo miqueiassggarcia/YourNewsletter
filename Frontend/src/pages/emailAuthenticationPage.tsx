@@ -41,7 +41,11 @@ export function EmailAuthentication() {
       "username": username,
       "email": email,
       "token_confirmation": tokenCode
-    }).then(async () => {
+    },
+    {
+      withCredentials: true
+    }
+    ).then(async () => {
       if(!dialogOpen) {
         setDialogOpen(true);
         localStorage.setItem("validate", "validated user")
@@ -124,12 +128,10 @@ export function EmailAuthentication() {
           </form>
         </div>
 
-        {dialogOpen ?
+        {dialogOpen &&
           <dialog className="dialog">
             <h1>Email confirmado</h1>
           </dialog>
-          :
-          null
         }
     </>
   )

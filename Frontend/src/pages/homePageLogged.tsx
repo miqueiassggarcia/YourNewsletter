@@ -14,12 +14,16 @@ export function HomePageLogged() {
     }
   }, [navigate])
 
+  function navigateToCreateNewsletter() {
+    navigate("/create-newsletter")
+  }
+  
   return (
     <div className="home-logged-container">
       <div className="new-newsletter-container">
         <h1>Crie uma nova newsletter</h1>
         <p>Crie a sua própria newsletter, definindo seus textos, horário e muito mais!</p>
-        <ConfirmButton type="button">Criar newsletter</ConfirmButton>
+        <ConfirmButton type="button" onClick={navigateToCreateNewsletter}>Criar newsletter</ConfirmButton>
       </div>
       <div className="subscribe-newsletter-container">
         <h1>Se increva na sua newsletter favorita</h1>

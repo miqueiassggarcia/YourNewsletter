@@ -7,7 +7,7 @@ import { useState } from "react"
 import { SideBar } from "./components/SideBar"
 
 function Root() {
-  const [sideBar, setSideBar] = useState(true);
+  const [sideBar, setSideBar] = useState(false);
 
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ function Root() {
           <img src={logo} alt="yournewsletter icon" />
           <span onClick={navigateToHome}>Yournewsletter</span>
         </div>
-        {localStorage.getItem("user") ?
+        {localStorage.getItem("validate") ?
           <div className="menu-items">    
             {
               sideBar ?
