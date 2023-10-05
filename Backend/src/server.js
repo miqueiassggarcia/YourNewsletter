@@ -30,8 +30,7 @@ let corsOptions = {
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true,
-    cookie: {secure: false}
+    saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -39,13 +38,17 @@ app.use(passport.session());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
-app.use(cookieParser('secretcode'))
+app.use(cookieParser());
 
+const ensureAuthenticated = require('./components/auth_middleware.js');
 
 // rotas
 router_register(app, prisma);
 router_login(app, prisma);
 router_newsletter(app, prisma);
+app.get("/user", ensureAuthenticated, (req, res, next) => {
+  res.json({"username": req.user.username});
+})
 auth(app, prisma);
 
 

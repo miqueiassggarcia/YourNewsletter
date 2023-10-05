@@ -15,8 +15,10 @@ module.exports = function (app, prisma) {
         passport.authenticate('local', function(err, user, info, status) {
             if (err) return res.status(401).json({"message": "erro ao autenticar usuário"});
             if (!user) return res.status(404).json({"message": "usuário não cadastrado"});
-            req.user = user;
-            next();
+            req.logIn(user, (err) => {
+                if (err) throw err;
+                next();
+            })
         })(req, res, next);
     }, 
     (req, res) => {
