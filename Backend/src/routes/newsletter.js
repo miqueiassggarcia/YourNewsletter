@@ -1,5 +1,6 @@
-const ensureAuthenticated = require('../components/auth_middleware.js');
+const ensureAuthenticated = require('../components/ensure_authenticated.js');
 const create_newsletter_schema = require('../validation/create_newsletter.js');
+const newsketters_from_user_schema = require('../validation/newsletters_from_user.js');
 
 module.exports = function (app, prisma) {
     app.post('/create_newsletter', ensureAuthenticated,
@@ -9,15 +10,21 @@ module.exports = function (app, prisma) {
         if (error) {
             return res.status(400).json({"message": error.details[0].message});
         } else {
-            return next();
+            next();
         }
     }, async(req, res, next) => {
         try {
-            await prisma.newsletter.create({
+            await prisma.user.update({
+                where: {
+                    username: req.user.username
+                },
                 data: {
-                    username: req.user.username,
-                    name: req.body.name,
-                    description: req.body.description
+                    newsletters: {
+                        create: {
+                            name: req.body.name,
+                            description: req.body.description
+                        }
+                    }
                 }
             });
 
@@ -25,6 +32,35 @@ module.exports = function (app, prisma) {
         } catch (error) {
             console.log(error);
             return res.status(500).json({"message": "Erro ao cadastrar newsletter"});
+        }
+    });
+
+
+    app.get('/newsletters_from_user/:username', (req, res, next) => {
+        const {error, resposta} = newsketters_from_user_schema.validate(req.params.username);
+        if (error) {
+            return res.status(400).json({"message": error.details[0].message});
+        } else {
+            next();
+        }
+    }, async(req, res, next) => {
+        try {
+            let newsletters = [];
+            let n = await prisma.user.findUnique({
+                where: {
+                    username: req.params.username
+                },
+                include: {
+                    newsletters: true
+                }
+            });
+            if (n) {
+                newsletters = n.newsletters;
+            }
+            res.status(200).json(newsletters);
+        } catch (error) {
+            console.log(error);
+            return res.status(500).json({"message": "Erro ao buscar newsletters"});
         }
     })
 }

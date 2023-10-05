@@ -17,7 +17,7 @@ model User {
   first_name String @db.VarChar(255)
   last_name String @db.VarChar(255)
   password String @db.VarChar(255)
-  newsletter NewsLetter?
+  newsletters NewsLetter[]
 }
 
 model EmailConfirmation {
@@ -35,7 +35,7 @@ model EmailConfirmation {
 model NewsLetter {
   id Int @id @default(autoincrement())
   username User @relation(fields: [userUsername], references: [username])
-  userUsername String @unique
+  userUsername String
   name String @db.VarChar(255)
   description String @db.VarChar(255)
 }
