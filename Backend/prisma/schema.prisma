@@ -17,6 +17,7 @@ model User {
   first_name String @db.VarChar(255)
   last_name String @db.VarChar(255)
   password String @db.VarChar(255)
+  newsletter NewsLetter?
 }
 
 model EmailConfirmation {
@@ -29,4 +30,12 @@ model EmailConfirmation {
   token_confirmation String
   token_generate_time DateTime
   token_expiry_time DateTime
+}
+
+model NewsLetter {
+  id Int @id @default(autoincrement())
+  username User @relation(fields: [userUsername], references: [username])
+  userUsername String @unique
+  name String @db.VarChar(255)
+  description String @db.VarChar(255)
 }

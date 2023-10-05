@@ -14,17 +14,25 @@ export function HomePageLogged() {
     }
   }, [navigate])
 
+  function navigateToCreateNewsletter() {
+    navigate("/create-newsletter")
+  }
+
+  function navigateToSeachNewsletter() {
+    navigate("/search-newsletter")
+  }
+  
   return (
     <div className="home-logged-container">
       <div className="new-newsletter-container">
         <h1>Crie uma nova newsletter</h1>
         <p>Crie a sua própria newsletter, definindo seus textos, horário e muito mais!</p>
-        <ConfirmButton type="button">Criar newsletter</ConfirmButton>
+        <ConfirmButton type="button" onClick={navigateToCreateNewsletter} className="button-newsletter-container">Criar newsletter</ConfirmButton>
       </div>
       <div className="subscribe-newsletter-container">
         <h1>Se increva na sua newsletter favorita</h1>
         <p>Procure o que mais lhe agrada e encontre as melhores newsletters para melhorar o seu dia!</p>
-        <ConfirmButton type="button">Procurar agora</ConfirmButton>
+        <ConfirmButton type="button" onClick={navigateToSeachNewsletter} className="button-newsletter-container">Procurar agora</ConfirmButton>
       </div>
     </div>
   );
