@@ -54,7 +54,9 @@ module.exports = function (app, prisma) {
                     newsletters: true
                 }
             });
-            newsletters = n.newsletters;
+            if (n) {
+                newsletters = n.newsletters;
+            }
             res.status(200).json(newsletters);
         } catch (error) {
             console.log(error);
