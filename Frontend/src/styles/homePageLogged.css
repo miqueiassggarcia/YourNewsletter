@@ -47,7 +47,7 @@
   font-weight: bold;
 }
 
-.button-container button:hover {
+.button-newsletter-container:hover {
   color: #0D0106;
   border-color: white;
   background-color: white;

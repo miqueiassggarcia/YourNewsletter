@@ -8,6 +8,7 @@ import "../styles/singUpMobile.css"
 import { FormEvent, useEffect, useState } from "react";
 import api from "../services/api";
 import { validateApelido, validateEmail, validateLastName, validateName, validatePassword } from "../validation/singupFormValidation";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export function SingUpPage() {
   const [apelido, setApelido] = useState("");
@@ -57,6 +58,9 @@ export function SingUpPage() {
         "last_name": lastName,
         "email": email,
         "password": password
+      },
+      {
+        withCredentials: true
       }).then(() => {
         //Caso cadastre
         localStorage.setItem("username", apelido)
@@ -65,7 +69,6 @@ export function SingUpPage() {
         localStorage.setItem("email", email)
         navigate("/authentication/email-authentication")
       }).catch((error) => {
-        //Caso usuário já exista
         if(error.response.status === 409) {
           setShowText(true);
         }
@@ -75,12 +78,21 @@ export function SingUpPage() {
     }
   }
 
+  function handleBackHistoryNavigation() {
+    window.history.back();
+  }
+
   return (
       <div className="float-div">
         <div className='container-text'>
-          <h1>Bem vindo de volta!</h1>
-          <span>Faça login aqui e continue a sua newsletter</span>
-          <button type='button' onClick={handleLogin}>Login</button>
+          <div className="back-button-container">
+            <AiOutlineArrowLeft size={30} className="back-button" onClick={handleBackHistoryNavigation}/>
+          </div>
+          <div className="container-text-main">
+            <h1>Bem vindo de volta!</h1>
+            <span>Faça login aqui e continue a sua newsletter</span>
+            <button type='button' onClick={handleLogin}>Login</button>
+          </div>
         </div>
         <form className='login-form' onSubmit={handleSingup}>
           <h1>Cadastre-se</h1>

@@ -5,26 +5,35 @@ import { FaUserCircle } from "react-icons/fa"
 
 import "../styles/sidebar.css"
 import api from "../services/api"
+import { useNavigate } from "react-router-dom"
 
 type activeProps = {
   active: () => void
 }
 
 export function SideBar({ active }: activeProps) {
+  const navigate = useNavigate();
+
   async function handleLogout() {
-    await api.post("/logout")
+    await api.get("/logout")
     .then(() => {
       localStorage.removeItem("username")
       localStorage.removeItem("first_name")
       localStorage.removeItem("last_name")
       localStorage.removeItem("email")
       localStorage.removeItem("validate")
+      active()
+      navigate("/")
     })
     .catch((error) => {
       if(error.response.status === 401) {
         alert("Erro ao fazer logout, por favor, tente novamente")
       }
     })
+  }
+
+  function navigateToHome() {
+    navigate("/home")
   }
 
   return (
@@ -37,7 +46,7 @@ export function SideBar({ active }: activeProps) {
           </div>
           <AiFillCloseCircle onClick={active} className="close-button" size={25}/>
         </div>
-        <div className="items-elements">
+        <div className="items-elements" onClick={navigateToHome}>
           <span>Home</span>
           <AiFillHome className="sidebar-items-icons" size={25}/>
         </div>
