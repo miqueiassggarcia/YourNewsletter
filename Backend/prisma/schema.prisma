@@ -12,17 +12,15 @@ datasource db {
 
 
 model User {
-  username  String @id @db.VarChar(255)
-  email String @db.VarChar(255) @unique
+  id  Int @id @default(autoincrement())
   first_name String @db.VarChar(255)
   last_name String @db.VarChar(255)
+  email String @db.VarChar(255)
   password String @db.VarChar(255)
-  newsletters NewsLetter[]
 }
 
 model EmailConfirmation {
-  username String @id @db.VarChar(255)
-  email String @db.VarChar(255) @unique
+  email String @id @db.VarChar(255)
   first_name String @db.VarChar(255)
   last_name String @db.VarChar(255)
   password String @db.VarChar(255)
@@ -30,12 +28,4 @@ model EmailConfirmation {
   token_confirmation String
   token_generate_time DateTime
   token_expiry_time DateTime
-}
-
-model NewsLetter {
-  id Int @id @default(autoincrement())
-  username User @relation(fields: [userUsername], references: [username])
-  userUsername String
-  name String @db.VarChar(255)
-  description String @db.VarChar(255)
 }

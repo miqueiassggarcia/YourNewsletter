@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./styles/global.css"
-import Root from './Root';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -10,15 +10,11 @@ import { HomePage } from './pages/homePage';
 import { SingUpPage } from './pages/singUpPage';
 import { Error404Page } from './pages/error404Page';
 import { SingInPage } from './pages/singInPage';
-import AuthenticationRoot from './pages/authenticationRoot';
-import { HomePageLogged } from './pages/homePageLogged';
-import { CreateNewsletterPage } from './pages/createNewsletterPage';
-import { SearchNewsletterPage } from './pages/searchNewsletterPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <App />,
     errorElement: <Error404Page />,
     children: [
       {
@@ -26,43 +22,25 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: "/home",
-        element: <HomePageLogged />
+        path: "/singup",
+        element: <SingUpPage />,
       },
       {
-        path: "/create-newsletter",
-        element: <CreateNewsletterPage />
+        path: "/singin",
+        element: <SingInPage />,
       },
       {
-        path: "/search-newsletter",
-        element: <SearchNewsletterPage />
+        path: "/email-authentication",
+        element: <EmailAuthentication />
       }
     ]
-  },
-  {
-  path: "/authentication",
-  element: <AuthenticationRoot />,
-  errorElement: <Error404Page />,
-  children: [
-    {
-      path: "singup",
-      element: <SingUpPage />,
-    },
-    {
-      path: "singin",
-      element: <SingInPage />,
-    },
-    {
-      path: "email-authentication",
-      element: <EmailAuthentication />
-    }
-  ]}
+  }
 ])
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
-  );
-  root.render(
+);
+root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
