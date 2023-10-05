@@ -27,12 +27,12 @@ export function HomePageLogged() {
       <div className="new-newsletter-container">
         <h1>Crie uma nova newsletter</h1>
         <p>Crie a sua própria newsletter, definindo seus textos, horário e muito mais!</p>
-        <ConfirmButton type="button" onClick={navigateToCreateNewsletter}>Criar newsletter</ConfirmButton>
+        <ConfirmButton type="button" onClick={navigateToCreateNewsletter} className="button-newsletter-container">Criar newsletter</ConfirmButton>
       </div>
       <div className="subscribe-newsletter-container">
         <h1>Se increva na sua newsletter favorita</h1>
         <p>Procure o que mais lhe agrada e encontre as melhores newsletters para melhorar o seu dia!</p>
-        <ConfirmButton type="button" onClick={navigateToSeachNewsletter}>Procurar agora</ConfirmButton>
+        <ConfirmButton type="button" onClick={navigateToSeachNewsletter} className="button-newsletter-container">Procurar agora</ConfirmButton>
       </div>
     </div>
   );

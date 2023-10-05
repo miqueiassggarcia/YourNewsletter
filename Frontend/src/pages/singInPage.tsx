@@ -6,6 +6,8 @@ import { Input } from "../components/Input";
 import { FormEvent, useEffect, useState } from "react";
 import api from "../services/api";
 
+import { AiOutlineArrowLeft } from "react-icons/ai";
+
 export function SingInPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -61,12 +63,21 @@ export function SingInPage() {
     })  
   }
 
+  function handleBackHistoryNavigation() {
+    window.history.back();
+  }
+
   return (
       <div className="float-div small">
         <div className='container-text'>
-          <h1>Ainda não tem uma conta?</h1>
-          <span>Cadastre-se para criar a sua própria newsletter</span>
-          <button type='button' onClick={handleLogin}>Cadastre-se</button>
+          <div className="back-button-container">
+            <AiOutlineArrowLeft size={30} className="back-button" onClick={handleBackHistoryNavigation}/>
+          </div>
+          <div className="container-text-main">
+            <h1>Ainda não tem uma conta?</h1>
+            <span>Cadastre-se para criar a sua própria newsletter</span>
+            <button type='button' onClick={handleLogin}>Cadastre-se</button>
+          </div>
         </div>
         <form className='login-form' onSubmit={handleSingup}>
           <h1>Login</h1>

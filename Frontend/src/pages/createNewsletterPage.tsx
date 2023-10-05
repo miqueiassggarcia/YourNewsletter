@@ -1,11 +1,29 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import "../styles/createNewsletter.css"
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 export function CreateNewsletterPage() {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const validate = localStorage.getItem("validate");
+    if(!validate) {
+      navigate("/")
+    }
+  }, [navigate])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDialogOpen(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [dialogOpen])
 
   function handleCreateNewsletter(event: FormEvent) {
     event.preventDefault();
@@ -17,7 +35,7 @@ export function CreateNewsletterPage() {
     {
       withCredentials: true
     }
-    ).then((response) => {
+    ).then(() => {
       setDialogOpen(true);
     }).catch((error) => {
       alert(error.response.data.message)
@@ -54,7 +72,7 @@ export function CreateNewsletterPage() {
       </form>
       {dialogOpen &&
           <dialog className="dialog">
-            <h1>Email confirmado</h1>
+            <h1>Newsletter criada</h1>
           </dialog>
         }
     </div>
