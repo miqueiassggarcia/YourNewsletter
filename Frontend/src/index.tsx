@@ -13,6 +13,7 @@ import { SingInPage } from './pages/singInPage';
 import AuthenticationRoot from './pages/authenticationRoot';
 import { HomePageLogged } from './pages/homePageLogged';
 import { CreateNewsletterPage } from './pages/createNewsletterPage';
+import { SearchNewsletterPage } from './pages/searchNewsletterPage';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/create-newsletter",
         element: <CreateNewsletterPage />
+      },
+      {
+        path: "/search-newsletter",
+        element: <SearchNewsletterPage />
       }
     ]
   },

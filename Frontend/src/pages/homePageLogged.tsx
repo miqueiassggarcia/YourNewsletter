@@ -17,6 +17,10 @@ export function HomePageLogged() {
   function navigateToCreateNewsletter() {
     navigate("/create-newsletter")
   }
+
+  function navigateToSeachNewsletter() {
+    navigate("/search-newsletter")
+  }
   
   return (
     <div className="home-logged-container">
@@ -28,7 +32,7 @@ export function HomePageLogged() {
       <div className="subscribe-newsletter-container">
         <h1>Se increva na sua newsletter favorita</h1>
         <p>Procure o que mais lhe agrada e encontre as melhores newsletters para melhorar o seu dia!</p>
-        <ConfirmButton type="button">Procurar agora</ConfirmButton>
+        <ConfirmButton type="button" onClick={navigateToSeachNewsletter}>Procurar agora</ConfirmButton>
       </div>
     </div>
   );
