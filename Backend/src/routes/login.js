@@ -16,7 +16,7 @@ module.exports = function (app, prisma) {
             if (err) return res.status(401).json({"message": "erro ao autenticar usuário"});
             if (!user) return res.status(404).json({"message": "usuário não cadastrado"});
             req.logIn(user, (err) => {
-                if (err) throw err;
+                if (err) return res.status(401).json({"message": "erro ao autenticar usuário"});
                 next();
             })
         })(req, res, next);

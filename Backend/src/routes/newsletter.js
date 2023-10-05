@@ -13,9 +13,9 @@ module.exports = function (app, prisma) {
         }
     }, async(req, res, next) => {
         try {
-            await prisma.newsletter.create({
+            await prisma.newsLetter.create({
                 data: {
-                    username: req.user.username,
+                    username: { connect: {username: req.user.username} },
                     name: req.body.name,
                     description: req.body.description
                 }

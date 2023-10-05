@@ -19,12 +19,15 @@ let whitelist = ['http://localhost:3000', 'http://10.0.0.124:3000']
 let corsOptions = {
   credentials: true,
   origin: function(origin, callback) {
+    callback(null, true);
+    return;
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
     }
-  }
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
 }
 
 app.use(session({
