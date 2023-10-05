@@ -4,6 +4,7 @@ const validationSchema = require("../validation/confirm_user");
 describe("Validation Schema", () => {
     it("deve passar sem erros para um objeto válido", () => {
         const validObject = {
+            username: "JhonDoe",
             email: "example@example.com",
             token_confirmation: "abc123",
         };
@@ -15,6 +16,7 @@ describe("Validation Schema", () => {
 
     it("deve retornar um erro para um objeto sem propriedade email", () => {
         const invalidObject = {
+            username: "JhonDoe",
             token_confirmation: "abc123",
         };
 
@@ -25,6 +27,7 @@ describe("Validation Schema", () => {
 
     it("deve retornar um erro para um objeto com email inválido", () => {
         const invalidObject = {
+            username: "JhonDoe",
             email: "invalid-email",
             token_confirmation: "abc123",
         };
@@ -36,6 +39,7 @@ describe("Validation Schema", () => {
 
     it("deve retornar um erro para um objeto sem propriedade token_confirmation", () => {
         const invalidObject = {
+            username: "JhonDoe",
             email: "example@example.com",
         };
 
