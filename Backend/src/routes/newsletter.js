@@ -36,8 +36,8 @@ module.exports = function (app, prisma) {
     });
 
 
-    app.get('/newsletters_from_user', (req, res, next) => {
-        const {error, resposta} = newsketters_from_user_schema.validate(req.body);
+    app.get('/newsletters_from_user/:username', (req, res, next) => {
+        const {error, resposta} = newsketters_from_user_schema.validate(req.params.username);
         if (error) {
             return res.status(400).json({"message": error.details[0].message});
         } else {
@@ -48,7 +48,7 @@ module.exports = function (app, prisma) {
             let newsletters = [];
             let n = await prisma.user.findUnique({
                 where: {
-                    username: req.body.username
+                    username: req.params.username
                 },
                 include: {
                     newsletters: true
