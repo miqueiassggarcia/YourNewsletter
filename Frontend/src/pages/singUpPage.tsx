@@ -69,8 +69,6 @@ export function SingUpPage() {
         localStorage.setItem("email", email)
         navigate("/authentication/email-authentication")
       }).catch((error) => {
-        alert(error)
-        // Caso usuário já exista
         if(error.response.status === 409) {
           setShowText(true);
         }

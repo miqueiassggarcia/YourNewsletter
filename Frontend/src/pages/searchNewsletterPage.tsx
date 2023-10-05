@@ -11,13 +11,13 @@ export function SearchNewsletterPage() {
   async function seachForNewsletters(event: FormEvent) {
     event.preventDefault();
 
-    await api.post("newsletters_from_user", {
-      "username": search
-    }).then((response) => {
-      setNewsletters(response.data);
-    }).catch((error) => {
-      alert(error);
-    })
+    await api.get(`newsletters_from_user/${search}`)
+      .then((response) => {
+        setNewsletters(response.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
   }
 
   return (
