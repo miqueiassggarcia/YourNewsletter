@@ -12,6 +12,8 @@ const router_login = require('./routes/login.js');
 const router_newsletter = require('./routes/newsletter.js');
 const auth = require('./auth.js');
 
+const http_status = require('./components/http_status.js');
+
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
@@ -44,10 +46,10 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 // rotas
-router_register(app, prisma);
-router_login(app, prisma);
-router_newsletter(app, prisma);
-auth(app, prisma);
+router_register(app, prisma, http_status);
+router_login(app, prisma, http_status);
+router_newsletter(app, prisma, http_status);
+auth(app, prisma, http_status);
 
 
 
