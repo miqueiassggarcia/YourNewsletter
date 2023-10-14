@@ -3,6 +3,7 @@ const create_newsletter_schema = require('../validation/create_newsletter.js');
 const newsketters_from_user_schema = require('../validation/newsletters_from_user.js');
 const update_newsletter_name_schema = require('../validation/update_newsletter_name.js');
 const update_newsletter_description_schema = require('../validation/update_newsletter_description.js');
+const delete_newsletter_schema = require('../validation/delete_newsletter.js');
 
 module.exports = function (app, prisma, http_status) {
     app.post('/create_newsletter', ensureAuthenticated,
@@ -150,7 +151,7 @@ module.exports = function (app, prisma, http_status) {
             const {code, message} = http_status.get_database_error();
             return res.status(code).json({"message": message});
         }
-    })
+    });
 
 
     app.put('/update_newsletter_description', ensureAuthenticated,
@@ -209,5 +210,59 @@ module.exports = function (app, prisma, http_status) {
             const {code, message} = http_status.get_database_error();
             return res.status(code).json({"message": message});
         }
-    })
+    });
+
+
+    app.delete("/delete_newsletter", ensureAuthenticated,
+    (req, res, next) => {
+        const {error} = delete_newsletter_schema.validate(req.body);
+        if (error) {
+            return res.status(400).json({"message": error.details[0].message});
+        } else {
+            next();
+        }
+    }, async(req, res, next) => {
+        try {
+            let newsletter = await prisma.user.findUnique({
+                where: {
+                    username: req.user.username
+                },
+                select: {
+                    newsletters: {
+                        where: {
+                            id: req.body.id
+                        }
+                    }
+                }
+            });
+
+            if(newsletter.newsletters.length > 0) {
+                await prisma.user.update({
+                    where: {
+                        username: req.user.username
+                    },
+                    data: {
+                        newsletters: {
+                            deleteMany: {
+                                id: req.body.id
+                            }
+                        }
+                    },
+                    include: {
+                        newsletters: true
+                    }
+                });
+            } else {
+                const {code, message} = http_status.get_user_not_have_this_newsletter();
+                return res.status(code).json({"message": message});
+            }
+
+            const {code, message} = http_status.get_newsletter_deleted();
+            return res.status(code).json({"message": message});
+        } catch(error) {
+            console.log(error);
+            const {code, message} = http_status.get_database_error();
+            return res.status(code).json({"message": message});
+        }
+    });
 }

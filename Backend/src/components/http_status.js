@@ -18,6 +18,10 @@ class HttpStatus {
     get_user_not_have_this_newsletter() {
         return this.create_status_return(StatusCodes.FORBIDDEN, "Usuário não possui essa newsletter");
     }
+
+    get_newsletter_deleted() {
+        return this.create_status_return(StatusCodes.OK, "Newsletter deletada com sucesso");
+    }
 }
 
 
