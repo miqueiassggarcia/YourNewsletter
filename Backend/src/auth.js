@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local');
 
 const bcrypt = require('bcrypt');
 
-module.exports = function (app, prisma) {
+module.exports = function (app, prisma, http_status) {
     passport.use(new LocalStrategy(async(username, password, done) => {
         try {
             const user = await prisma.user.findUnique({
