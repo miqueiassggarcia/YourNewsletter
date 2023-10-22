@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from "react";
 
-import "../styles/confirmButton.css"
+import "../styles/components/confirmButton.css"
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 

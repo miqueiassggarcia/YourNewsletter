@@ -1,8 +1,8 @@
 import { BiSearchAlt } from "react-icons/bi"
-import "../styles/searchNewsletter.css"
+import "../../styles/newsletter/searchNewsletter.css"
 import { FormEvent, useState } from "react"
-import api from "../services/api";
-import NewsletterItem, { newsletterProps } from "../components/NewsletterItem";
+import api from "../../services/api";
+import NewsletterItem, { newsletterProps } from "../../components/NewsletterItem";
 
 export function SearchNewsletterPage() {
   const [search, setSearch] = useState("");
@@ -11,7 +11,9 @@ export function SearchNewsletterPage() {
   async function seachForNewsletters(event: FormEvent) {
     event.preventDefault();
 
-    await api.get(`newsletters_from_user/${search}`)
+    await api.get(`/newsletters_from_user/${search}`, {
+      withCredentials: true,
+    })
       .then((response) => {
         setNewsletters(response.data);
       })

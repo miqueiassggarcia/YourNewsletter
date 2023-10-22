@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
-import "../styles/createNewsletter.css"
-import api from "../services/api";
+import "../../styles/newsletter/createNewsletter.css"
+import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
 export function CreateNewsletterPage() {

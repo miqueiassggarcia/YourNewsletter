@@ -1,38 +1,10 @@
-.container-search-newsletter {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-}
-
-.wrapper-input-search-newsletter {
-  border: 1px white solid;
-  border-radius: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 50%;
-  height: 10%;
-  margin-top: 1rem;
-  color: white;
-}
-
-.input-search-newsletter {
-  border: none;
-  width: 90%;
-  margin: 0;
-  font-size: 100%;
-  color: white;
-}
-
 .result-items-container-search-newsletter {
   width: 90%;
   padding: 1rem;
   border-radius: 1rem;
-  margin-top: 1rem;
+  margin-bottom: 1rem;
   background-color: #555358;
+  overflow-wrap: break-word;
 }
 
 .header-search-newsletter {

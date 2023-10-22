@@ -1,0 +1,24 @@
+import { useEffect, useState } from "react";
+import NewsletterItem, { newsletterProps } from "../../components/NewsletterItem";
+import api from "../../services/api";
+
+import "../../styles/newsletter/userNewsletters.css"
+
+export function UserNewslettersPage() {
+  const [newsletters, setNewsletters] = useState<newsletterProps[]>();
+
+  async function getUserNewsletters() {
+    const newsletters = await api.get("get_my_newsletters");
+    setNewsletters(newsletters.data);
+  }
+
+  useEffect(() => {
+    getUserNewsletters();
+  }, [])
+
+  return (
+    <div className="container-user-newsletters">
+      
+    </div>
+  )
+}

@@ -1,5 +1,7 @@
 import { GoCrossReference } from "react-icons/go";
 
+import "../styles/components/newsletterItem.css"
+
 export interface newsletterProps {
   id: number;
   userName: string;
