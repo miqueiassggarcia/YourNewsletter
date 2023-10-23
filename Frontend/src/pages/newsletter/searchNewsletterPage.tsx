@@ -33,7 +33,7 @@ export function SearchNewsletterPage() {
         <BiSearchAlt size={30} type="submit"/>
       </form>
       {newsletters.map((newsletter) => {
-        return <NewsletterItem key={newsletter.id} newsletter={newsletter}/>
+        return <NewsletterItem key={newsletter.id} newsletter={newsletter} userItem={false} />
       })}
     </div>
   )

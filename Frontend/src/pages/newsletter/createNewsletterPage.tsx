@@ -71,10 +71,10 @@ export function CreateNewsletterPage() {
         <button type="submit" className="button-new-newsletter">Criar</button>
       </form>
       {dialogOpen &&
-          <dialog className="dialog">
-            <h1>Newsletter criada</h1>
-          </dialog>
-        }
+        <dialog className="dialog">
+          <h1>Newsletter criada</h1>
+        </dialog>
+      }
     </div>
   );
 }
