@@ -16,7 +16,7 @@ export interface newsletterProps {
 interface newsletterItemProps {
   newsletter: newsletterProps;
   userItem: boolean;
-  callbackUpdate?: (newsletterId: number) => void;
+  callbackUpdate?: () => void;
 }
 
 const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, userItem, callbackUpdate}) => {
@@ -32,7 +32,7 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, userItem, ca
     })
     .then(() => {
       closeDeleteDialog();
-      callbackUpdate!(newsletter.id);
+      callbackUpdate!();
     })
     .catch((error) => {
       console.log(error);
@@ -44,33 +44,31 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, userItem, ca
 
     if(name !== newsletter.name) {
       api.put("/update_newsletter_name", {
-        data: {
-          "id": newsletter.id,
-          "new_name": name
-        },
+        "id": newsletter.id,
+        "new_name": name
+      },
+      {
         withCredentials: true
-      })
-      .then(() => {
-        alert("nome alterado");
-      })
-      .catch((error) => {
-        alert(error);
+      }
+      ).then(() => {
+        callbackUpdate!();
+      }).catch((error) => {
+        alert(error)
       })
     }
-
+    
     if(description !== newsletter.description) {
       api.put("/update_newsletter_description", {
-        data: {
-          "id": newsletter.id,
-          "new_description": description
-        },
+        "id": newsletter.id,
+        "new_description": description
+      },
+      {
         withCredentials: true
-      })
-      .then(() => {
-        alert("descrição alterada");
-      })
-      .catch((error) => {
-        alert(error);
+      }
+      ).then(() => {
+        callbackUpdate!();
+      }).catch((error) => {
+        alert(error)
       })
     }
 

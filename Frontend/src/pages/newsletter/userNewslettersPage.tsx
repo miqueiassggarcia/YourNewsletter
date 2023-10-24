@@ -14,10 +14,6 @@ export function UserNewslettersPage() {
     setNewsletters(newsletters.data);
   }
 
-  function updateNewsletterList (newsletterId: number): void {
-    setNewsletters(newsletters.filter((value) => value.id !== newsletterId));
-  }
-
   useEffect(() => {
     getUserNewsletters();
   }, [])
@@ -25,7 +21,7 @@ export function UserNewslettersPage() {
   return (
     <div className="container-user-newsletters">
       {newsletters.map((newsletter) => {
-        return <NewsletterItem key={newsletter.id} newsletter={newsletter} userItem={true} callbackUpdate={updateNewsletterList} />
+        return <NewsletterItem key={newsletter.id} newsletter={newsletter} userItem={true} callbackUpdate={getUserNewsletters} />
       })}
     </div>
   )
