@@ -56,4 +56,4 @@ auth(app, prisma, http_status);
 const server = app.listen(process.env.PORT, () => {
     console.log("servidor rodando na porta " + process.env.PORT.toString());
 })
-module.exports = { app, server };
+module.exports = { app, server, prisma };

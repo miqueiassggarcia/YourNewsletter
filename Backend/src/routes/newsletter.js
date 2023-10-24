@@ -5,6 +5,7 @@ const update_newsletter_name_schema = require('../validation/update_newsletter_n
 const update_newsletter_description_schema = require('../validation/update_newsletter_description.js');
 const delete_newsletter_schema = require('../validation/delete_newsletter.js');
 
+
 module.exports = function (app, prisma, http_status) {
     app.post('/create_newsletter', ensureAuthenticated,
     (req, res, next) => {
