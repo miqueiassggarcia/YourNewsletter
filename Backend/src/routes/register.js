@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt');
 const register_user_schema = require("../validation/register_user.js");
 const confirm_user_schema = require("../validation/confirm_user.js");
 
-module.exports = function (app, prisma) {
+module.exports = function (app, prisma, http_status) {
     app.post("/register_user", async(req, res, next) => {
         // verifica se as entradas estão corretas
         const {error, resposta} = register_user_schema.validate(req.body);
