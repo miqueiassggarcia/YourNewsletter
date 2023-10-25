@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
-import "../styles/createNewsletter.css"
-import api from "../services/api";
+import "../../styles/newsletter/createNewsletter.css"
+import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
 export function CreateNewsletterPage() {
@@ -71,10 +71,10 @@ export function CreateNewsletterPage() {
         <button type="submit" className="button-new-newsletter">Criar</button>
       </form>
       {dialogOpen &&
-          <dialog className="dialog">
-            <h1>Newsletter criada</h1>
-          </dialog>
-        }
+        <dialog className="dialog">
+          <h1>Newsletter criada</h1>
+        </dialog>
+      }
     </div>
   );
 }

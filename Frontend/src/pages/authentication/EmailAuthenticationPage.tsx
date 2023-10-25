@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { ConfirmButton } from "../components/ConfirmButton";
-import { Input } from "../components/Input";
-import "../styles/emailAuthentication.css";
+import { ConfirmButton } from "../../components/ConfirmButton";
+import { Input } from "../../components/Input";
+import "../../styles/authentication/emailAuthentication.css";
 import { FormEvent, useEffect, useState } from "react";
-import "../styles/dialog.css"
-import api from "../services/api";
+import "../../styles/dialog.css"
+import api from "../../services/api";
 
 export function EmailAuthentication() {
   const delay = (time: number) => new Promise(

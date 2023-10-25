@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ConfirmButton } from "../components/ConfirmButton";
-import "../styles/homePageLogged.css"
+import { ConfirmButton } from "../../components/ConfirmButton";
+import "../../styles/home/homePageLogged.css"
 
 export function HomePageLogged() {
   const navigate = useNavigate();

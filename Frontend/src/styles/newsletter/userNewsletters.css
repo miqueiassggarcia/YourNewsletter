@@ -1,0 +1,140 @@
+.container-user-newsletters {
+  min-height: 78vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.delete-newsletter-dialog {
+  width: 40vw;
+  height: 35vh;
+  max-width: 100%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: white;
+  padding: 2em;
+  border-radius: .6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.delete-newsletter-dialog-content {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.delete-newsletter-dialog-buttons {
+  display: flex;
+  height: 100%;
+  width: 80%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.delete-newsletter-dialog h1 {
+  color: black;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.delete-button-newsletter-dialog {
+  border-color: red;
+  color: red;
+  font-weight: bold;
+  &:hover, &:focus, &:active {
+    color: white;
+    background-color: red;
+  }
+}
+
+.cancel-button-newsletter-dialog {
+  border-color: green;
+  color: green;
+  font-weight: bold;
+  &:hover, &:focus, &:active {
+    color: white;
+    background-color: green;
+  }
+}
+
+
+.edit-newsletter-dialog {
+  width: 40vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: white;
+  padding: 2em;
+  border-radius: .6em;
+  border: none;
+}
+
+.form-edit-newsletter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.label-edit-newsletter {
+  margin-top: 3%;
+  font-size: 1rem;
+}
+
+.name-edit-newsletter {
+  width: 80%;
+  margin: 0;
+  margin-top: 1%;
+  background-color: white;
+}
+
+.textarea-edit-newsletter {
+  margin-top: 1%;
+  width: 90%;
+  background: white;
+  text-align: center;
+	outline: none;
+	color: black;
+	font-size: 70%;
+	padding: 1em;
+	border-radius: 2em;
+	letter-spacing: 0.01em;
+  resize: none;
+  border: 2px solid black;
+  border-bottom: 4px solid black;
+}
+
+.button-edit-newsletter {
+  margin: 0;
+  margin-top: .8rem;
+  width: 25%;
+  cursor: pointer;
+}
+
+.button-new-newsletter:hover {
+  background-color: white;
+  color: black;
+}
+
+.close-edit-newsletter-button {
+  display: flex;
+  align-self: flex-end;
+  cursor: pointer;
+}
