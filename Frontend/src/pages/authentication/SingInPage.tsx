@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom"
 
-import { ConfirmButton } from "../components/ConfirmButton";
-import { Input } from "../components/Input";
+import { ConfirmButton } from "../../components/ConfirmButton";
+import { Input } from "../../components/Input";
 
 import { FormEvent, useEffect, useState } from "react";
-import api from "../services/api";
+import api from "../../services/api";
 
 import { AiOutlineArrowLeft } from "react-icons/ai";
 

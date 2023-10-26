@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom"
 
-import { ConfirmButton } from "../components/ConfirmButton";
-import { Input } from "../components/Input";
+import { ConfirmButton } from "../../components/ConfirmButton";
+import { Input } from "../../components/Input";
 
-import "../styles/singUp.css"
-import "../styles/singUpMobile.css"
+import "../../styles/authentication/singUp.css"
+import "../../styles/authentication/singUpMobile.css"
 import { FormEvent, useEffect, useState } from "react";
-import api from "../services/api";
-import { validateApelido, validateEmail, validateLastName, validateName, validatePassword } from "../validation/singupFormValidation";
+import api from "../../services/api";
+import { validateApelido, validateEmail, validateLastName, validateName, validatePassword } from "../../validation/singupFormValidation";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 
 export function SingUpPage() {
