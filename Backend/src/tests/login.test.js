@@ -18,8 +18,8 @@ describe("Testar rota de login", () =>{
     })
     it("Deve retornar 200 para autenticação bem-sucedida", async () => {
         const res = await request(app).post("/login").send({
-            "username": "TESTEEEEE",
-            "password": "TESTEEEEE",
+            "username": "noberto",
+            "password": "Teste123!",
         });
         expect(res.statusCode).toBe(200);
         expect(res.body).toHaveProperty("username");
@@ -27,6 +27,14 @@ describe("Testar rota de login", () =>{
         expect(res.body).toHaveProperty("last_name");
         expect(res.body).toHaveProperty("email");
         });
+    // it("Deve retornar 401 para autenticação falha", async () => {
+    //     const res = await request(app).post("/login").send({
+    //         "username": "noberto",
+    //         "password": "senha_incorreta", 
+    //         });
+    //     expect(res.statusCode).toBe(401);
+    //     expect(res.body).toEqual({ "message": "erro ao autenticar usuário" });
+    //     });
 });
 
 describe("Testar rota de logout", () => {

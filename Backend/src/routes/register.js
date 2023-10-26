@@ -24,7 +24,6 @@ module.exports = function (app, prisma, http_status) {
                     username: req.body.username
                 }
             });
-
             if (result) {
                 return res.status(409).json({"message": "Usuário já cadastrado"});
             } else {
@@ -42,7 +41,6 @@ module.exports = function (app, prisma, http_status) {
                     email: req.body.email
                 }
             });
-        
             if (result) {
                 return res.status(409).json({"message": "Email já cadastrado"});
             } else {
@@ -52,7 +50,6 @@ module.exports = function (app, prisma, http_status) {
             console.log(error);
             return res.status(500).json({"message": "Erro ao acessar banco de dados"});
         }
-
     }, async(req, res) => {
         // cria usuário temporário (ou atualiza caso já exista) na tabela EmailConfirmation
         let random_token = randToken.generate(6, process.env.CONFIRMATION_TOKEN_DICTIONARY);
@@ -85,7 +82,6 @@ module.exports = function (app, prisma, http_status) {
                         token_expiry_time: expiry_time
                     }
                 })
-    
             } else {
                 await prisma.emailConfirmation.create({
                     data: {
@@ -101,15 +97,12 @@ module.exports = function (app, prisma, http_status) {
                     }
                 })
             }
-    
-    
             let email_options = {
                 from: process.env.EMAIL_USER,
                 to: req.body.email,
                 subject: "email confirmation",
                 text: random_token
             }
-    
             sendEmail(email_options);
     
             return res.status(200).json({"message": "Usuário esperando confirmação"});
@@ -117,10 +110,7 @@ module.exports = function (app, prisma, http_status) {
             console.log(erro);
             return res.status(500).json({"message": "Erro ao cadastrar usuário"});
         }
-    
     });
-    
-    
     app.post("/confirm_user", async (req, res, next) => {
         // verifica se os campos são válidos
         const {error, resposta} = confirm_user_schema.validate(req.body);
@@ -137,7 +127,6 @@ module.exports = function (app, prisma, http_status) {
                     username: req.body.username
                 }
             });
-        
             if (!email_confirmation) {
                 return res.status(404).json({"message": "Email não cadastrado"});
             } else {
@@ -148,15 +137,12 @@ module.exports = function (app, prisma, http_status) {
             console.log(erro);
             return res.status(500).json({"message": "Erro ao acessar banco de dados"});
         }
-    
     }, async (req, res, next) => {
         // se são iguais, verifica se o token já se expirou ou se já foi confirmado
         // verifica se já foi confirmado
         if (req.user_email_confirmation.token_confirmed) {
             return res.status(409).json({"message": "Usuário já confirmado"});
         }
-    
-    
         // verifica se o token já se expirou
         let current_date = new Date();
         if (time.is_late(current_date, req.user_email_confirmation.token_expiry_time)) {
@@ -167,9 +153,7 @@ module.exports = function (app, prisma, http_status) {
         if (!bcrypt.compareSync(req.body.token_confirmation.toString(), req.user_email_confirmation.token_confirmation.toString())) {
             return res.status(401).json({"message": "Tokens não coincidem"});
         }
-    
         next();
-    
     }, async (req, res) => {
         // tokens tudo nos conformes, cadastra usuário
         try {
@@ -182,7 +166,6 @@ module.exports = function (app, prisma, http_status) {
                     password: req.user_email_confirmation.password
                 }
             });
-    
             await prisma.emailConfirmation.update({
                 where: {
                     username: req.user_email_confirmation.username
@@ -192,12 +175,10 @@ module.exports = function (app, prisma, http_status) {
                     password: ""
                 }
             })
-    
             return res.status(200).json({"message": "Email de usuário validado"});
         } catch(erro) {
             console.log(erro);
             return res.status(500).json({"message": "Erro ao confirmar email de usuário"});
         }
     })
-    
 }

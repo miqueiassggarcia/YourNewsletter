@@ -1,63 +1,60 @@
-const {app, server} = require("../server");
-const prisma = require("../server");
+const {app, server, prisma} = require("../server");
 const request = require("supertest");
-const jwt = require('jsonwebtoken');
-// const randToken = require('rand-token');
 
-// const newSecretKey = randToken.generate(16);
+// function simulateAuthentication(req, res, next) {
+//     req.user = {
+//         username: 'noberto',
+//         // Outras informações do usuário que você deseja simular
+//     };
+//     next();
+// }
 
-// let authenticatedUser;
+// let authToken; 
 
 // beforeAll(async () => {
-//   // Realize a autenticação antes de iniciar os testes.
-//     authenticatedUser = await request(app)
-//     .post('/login') // Substitua pela rota real de login da sua aplicação
-//     .send({
-//         "username": "TESTEEEEE",
-//         "password": "TESTEEEEE",
+//     const existingUser = await prisma.user.findFirst({
+//     where: {
+//         "username": 'noberto'
+//     }
+// });
+//     if (existingUser) {
+//     const loginResponse = await request(app).post('/login')
+//         .send({
+//         "username": "noberto",
+//         "password": 'Teste123'
 //     });
+//     authToken = loginResponse.body.token;
+//     } else {
+//     console.error('Usuário não encontrado no banco de dados.');
+//     }
 // });
 
-
-// const user = {
-//     "username": "TESTEEEEE",
-//     "first_name": "TESTEEEEE",
-//     "last_name": "TESTEEEEE",
-//     "email": "TESTEEEEE@GMAIL.COM",
-//     "password": "TESTEEEEE"
-// };
-
-// // Função para gerar um token JWT válido para um usuário
-// function generateAuthToken(user) {
-//     const secretKey = "TESTEEEEE"; // Use a mesma chave secreta que sua aplicação real
-//     const token = jwt.sign({ user}, secretKey, { expiresIn: '1h' }); // O token expira em 1 hora
-//     return token;
-//     }
-//     const authenticatedUser = {
-//         username: "TESTEEEEE",
-//     };
-// const authToken = generateAuthToken(authenticatedUser.user);
-
 describe("Testar rota de newsletter", () =>{
+    // beforeAll(() => {
+    //     app.use(simulateAuthentication);
+    // });
     it("Deve retornar 401 para usuario não logado", async()=>{
         const res = await request(app).post("/create_newsletter").send({});
         expect(res.statusCode).toBe(401);
     })
-
-    // it('Deve retornar 200 para usuário autenticado e dados corretos', async () => {
-    //     const data = {
-    //         name: 'Nome da Newsletter',
-    //         description: 'Descrição da Newsletter',
-    //     };
-
-    //     const token = authenticatedUser.body.token;
-
-    //     const res = await request(app)
-    //         .post('/create_newsletter')
-    //         .set('Authorization', `Bearer ${token}`) // Adicione um cabeçalho de autenticação válido
-    //         .send(data);
-    //     expect(res.statusCode).toBe(200);
+    // it("deve criar uma newsletter com autenticação", async () => {
+    //     const response = await request(app).post("/create_newsletter").set('Authorization', `Bearer ${authToken}`)
+    //     .send({
+    //         "nome": "testeando",
+    //         "description": "apenas vendo se funciona"
     //     });
+    //     expect(response.status).toBe(200);
+    // });
+    // it("Deve retornar 200 ao criar uma newsletter com autenticação", async () => {
+    //     const response = await request(app)
+    //         .post("/create_newsletter")
+    //         .send({
+    //             name: "testeando",
+    //             description: "apenas vendo se funciona"
+    //         });
+
+    //     expect(response.status).toBe(200);
+    // });
 })
 
 afterAll((done) => {
