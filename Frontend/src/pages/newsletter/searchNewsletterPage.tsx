@@ -6,25 +6,20 @@ import NewsletterItem, { newsletterProps } from "../../components/NewsletterItem
 
 export function SearchNewsletterPage() {
   const [search, setSearch] = useState("");
-  const [searched, setSearched] = useState(false);
   const [newsletters, setNewsletters] = useState<newsletterProps[]>([]);
 
   async function seachForNewsletters(event: FormEvent) {
     event.preventDefault();
 
-    await api.get(`/newsletter_search/?search_query=${search}`, 
-    {
+    await api.get(`/newsletters_from_user/${search}`, {
       withCredentials: true,
     })
-    .then((response) => {
-      console.log(response.data);
-      setNewsletters(response.data);
-    })
-    .catch((error) => {
-      alert(error);
-    });
-
-    setSearched(true);
+      .then((response) => {
+        setNewsletters(response.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
   }
 
   return (
@@ -40,7 +35,6 @@ export function SearchNewsletterPage() {
       {newsletters.map((newsletter) => {
         return <NewsletterItem key={newsletter.id} newsletter={newsletter} userItem={false} />
       })}
-      {searched && newsletters.length === 0 && <h1>Nenhum resultado encontrado</h1>}
     </div>
   )
 }

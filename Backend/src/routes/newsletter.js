@@ -1,7 +1,6 @@
 const ensureAuthenticated = require('../components/ensure_authenticated.js');
 const create_newsletter_schema = require('../validation/create_newsletter.js');
-const newsletter_search_schema = require('../validation/newsletters_search.js');
-const newsletter_search_user_schema = require('../validation/newsletter_from_user.js');
+const newsketters_from_user_schema = require('../validation/newsletters_from_user.js');
 const update_newsletter_name_schema = require('../validation/update_newsletter_name.js');
 const update_newsletter_description_schema = require('../validation/update_newsletter_description.js');
 const delete_newsletter_schema = require('../validation/delete_newsletter.js');
@@ -67,9 +66,9 @@ module.exports = function (app, prisma, http_status) {
         }
     });
 
-    app.get('/newsletters_from_user', ensureAuthenticated, 
+    app.get('/newsletters_from_user/:username', ensureAuthenticated, 
     (req, res, next) => {
-        const {error, resposta} = newsletter_search_user_schema.validate(req.query);
+        const {error, resposta} = newsketters_from_user_schema.validate(req.params.username);
         if (error) {
             return res.status(400).json({"message": error.details[0].message});
         } else {
@@ -80,7 +79,7 @@ module.exports = function (app, prisma, http_status) {
             let newsletters = [];
             let n = await prisma.user.findUnique({
                 where: {
-                    username: req.query.username
+                    username: req.params.username
                 },
                 include: {
                     newsletters: true
