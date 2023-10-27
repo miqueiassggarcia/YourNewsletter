@@ -32,14 +32,6 @@ export function SideBar({ active }: activeProps) {
     })
   }
 
-  function navigateToHome() {
-    navigate("/home");
-  }
-
-  function navigateToUserNewsletters() {
-    navigate("/user-newsletters");
-  }
-
   return (
     <div className="sidebar-container">
       <div className="sidebar-items">
@@ -50,7 +42,7 @@ export function SideBar({ active }: activeProps) {
           </div>
           <AiFillCloseCircle onClick={active} className="close-button" size={25}/>
         </div>
-        <div className="items-elements" onClick={navigateToHome}>
+        <div className="items-elements" onClick={() => {active(); navigate("/home")}}>
           <span>Home</span>
           <AiFillHome className="sidebar-items-icons" size={25}/>
         </div>
@@ -58,7 +50,7 @@ export function SideBar({ active }: activeProps) {
           <span>Usuário</span>
           <FaUserCircle className="sidebar-items-icons" size={25}/>
         </div>
-        <div className="items-elements" onClick={navigateToUserNewsletters}>
+        <div className="items-elements" onClick={() => {active(); navigate("/user-newsletters")}}>
           <span>Newsletters</span>
           <IoNewspaperSharp className="sidebar-items-icons" size={25}/>
         </div>
