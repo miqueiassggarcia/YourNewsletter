@@ -12,7 +12,7 @@ export function SearchNewsletterPage() {
   async function seachForNewsletters(event: FormEvent) {
     event.preventDefault();
 
-    await api.get(`/newsletter_search/${search}`, 
+    await api.get(`/newsletter_search/?search_query=${search}`, 
     {
       withCredentials: true,
     })
