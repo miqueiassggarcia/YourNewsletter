@@ -9,7 +9,7 @@ on:
       - 'backend/**'
 
 jobs:
-  Continuos-Integration:
+  continuous-integration:
     runs-on: ubuntu-latest
 
     steps:
