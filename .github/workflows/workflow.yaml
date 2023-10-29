@@ -3,10 +3,10 @@ name : Continuous Integration
 on: 
   pull_request:
     paths:
-      - 'backend/**'
+      - 'Backend/**'
   push:
     paths:
-      - 'backend/**'
+      - 'Backend/**'
 
 jobs:
   continuous-integration:
@@ -23,7 +23,7 @@ jobs:
       - name: Using Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: 18.
 
       - name: Run install dependencies
         run:
