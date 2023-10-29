@@ -23,8 +23,17 @@ class HttpStatus {
         return this.create_status_return(StatusCodes.CONFLICT, "Usuário já inscrito na newsletter");
     }
 
+    get_user_dont_subscribed_newsletter() {
+        return this.create_status_return(StatusCodes.BAD_REQUEST, "Usuário não está inscrito na newsletter");
+    }
+    
+
     get_user_subscribed_newsletter() {
         return this.create_status_return(StatusCodes.OK, "Usuário inscrito com sucesso na newsletter");
+    }
+    
+    get_user_unsubscribe_newsletter() {
+        return this.create_status_return(StatusCodes.OK, "Usuário desinscrito com sucesso da newsletter");
     }
 
     get_user_not_have_this_newsletter() {
