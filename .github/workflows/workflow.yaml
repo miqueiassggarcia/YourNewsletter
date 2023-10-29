@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: 18.
 
-      -name: Run install, build and test
+      - name: Run install, build and test
         run:
           npm install
           npx jest tests
