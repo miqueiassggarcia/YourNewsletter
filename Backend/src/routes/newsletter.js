@@ -435,10 +435,13 @@ module.exports = function (app, prisma, http_status) {
                     ],
                   }
             });
-            console.log(deletedSubscriber)
 
-            const {code, message} = http_status.get_user_unsubscribe_newsletter();
-            return res.status(code).json({"message": message});
+            if (deletedSubscriber.count == 1) {
+                const {code, message} = http_status.get_user_unsubscribe_newsletter();
+                return res.status(code).json({"message": message});
+            } else if (count == 0) {
+                return console.log("Nenhum usuário foi removido");
+            }
         } catch (error) {
             console.log(error);
             const {code, message} = http_status.get_database_error();
