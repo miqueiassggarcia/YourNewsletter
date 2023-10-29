@@ -28,7 +28,9 @@ jobs:
       - name: Run install dependencies
         run:
           npm install
+        working-directory: ./Backend
 
       - name: Run test 
         run:
           npx jest tests
+        working-directory: ./Backend
