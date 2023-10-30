@@ -21,6 +21,7 @@ let whitelist = process.env.WHITELIST.split(" ")
 let corsOptions = {
   credentials: true,
   origin: function(origin, callback) {
+    return callback(null, true);
     if (whitelist.includes(origin)) {
       callback(null, true);
     } else {
