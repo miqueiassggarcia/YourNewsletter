@@ -38,7 +38,7 @@ export function SearchNewsletterPage() {
         <BiSearchAlt size={30} type="submit"/>
       </form>
       {newsletters.map((newsletter) => {
-        return <NewsletterItem key={newsletter.id} newsletter={newsletter} userItem={false} />
+        return <NewsletterItem key={newsletter.id} newsletter={newsletter} />
       })}
       {searched && newsletters.length === 0 && <h1>Nenhum resultado encontrado</h1>}
     </div>

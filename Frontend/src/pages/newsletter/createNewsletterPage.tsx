@@ -68,7 +68,7 @@ export function CreateNewsletterPage() {
           value={description}
           onChange={(event) => {setDescription(event.target.value)}}
         />
-        <button type="submit" className="button-new-newsletter">Criar</button>
+        <button type="submit" className="new-newsletter-button">Criar</button>
       </form>
       {dialogOpen &&
         <dialog className="dialog">

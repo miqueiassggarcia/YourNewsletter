@@ -2,19 +2,20 @@ button {
 	width: 35%;
 	justify-items: center;
 	align-content: center;
-	border: 2px solid #0D1B1E;
-	background: transparent;
+	border: 1px solid transparent;
+	background: var(--button-color);
 	padding: 1em;
-	color: #0D1B1E;
+	color: var(--text-light-color);
 	border-radius: 5em;
-	transition: 0.7s;
-	&:hover, &:focus, &:active {
-		background: black;
-		color: #FCFCFC;
-	}
+	transition: 0.6s;
 	margin-bottom: 5vh;
 	margin-top: 4vh;
 	font-size: 70%;
+	font-weight: bolder;
+	&:hover, &:focus, &:active {
+		background-color: var(--button-hover-color);
+		cursor: pointer;
+	}
 }
 
 @media only screen and (max-width: 600px) {

@@ -16,46 +16,41 @@
 }
 
 .form-new-newsletter h1 {
-  margin-top: 1rem;
+  margin-top: .8rem;
 }
 
 .label-new-newsletter {
   margin-top: 3%;
   font-size: 1rem;
-  color: white;
+  color: var(--text-light-color);
 }
 
 .name-new-newsletter {
   width: 60%;
   margin: 0;
   margin-top: 1%;
-  border-bottom: .2em solid white;
-  background-color: white;
+  border: .1em solid var(--text-light-color);
+  border-bottom: .2em solid var(--text-light-color);
+  background-color: var(--text-light-color);
 }
 
 .textarea-new-newsletter {
   margin-top: 1%;
   width: 60%;
-  background: white;
+  background: var(--text-light-color);
   text-align: center;
 	outline: none;
-	border-bottom: .2em solid white;
-	color: black;
+  border: .1em solid var(--text-light-color);
+  border-bottom: .2em solid var(--text-light-color);
+	color: var(--text-dark-color);
 	font-size: 70%;
-	padding: 1em;
+	padding: .5em 1em .5em 1em;
 	border-radius: 2em;
 	letter-spacing: 0.01em;
   resize: none;
 }
 
-.button-new-newsletter {
+.new-newsletter-button {
   margin: .5rem 0 .5rem 0;
   width: 25%;
-  color: white;
-  border-color: white;
-}
-
-.button-new-newsletter:hover {
-  background-color: white;
-  color: black;
 }

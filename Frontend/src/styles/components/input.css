@@ -4,8 +4,8 @@ input {
   background: transparent;
   text-align: center;
 	outline: none;
-	border-bottom: .2em solid #0D1B1E;
-	color: #0D1B1E;
+	border-bottom: .2em solid var(--text-dark-color);
+	color: var(--text-dark-color);
 	font-size: 70%;
 	padding: .7em;
 	border-radius: 3em;
