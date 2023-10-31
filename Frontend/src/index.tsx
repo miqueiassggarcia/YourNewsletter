@@ -16,6 +16,9 @@ import { SearchNewsletterPage } from './pages/newsletter/searchNewsletterPage';
 import { UserNewslettersPage } from './pages/newsletter/userNewslettersPage';
 import StaticSizePage from './pages/root/StaticSizePages';
 import DinamicSizePage from './pages/root/DinamicSizePages';
+import { UserSubscriptions } from './pages/newsletter/userSubscriptions';
+
+// const style = {"--primary-color": "white"} as React.CSSProperties;
 
 const router = createBrowserRouter([
   {
@@ -49,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/user-newsletters",
         element: <UserNewslettersPage />
+      },
+      {
+        path: "/user-subscriptions",
+        element: <UserSubscriptions />
       }
     ]
   },

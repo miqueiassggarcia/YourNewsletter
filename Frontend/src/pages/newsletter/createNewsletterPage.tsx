@@ -2,6 +2,8 @@ import { FormEvent, useEffect, useState } from "react";
 import "../../styles/newsletter/createNewsletter.css"
 import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import AlertMessage from "../../components/AlertMessage";
+import { validateNewsletterDescription, validateNewsletterName } from "../../validation/createUserFormValidation";
 
 export function CreateNewsletterPage() {
   const navigate = useNavigate();
@@ -9,6 +11,8 @@ export function CreateNewsletterPage() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [newsletterNameFeedback, setNewsletterNameFeedback] = useState("");
+  const [newsletterDescriptionFeedback, setNewsletterDescriptionFeedback] = useState("");
 
   useEffect(() => {
     const validate = localStorage.getItem("validate");
@@ -17,30 +21,26 @@ export function CreateNewsletterPage() {
     }
   }, [navigate])
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDialogOpen(false);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, [dialogOpen])
+  const closeDialog = () => setDialogOpen(false);
 
   function handleCreateNewsletter(event: FormEvent) {
     event.preventDefault();
 
-    api.post("/create_newsletter", {
-      "name": name,
-      "description": description
-    },
-    {
-      withCredentials: true
+    if(newsletterNameFeedback.length === 0 && newsletterDescriptionFeedback.length === 0) {
+      api.post("/create_newsletter", {
+        "name": name,
+        "description": description
+      },
+      {
+        withCredentials: true
+      }
+      ).then(() => {
+        setDialogOpen(true);
+      }).catch((error) => {
+        alert(error.response.data.message)
+        alert(error.response.status)
+      })
     }
-    ).then(() => {
-      setDialogOpen(true);
-    }).catch((error) => {
-      alert(error.response.data.message)
-      alert(error.response.status)
-    })
   }
 
   return (
@@ -55,8 +55,12 @@ export function CreateNewsletterPage() {
           className="name-new-newsletter"
           placeholder="Digite aqui o nome"
           value={name}
-          onChange={(event) => {setName(event.target.value)}}
+          onChange={(event) => {
+            setName(event.target.value)
+            setNewsletterNameFeedback(validateNewsletterName(event.target.value));
+          }}
         />
+        <p className="feedback">{newsletterNameFeedback}</p>
         <label htmlFor="descricao" className="label-new-newsletter">Dê uma breve descrição para sua newsletter</label>
         <textarea
           name="descricao"
@@ -66,14 +70,16 @@ export function CreateNewsletterPage() {
           className="textarea-new-newsletter"
           placeholder="Digite aqui a descrição"
           value={description}
-          onChange={(event) => {setDescription(event.target.value)}}
+          onChange={(event) => {
+            setDescription(event.target.value);
+            setNewsletterDescriptionFeedback(validateNewsletterDescription(event.target.value));
+          }}
         />
-        <button type="submit" className="button-new-newsletter">Criar</button>
+        <p className="feedback">{newsletterDescriptionFeedback}</p>
+        <button type="submit" className="new-newsletter-button">Criar</button>
       </form>
       {dialogOpen &&
-        <dialog className="dialog">
-          <h1>Newsletter criada</h1>
-        </dialog>
+        <AlertMessage title={"Newsletter criada"} hasDescription={false} callbackClose={closeDialog} />
       }
     </div>
   );

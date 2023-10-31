@@ -6,7 +6,7 @@
   left: 50%;
   top: 13%;
   transform: translate(-50%,-50%);
-  background-color: white;
+  background-color: var(--background-light-color);
   padding: 2em;
   border-radius: .9em;
   display: flex;
@@ -16,17 +16,5 @@
 }
 
 .dialog h1 {
-  color: black;
+  color: var(--text-dark-color);
 }
-
-/* .dialog-close-button {
-  margin-bottom: 15px;
-  padding: 3px 8px;
-  cursor: pointer;
-  border-radius: 50%;
-  border: none;
-  width: 30px;
-  height: 30px;
-  font-weight: bold;
-  align-self: flex-end
-}; */
