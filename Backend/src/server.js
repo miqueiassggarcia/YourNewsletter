@@ -12,19 +12,20 @@ const router_login = require('./routes/login.js');
 const router_newsletter = require('./routes/newsletter.js');
 const auth = require('./auth.js');
 
+const http_status = require('./components/http_status.js');
+
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-let whitelist = ['http://localhost:3000', 'http://10.0.0.124:3000']
+let whitelist = process.env.WHITELIST.split(" ")
 let corsOptions = {
   credentials: true,
   origin: function(origin, callback) {
-    callback(null, true);
-    return;
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
+    return callback(null, true);
+    if (whitelist.includes(origin)) {
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'))
+      callback(new Error('Not allowed by CORS'));
     }
   },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
@@ -33,7 +34,8 @@ let corsOptions = {
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {secure: false}
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -44,10 +46,10 @@ app.use(cors(corsOptions));
 app.use(cookieParser());
 
 // rotas
-router_register(app, prisma);
-router_login(app, prisma);
-router_newsletter(app, prisma);
-auth(app, prisma);
+router_register(app, prisma, http_status);
+router_login(app, prisma, http_status);
+router_newsletter(app, prisma, http_status);
+auth(app, prisma, http_status);
 
 
 
