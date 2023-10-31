@@ -35,7 +35,7 @@ export function SearchNewsletterPage() {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
         />
-        <BiSearchAlt size={30} type="submit"/>
+        <BiSearchAlt size={30} type="submit" onClick={seachForNewsletters} className="search-newsletter-search-button"/>
       </form>
       {newsletters.map((newsletter) => {
         return <NewsletterItem key={newsletter.id} newsletter={newsletter} />

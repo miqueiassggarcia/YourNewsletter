@@ -5,6 +5,7 @@ import "../../styles/authentication/emailAuthentication.css";
 import { FormEvent, useEffect, useState } from "react";
 import "../../styles/dialog.css"
 import api from "../../services/api";
+import AlertMessage from "../../components/AlertMessage";
 
 export function EmailAuthentication() {
   const delay = (time: number) => new Promise(
@@ -129,9 +130,7 @@ export function EmailAuthentication() {
         </div>
 
         {dialogOpen &&
-          <dialog className="dialog">
-            <h1>Email confirmado</h1>
-          </dialog>
+          <AlertMessage title={"Email confirmado"} hasDescription={false} />
         }
     </>
   )

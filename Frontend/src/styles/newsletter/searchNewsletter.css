@@ -27,3 +27,7 @@
   font-size: 100%;
   color: var(--text-light-color);
 }
+
+.search-newsletter-search-button:hover {
+  opacity: .6;
+}

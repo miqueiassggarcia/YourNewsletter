@@ -30,7 +30,7 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
       callbackUpdate!();
     })
     .catch((error) => {
-      console.log(error);
+      alert(error);
     });
   }
 
@@ -76,7 +76,7 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
 
   return (
     <div className="newsletter-item-container">
-      <div className="content-newsletter-item" style={userItem ? {width: "95%"} : {}}>
+      <div className="content-newsletter-item" style={{width: "95%"}}>
         <div className="header-newsletter-item">
           {editActive ?
               <input
@@ -100,16 +100,14 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
             <p className="description-newsletter-item  description-newsletter-item-edit">{newsletter.description}</p>
           }
       </div>
-        {userItem &&
-          <div className="options-newsletter-item">
-              <MdDeleteForever className="delete-button-newsletter-item" size={30} onClick={openDeleteDialog}/>
-              {editActive ?
-                <BsFillCheckCircleFill className="confirm-edit-button-newsletter-item" size={25} onClick={closeEdit} />
-              :
-                <AiFillEdit className="edit-button-newsletter-item" size={25} onClick={openEdit} />
-              }
-          </div>
-        }
+        <div className="options-newsletter-item">
+            <MdDeleteForever className="delete-button-newsletter-item" size={30} onClick={openDeleteDialog}/>
+            {editActive ?
+              <BsFillCheckCircleFill className="confirm-edit-button-newsletter-item" size={25} onClick={closeEdit} />
+            :
+              <AiFillEdit className="edit-button-newsletter-item" size={25} onClick={openEdit} />
+            }
+        </div>
         {deleteDialogOpen &&
           <dialog className="delete-newsletter-dialog">
             <div className="delete-newsletter-dialog-content">

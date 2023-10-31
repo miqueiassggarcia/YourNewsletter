@@ -3,7 +3,7 @@ import { GoCrossReference } from "react-icons/go";
 import "../styles/components/newsletterItem.css"
 import { AiFillCheckCircle } from "react-icons/ai";
 import api from "../services/api";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface newsletterProps {
   id: number;
@@ -18,7 +18,20 @@ interface newsletterItemProps {
 }
 
 const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpdate}) => {
+  const [unsubscribeDialogOpen, setUnsubscribeDialogOpen] = useState<boolean>(false);
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
+
+  useEffect(() => {
+    api.get(`check_newsletter_subscription/?id_newsletter=${newsletter.id}`, {
+      withCredentials: true
+    })
+    .then((response) => {
+      setIsSubscribed(response.data.message)
+    })
+    .catch((error) => {
+      alert(error)
+    })
+  }, [newsletter.id]);
 
   function changeSubscription() {
     if(isSubscribed) {
@@ -31,7 +44,11 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
         }
       )
       .then(() => {
-        setIsSubscribed(false);
+        if(callbackUpdate) {
+          callbackUpdate()
+        } else {
+          setIsSubscribed(false);
+        }
       })
       .catch((error) => {
         alert(error);
@@ -64,7 +81,7 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
         <p className="description-newsletter-item">{newsletter.description}</p>
       </div>  
       {isSubscribed ?
-        <button type="button" className="subscribed-button-newsletter-item" onClick={changeSubscription}>
+        <button type="button" className="subscribed-button-newsletter-item" onClick={() => setUnsubscribeDialogOpen(true)}>
           Inscrito
           <AiFillCheckCircle size={20} style={{marginLeft: ".4rem"}}/>
         </button>
@@ -74,6 +91,17 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
           <GoCrossReference size={20} style={{marginLeft: ".4rem"}}/>
         </button>
       }
+      {unsubscribeDialogOpen &&
+          <dialog className="unsubscribe-newsletter-dialog">
+            <div className="unsubscribe-newsletter-dialog-content">
+              <h1>Desinscrever da newsletter</h1>
+              <div className="unsubscribe-newsletter-dialog-buttons">
+                <button className="unsubscribe-button-newsletter-dialog" onClick={() => {changeSubscription(); setUnsubscribeDialogOpen(false)}}>Desinscrever</button>
+                <button className="cancel-button-newsletter-dialog" onClick={() => {setUnsubscribeDialogOpen(false)}}>Cancelar</button>
+              </div>
+            </div>
+          </dialog>
+        }
     </div>
   )
 }
