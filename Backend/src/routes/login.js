@@ -2,7 +2,7 @@ const passport = require('passport');
 
 const login_user_schema = require('../validation/login_user.js');
 
-module.exports = function (app, prisma, http_status) {
+module.exports = function (app, prisma) {
     app.post("/login", async (req, res, next) => {
         // verifica se as entradas estão corretas
         const {error, response} = login_user_schema.validate(req.body);

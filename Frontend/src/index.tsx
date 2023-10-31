@@ -1,29 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./styles/global.css"
+import Root from './Root';
 import reportWebVitals from './reportWebVitals';
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { EmailAuthentication } from './pages/authentication/EmailAuthenticationPage';
-import { HomePage } from './pages/home/homePage';
-import { SingUpPage } from './pages/authentication/SingUpPage';
-import { Error404Page } from './pages/error/error404Page';
-import { SingInPage } from './pages/authentication/SingInPage';
-import { AuthenticationRoot } from './pages/root/AuthenticationRoot';
-import { HomePageLogged } from './pages/home/homePageLogged';
-import { CreateNewsletterPage } from './pages/newsletter/createNewsletterPage';
-import { SearchNewsletterPage } from './pages/newsletter/searchNewsletterPage';
-import { UserNewslettersPage } from './pages/newsletter/userNewslettersPage';
-import StaticSizePage from './pages/root/StaticSizePages';
-import DinamicSizePage from './pages/root/DinamicSizePages';
-import { UserSubscriptions } from './pages/newsletter/userSubscriptions';
-
-// const style = {"--primary-color": "white"} as React.CSSProperties;
+import { EmailAuthentication } from './pages/emailAuthenticationPage';
+import { HomePage } from './pages/homePage';
+import { SingUpPage } from './pages/singUpPage';
+import { Error404Page } from './pages/error404Page';
+import { SingInPage } from './pages/singInPage';
+import AuthenticationRoot from './pages/authenticationRoot';
+import { HomePageLogged } from './pages/homePageLogged';
+import { CreateNewsletterPage } from './pages/createNewsletterPage';
+import { SearchNewsletterPage } from './pages/searchNewsletterPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <StaticSizePage />,
+    element: <Root />,
     errorElement: <Error404Page />,
     children: [
       {
@@ -34,13 +29,6 @@ const router = createBrowserRouter([
         path: "/home",
         element: <HomePageLogged />
       },
-    ]
-  },
-  {
-    path: "/",
-    element: <DinamicSizePage />,
-    errorElement: <Error404Page />,
-    children: [
       {
         path: "/create-newsletter",
         element: <CreateNewsletterPage />
@@ -48,14 +36,6 @@ const router = createBrowserRouter([
       {
         path: "/search-newsletter",
         element: <SearchNewsletterPage />
-      },
-      {
-        path: "/user-newsletters",
-        element: <UserNewslettersPage />
-      },
-      {
-        path: "/user-subscriptions",
-        element: <UserSubscriptions />
       }
     ]
   },

@@ -1,0 +1,19 @@
+input {
+	margin-top: 2%;
+  width: 70%;
+  background: transparent;
+  text-align: center;
+	outline: none;
+	border-bottom: .2em solid #0D1B1E;
+	color: #0D1B1E;
+	font-size: 70%;
+	padding: .7em;
+	border-radius: 3em;
+	letter-spacing: 0.01em;
+}
+
+@media only screen and (max-width: 600px) {
+	input {
+		font-size: 2vmin;
+	}
+}

@@ -1,9 +1,9 @@
 import { AiFillCloseCircle, AiFillHome, AiFillSetting } from "react-icons/ai"
 import { BiLogOut } from "react-icons/bi"
 import { IoNewspaperSharp } from "react-icons/io5"
-import { MdMarkEmailRead } from "react-icons/md"
+import { FaUserCircle } from "react-icons/fa"
 
-import "../styles/components/sidebar.css"
+import "../styles/sidebar.css"
 import api from "../services/api"
 import { useNavigate } from "react-router-dom"
 
@@ -32,25 +32,29 @@ export function SideBar({ active }: activeProps) {
     })
   }
 
+  function navigateToHome() {
+    navigate("/home")
+  }
+
   return (
     <div className="sidebar-container">
       <div className="sidebar-items">
         <div className="sidebar-buttons">
           <div className="logout" onClick={handleLogout}>
           <BiLogOut className="logout-button" size={25}/>
-          <span>Logout</span>
+          <span>logout</span>
           </div>
           <AiFillCloseCircle onClick={active} className="close-button" size={25}/>
         </div>
-        <div className="items-elements" onClick={() => {active(); navigate("/home")}}>
+        <div className="items-elements" onClick={navigateToHome}>
           <span>Home</span>
           <AiFillHome className="sidebar-items-icons" size={25}/>
         </div>
-        <div className="items-elements" onClick={() => {active();  navigate("/user-subscriptions")}}>
-          <span>Inscrições</span>
-          <MdMarkEmailRead className="sidebar-items-icons" size={25}/>
+        <div className="items-elements">
+          <span>Usuário</span>
+          <FaUserCircle className="sidebar-items-icons" size={25}/>
         </div>
-        <div className="items-elements" onClick={() => {active(); navigate("/user-newsletters")}}>
+        <div className="items-elements">
           <span>Newsletters</span>
           <IoNewspaperSharp className="sidebar-items-icons" size={25}/>
         </div>
