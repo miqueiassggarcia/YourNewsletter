@@ -280,6 +280,17 @@ module.exports = function (app, prisma, http_status) {
             });
 
             if(newsletter.newsletters.length > 0) {
+                // deleta todas as inscrições da newsletter
+                await prisma.newsletterSubscribers.deleteMany({
+                    where: {
+                        AND: [
+                          { id_newsletter: req.body.id}
+                        ],
+                      }
+                });
+
+
+                // deleta a newsletter
                 await prisma.user.update({
                     where: {
                         username: req.user.username
