@@ -1,0 +1,106 @@
+.newsletter-item-container {
+  width: 95%;
+  min-height: 23vh;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  background-color: var(--secondary-color);
+  overflow-wrap: break-word;
+}
+
+.content-newsletter-item {
+  height: 100%;
+  width: 90%;
+}
+
+.options-newsletter-item {
+  color: var(--text-light-color);
+  height: 100%;
+  width: 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-newsletter-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-newsletter-item {
+  color: var(--text-light-color);
+}
+
+.description-newsletter-item {
+  color: var(--text-light-color);
+  margin-top: 1rem;
+  font-size: .8rem;
+}
+
+.subscribe-button-newsletter-item {
+  margin: 0;
+  width: 13%;
+  padding: .6rem;
+  color: var(--text-light-color);
+  display: flex;
+  justify-content: center;
+}
+
+.subscribed-button-newsletter-item {
+  margin: 0;
+  width: 13%;
+  padding: .6rem;
+  display: flex;
+  justify-content: center;
+}
+
+.unsubscribe-newsletter-dialog {
+  width: 40vw;
+  height: 35vh;
+  max-width: 100%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: var(--background-light-color);
+  padding: 2em;
+  border-radius: .6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.unsubscribe-newsletter-dialog-content {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.unsubscribe-newsletter-dialog-buttons {
+  display: flex;
+  height: 100%;
+  width: 80%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.unsubscribe-newsletter-dialog h1 {
+  color: var(--text-dark-color);
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.unsubscribe-button-newsletter-dialog {
+  background-color: var(--red-color);
+  &:hover, &:focus, &:active {
+    background-color: var(--red-hover-color);
+  }
+}

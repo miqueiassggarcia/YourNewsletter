@@ -1,3 +1,23 @@
+.static-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--background-dark-color);
+}
+
+.dinamic-container {
+  width: 100vw;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background: var(--background-dark-color);
+}
+
 html {
   font-size: calc(100% + 0.5vw);
 }
@@ -5,7 +25,7 @@ html {
 /* Tirare estilo automático de links */
 a {
   text-decoration: none;
-  color: #000;
+  color: var(--text-light-color);
 }
 
 
@@ -22,6 +42,18 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
+  --text-light-color: #EBEFF2;
+  --text-dark-color: #333140;
+  --background-light-color: #EBEFF2;
+  --background-dark-color: #333140;
+  --background-overlay-black-color: #07060088;
+  --button-color: #0ABF7D;
+  --button-hover-color: #089964;
+  --primary-color: #070600;
+  --secondary-color: #1BA0F2;
+  --red-color: #EF233C;
+  --red-hover-color: #c91d31;
+  --footer-color: #070600;
 }
 
 html, body {
