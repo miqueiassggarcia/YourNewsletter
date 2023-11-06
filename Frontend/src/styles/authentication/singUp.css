@@ -5,6 +5,7 @@
   text-align: center;
   height: 80vh;
   width: 70vw;
+  background-color: var(--background-dark-color);
 }
 
 .small {
@@ -14,7 +15,7 @@
 .container-text {
   display: flex;
   flex-direction: column;
-  background-color: #6B7FD7;
+  background-color: var(--primary-color);
   width: 45%;
   height: 100%;
   border-radius: .7rem 0rem 0rem .7rem;
@@ -31,18 +32,9 @@
   margin-bottom: 5%;
 }
 
-.container-text button {
-  color: #FCFCFC;
-  border: 2px solid #FCFCFC;
-  &:hover, &:focus, &:active {
-		background: #FCFCFC;
-		color: #0D1B1E;
-	}
-}
-
 h1 {
   font-size: 1.4em;
-  color: #FCFCFC;
+  color: var(--text-light-color);
   font-weight: bolder;
 }
 
@@ -52,7 +44,7 @@ h1 {
 
 .login-form h1 {
   margin-top: 5vh;
-  color: #0D1B1E;
+  color: var(--text-dark-color);
   margin-bottom: 1%;
 }
 
@@ -61,26 +53,25 @@ h1 {
   width: 55%;
   height: 100%;
   border-radius: 0rem .7rem .7rem 0rem;
-  background: #FCFCFC;
+  background: var(--background-light-color);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1),0px 10px 15px -3px rgba(0,0,0,0.1);
 }
 
 span {
   font-size: 0.6rem;
   margin-top: .4rem;
-  color: #FCFCFC;
+  color: var(--text-light-color);
 }
 
 .login-form span {
-  color: #0D1B1E;
+  color: var(--text-dark-color);
 }
 
 a {
   text-decoration: underline;
-  color: rgb(34, 133, 247);
+  color: var(--primary-color);
 }
 
 
@@ -95,13 +86,13 @@ a {
 .show-text {
   font-size: .8em;
   margin-top: 2%;
-  color: rgb(255, 45, 45);
+  color: var(--red-color);
 }
 
 .feedback {
   font-size: .6em;
   margin-top: 1%;
-  color: rgb(255, 45, 45);
+  color: var(--red-color);
 }
 
 .back-button-container {
@@ -112,12 +103,12 @@ a {
 }
 
 .back-button {
-  color: white;
+  color: var(--text-light-color);
   height: 1.5rem;
   width: 2rem;
   margin-top: .2rem;
 }
 
 .back-button-container:hover {
-  background-color: rgb(0, 0, 187);
+  opacity: 0.6;
 }

@@ -15,7 +15,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
-  background-color: white;
+  background-color: var(--background-light-color);
   padding: 2em;
   border-radius: .6em;
   display: flex;
@@ -42,29 +42,21 @@
 }
 
 .delete-newsletter-dialog h1 {
-  color: black;
+  color: var(--text-dark-color);
   font-size: 1rem;
   margin-top: 1rem;
 }
 
 .delete-button-newsletter-dialog {
-  border-color: red;
-  color: red;
-  font-weight: bold;
+  color: var(--text-light-color);
+  background-color: var(--red-color);
   &:hover, &:focus, &:active {
-    color: white;
-    background-color: red;
+    background-color: var(--red-hover-color);
   }
 }
 
 .cancel-button-newsletter-dialog {
-  border-color: green;
-  color: green;
-  font-weight: bold;
-  &:hover, &:focus, &:active {
-    color: white;
-    background-color: green;
-  }
+  color: var(--text-light-color);
 }
 
 
@@ -79,7 +71,7 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%,-50%);
-  background-color: white;
+  background-color: var(--background-light-color);
   padding: 2em;
   border-radius: .6em;
   border: none;
@@ -102,35 +94,29 @@
   width: 80%;
   margin: 0;
   margin-top: 1%;
-  background-color: white;
+  background-color: var(--text-light-color);
 }
 
 .textarea-edit-newsletter {
   margin-top: 1%;
   width: 90%;
-  background: white;
+  background: var(--text-light-color);
   text-align: center;
 	outline: none;
-	color: black;
+	color: var(--text-dark-color);
 	font-size: 70%;
 	padding: 1em;
 	border-radius: 2em;
 	letter-spacing: 0.01em;
   resize: none;
-  border: 2px solid black;
-  border-bottom: 4px solid black;
+  border: 2px solid var(--text-dark-color);
+  border-bottom: 4px solid var(--text-dark-color);
 }
 
 .button-edit-newsletter {
   margin: 0;
   margin-top: .8rem;
   width: 25%;
-  cursor: pointer;
-}
-
-.button-new-newsletter:hover {
-  background-color: white;
-  color: black;
 }
 
 .close-edit-newsletter-button {

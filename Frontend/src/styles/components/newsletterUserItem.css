@@ -1,0 +1,51 @@
+.edit-button-newsletter-item {
+  margin-top: 1rem;
+}
+
+.edit-button-newsletter-item:hover {
+  opacity: 0.6;
+}
+
+.delete-button-newsletter-item {
+  color: var(--red-color);
+}
+
+.delete-button-newsletter-item:hover {
+  opacity: 0.6;
+}
+
+.user-newsletter-item-edit-title-input {
+  margin: 0;
+  border: none;
+  border-bottom: 2px solid var(--text-light-color);
+  border-radius: .2rem;
+  text-align: start;
+  color: var(--text-light-color);
+  font-size: 1.4rem;
+  padding: .2rem;
+  font-weight: bold;
+}
+
+.user-newsletter-item-edit-description-input {
+  margin: .7rem 0 0 0;
+  border: none;
+  border-bottom: 2px solid var(--text-light-color);
+  border-radius: .2rem;
+  text-align: start;
+  color: var(--text-light-color);
+  padding: .2rem;
+  font-size: .8rem;
+}
+
+.confirm-edit-button-newsletter-item {
+  color: rgb(0, 255, 0);
+  margin-top: 1rem;
+}
+
+.title-newsletter-item-edit {
+  padding-left: .2rem;
+}
+
+.description-newsletter-item-edit {
+  padding-left: .2rem;
+}

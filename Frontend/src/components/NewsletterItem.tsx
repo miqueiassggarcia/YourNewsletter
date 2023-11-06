@@ -1,142 +1,105 @@
 import { GoCrossReference } from "react-icons/go";
-import { MdDeleteForever } from "react-icons/md";
 
 import "../styles/components/newsletterItem.css"
-import { AiFillCloseCircle, AiFillEdit } from "react-icons/ai";
+import { AiFillCheckCircle } from "react-icons/ai";
 import api from "../services/api";
-import { FormEvent, useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface newsletterProps {
   id: number;
-  userName: string;
+  userUsername: string;
   name: string;
   description: string;
 }
 
 interface newsletterItemProps {
   newsletter: newsletterProps;
-  userItem: boolean;
   callbackUpdate?: () => void;
 }
 
-const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, userItem, callbackUpdate}) => {
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>();
-  const [editDialogOpen, setEditDialogOpen] = useState<boolean>();
-  const [name, setName] = useState(newsletter.name);
-  const [description, setDescription] = useState(newsletter.description);
+const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpdate}) => {
+  const [unsubscribeDialogOpen, setUnsubscribeDialogOpen] = useState<boolean>(false);
+  const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
 
-  async function deleteNewsletter() {
-    await api.delete("/delete_newsletter", {
-      data: {"id": newsletter.id},
+  useEffect(() => {
+    api.get(`check_newsletter_subscription/?id_newsletter=${newsletter.id}`, {
       withCredentials: true
     })
-    .then(() => {
-      closeDeleteDialog();
-      callbackUpdate!();
+    .then((response) => {
+      setIsSubscribed(response.data.message)
     })
     .catch((error) => {
-      console.log(error);
-    });
-  }
+      alert(error)
+    })
+  }, [newsletter.id]);
 
-  function editNewsletter(event: FormEvent) {
-    event.preventDefault();
-
-    if(name !== newsletter.name) {
-      api.put("/update_newsletter_name", {
-        "id": newsletter.id,
-        "new_name": name
-      },
-      {
-        withCredentials: true
-      }
-      ).then(() => {
-        callbackUpdate!();
-      }).catch((error) => {
-        alert(error)
+  function changeSubscription() {
+    if(isSubscribed) {
+      api.post("newsletter_unsubscribe",
+        {
+          "id_newsletter": newsletter.id,
+        },
+        {
+          withCredentials: true
+        }
+      )
+      .then(() => {
+        if(callbackUpdate) {
+          callbackUpdate()
+        } else {
+          setIsSubscribed(false);
+        }
       })
-    }
-    
-    if(description !== newsletter.description) {
-      api.put("/update_newsletter_description", {
-        "id": newsletter.id,
-        "new_description": description
-      },
-      {
-        withCredentials: true
-      }
-      ).then(() => {
-        callbackUpdate!();
-      }).catch((error) => {
-        alert(error)
+      .catch((error) => {
+        alert(error);
       })
+      setIsSubscribed(false);
+    } else {
+      api.post("newsletter_subscribe",
+        {
+          "id_newsletter": newsletter.id,
+        },
+        {
+          withCredentials: true
+        }
+      )
+      .then(() => {
+        setIsSubscribed(true);
+      })
+      .catch((error) => {
+        alert(error);
+      })  
     }
-
-    closeEditDialog();
   }
-
-  const openDeleteDialog = () => setDeleteDialogOpen(true);
-  const closeDeleteDialog = () => setDeleteDialogOpen(false);
-  const openEditDialog = () => setEditDialogOpen(true);
-  const closeEditDialog = () => setEditDialogOpen(false);
 
   return (
     <div className="newsletter-item-container">
-      <div className="content-newsletter-item" style={userItem ? {width: "95%"} : {}}>
+      <div className="content-newsletter-item">
         <div className="header-newsletter-item">
           <h1 className="title-newsletter-item">{newsletter.name}</h1>
         </div>
         <p className="description-newsletter-item">{newsletter.description}</p>
-      </div>
-        {userItem ?
-          <div className="options-newsletter-item">
-              <MdDeleteForever className="delete-button-newsletter-item" size={30} onClick={openDeleteDialog}/>
-              <AiFillEdit className="edit-button-newsletter-item" size={25} onClick={openEditDialog} />
-          </div>
-          :
-          <button type="button" className="subscribe-button-newsletter-item">
-            Se increver
-            <GoCrossReference size={20} style={{marginLeft: ".4rem"}}/>
-          </button>
-        }
-        {deleteDialogOpen &&
-          <dialog className="delete-newsletter-dialog">
-            <div className="delete-newsletter-dialog-content">
-              <h1>Você tem certeza em deletar sua newsletter</h1>
-              <div className="delete-newsletter-dialog-buttons">
-                <button className="delete-button-newsletter-dialog" onClick={deleteNewsletter}>Deletar</button>
-                <button className="cancel-button-newsletter-dialog" onClick={closeDeleteDialog}>Cancelar</button>
+      </div>  
+      {isSubscribed ?
+        <button type="button" className="subscribed-button-newsletter-item" onClick={() => setUnsubscribeDialogOpen(true)}>
+          Inscrito
+          <AiFillCheckCircle size={20} style={{marginLeft: ".4rem"}}/>
+        </button>
+        :
+        <button type="button" className="subscribe-button-newsletter-item" onClick={changeSubscription}>
+          Se increver
+          <GoCrossReference size={20} style={{marginLeft: ".4rem"}}/>
+        </button>
+      }
+      {unsubscribeDialogOpen &&
+          <dialog className="unsubscribe-newsletter-dialog">
+            <div className="unsubscribe-newsletter-dialog-content">
+              <h1>Desinscrever da newsletter</h1>
+              <div className="unsubscribe-newsletter-dialog-buttons">
+                <button className="unsubscribe-button-newsletter-dialog" onClick={() => {changeSubscription(); setUnsubscribeDialogOpen(false)}}>Desinscrever</button>
+                <button className="cancel-button-newsletter-dialog" onClick={() => {setUnsubscribeDialogOpen(false)}}>Cancelar</button>
               </div>
             </div>
-          </dialog>
-        }
-        {editDialogOpen &&
-          <dialog className="edit-newsletter-dialog">
-            <AiFillCloseCircle className="close-edit-newsletter-button" size={25} onClick={closeEditDialog}/>
-            <form className="form-edit-newsletter" onSubmit={editNewsletter}>
-              <label htmlFor="newsletter-name" className="label-edit-newsletter">Edite o nome da sua newsletter</label>
-              <input
-                type="text"
-                name="newsletter-name"
-                id="newsletter-name"
-                className="name-edit-newsletter"
-                placeholder="Digite aqui o nome"
-                value={name}
-                onChange={(event) => {setName(event.target.value)}}
-              />
-              <label htmlFor="descricao" className="label-edit-newsletter">Edite a descrição da sua newsletter</label>
-              <textarea
-                name="descricao"
-                id="descricao"
-                cols={30}
-                rows={10}
-                className="textarea-edit-newsletter"
-                placeholder="Digite aqui a descrição"
-                value={description}
-                onChange={(event) => {setDescription(event.target.value)}}
-              />
-              <button type="submit" className="button-edit-newsletter">Editar</button>
-            </form>
           </dialog>
         }
     </div>

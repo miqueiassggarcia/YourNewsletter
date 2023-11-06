@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #0D1B1E;
+  background: var(--background-dark-color);
 }
 
 .email-code-form {
@@ -18,7 +18,7 @@
   text-align: center;
   height: 45vh;
   width: 40vw;
-  background-color: #FCFCFC;
+  background-color: var(--background-light-color);
   border-radius: 1.5em;
 }
 
@@ -34,7 +34,7 @@
 
 .email-code-form h1 {
   font-size: 1.4em;
-  color: #0D1B1E;
+  color: var(--background-dark-color);
   font-weight: bolder;
 }
 
@@ -44,9 +44,5 @@
 }
 
 .error-text {
-  color: rgb(255, 20, 20);
-}
-
-.explain-message {
-  
+  color: var(--red-color);
 }

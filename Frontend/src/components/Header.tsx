@@ -38,8 +38,8 @@ export function Header() {
           </div>
           :
           <div className="menu-items">    
-              <span onClick={navigateToSingin}>Login</span>
-              <span>Suporte</span>
+              <span className="span-menu-items" onClick={navigateToSingin}>Login</span>
+              <span className="span-menu-items">Suporte</span>
           </div>
         }
       </header>

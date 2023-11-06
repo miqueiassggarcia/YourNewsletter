@@ -19,7 +19,7 @@
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 10%;
-  background-color: rgba(0, 0, 0, 0.50);
+  background-color: var(--background-overlay-black-color);
 }
 
 .subscribe-newsletter-container {
@@ -32,24 +32,19 @@
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 10%;
-  background-color: rgba(0, 0, 0, 0.50);
+  background-color: var(--background-overlay-black-color);
 }
 
 .home-logged-container p {
   font-size: .8rem;
-  color: white;
+  color: var(--text-light-color);
 }
 
 .home-logged-container button {
   width: 50%;
-  color: white;
-  border-color: white;
   font-weight: bold;
 }
 
 .button-newsletter-container:hover {
-  color: #0D0106;
-  border-color: white;
-  background-color: white;
   cursor: pointer;
 }

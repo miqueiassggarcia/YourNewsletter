@@ -24,7 +24,7 @@
     justify-content: center;
     height: 20%;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.50);
+    background-color: var(--background-overlay-black-color);
     padding-bottom: 10%;
 }
 
@@ -38,7 +38,7 @@
     padding-left: 5%;
     padding-right: 10%;
     padding-top: 10%;
-    background-color: rgba(0, 0, 0, 0.50);
+    background-color: var(--background-overlay-black-color);
 }
 
 .create-text span {
@@ -59,19 +59,10 @@
     padding-left: 5%;
     padding-right: 10%;
     padding-top: 10%;
-    background-color: rgba(0, 0, 0, 0.50);
+    background-color: var(--background-overlay-black-color);
 }
 
 .button-container button {
     width: 15%;
-    color: white;
-    border-color: white;
     font-weight: bold;
-}
-
-.button-container button:hover {
-    color: #0D0106;
-    border-color: white;
-    background-color: white;
-    cursor: pointer;
 }
