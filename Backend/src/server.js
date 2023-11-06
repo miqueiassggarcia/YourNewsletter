@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 
 const router_register = require('./routes/register.js');
 const router_login = require('./routes/login.js');
-const router_newsletter = require('./routes/newsletter.js');
+const router_newsletter = require('./routes/newsletter/newsletter.js');
 const auth = require('./auth.js');
 
 const http_status = require('./components/http_status.js');
