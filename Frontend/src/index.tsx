@@ -17,6 +17,7 @@ import { UserNewslettersPage } from './pages/newsletter/userNewslettersPage';
 import StaticSizePage from './pages/root/StaticSizePages';
 import DinamicSizePage from './pages/root/DinamicSizePages';
 import { UserSubscriptions } from './pages/newsletter/userSubscriptions';
+import ConfigurationPage from './pages/configuration/configurationPage';
 
 // const style = {"--primary-color": "white"} as React.CSSProperties;
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         path: "/home",
         element: <HomePageLogged />
       },
+      {
+        path: "/configuration",
+        element: <ConfigurationPage />
+      }
     ]
   },
   {

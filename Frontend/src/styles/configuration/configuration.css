@@ -1,0 +1,64 @@
+.configuration-container {
+  height: 78vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.configuration-form {
+  height: 100%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.configuration-label-form {
+  color: var(--text-light-color);
+  margin-bottom: 0.3rem;
+}
+
+.configuration-form label:not(:first-child) {
+  margin-top: 1rem;
+}
+
+.configuration-input {
+  margin: 0;
+  border-color: var(--text-light-color);
+  border-radius: .6rem;
+  border-width: 2px;
+  color: var(--text-light-color);
+  text-align: start;
+}
+
+.configuration-options {
+  display: flex;
+  width: 30%;
+  height: 100%;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.configuration-span {
+  font-size: .7rem;
+  margin: 0;
+}
+
+.configuration-change-password-button {
+  margin-top: .5rem;
+  width: 50%;
+}
+
+.configuration-delete-account-button {
+  margin-top: .5rem;
+  width: 50%;
+  background-color: var(--red-color);
+  &:hover {
+    background-color: var(--red-hover-color);
+  }
+}
