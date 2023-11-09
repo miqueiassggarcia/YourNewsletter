@@ -2,14 +2,26 @@ import { FormEvent, useEffect, useState } from "react";
 import api from "../../services/api";
 
 import "../../styles/configuration/configuration.css";
+import { AiFillCloseCircle } from "react-icons/ai";
+import DeleteDialog from "../../components/DeleteDialog";
 
 export default function ConfigurationPage() {
   const [userName, setUserName] = useState("");
   const [userLastName, setUserLastName] = useState("");
   const [userEmail, setUserEmail] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   const [hasChanged, setHasChanged] = useState<boolean>(false);
+
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editPasswordOpen, setEditPasswordOpen] = useState(false);
+
+  const openDeleteDialog = () => setDeleteDialogOpen(true);
+  const closeDeleteDialog = () => setDeleteDialogOpen(false);
+
+  const openEditPasswordDialog = () => setEditPasswordOpen(true);
+  const closeEditPasswordDialog = () => setEditPasswordOpen(false);
 
   function getUserData() {
     // api.get("user-data", {
@@ -36,6 +48,18 @@ export default function ConfigurationPage() {
     {
       withCredentials: true
     })
+    .then((response) => {
+      alert(response)
+    })
+    .catch((error) => {
+      alert(error)
+    })
+  }
+
+  function handleDeleterUserAccount() {
+    closeDeleteDialog();
+
+    api.delete("delete-user", {withCredentials: true})
     .then((response) => {
       alert(response)
     })
@@ -78,23 +102,45 @@ export default function ConfigurationPage() {
           value={userEmail}
           onChange={(event) => {setHasChanged(true); setUserEmail(event.target.value)}}
         />
-        <button style={!hasChanged ? {opacity: ".4"} : {}} disabled={!hasChanged} onClick={() => alert("teste")}>Atualizar</button>
+        <button type="submit" style={!hasChanged ? {opacity: ".4"} : {}} disabled={!hasChanged} onClick={() => alert("teste")}>Atualizar</button>
       </form>
       <div className="configuration-options">
         <span className="configuration-span">Ao editar sua senha, por segurança, você terá que relogar na sua conta</span>
-        <button className="configuration-change-password-button">Mudar senha</button>
+        <button className="configuration-change-password-button" onClick={openEditPasswordDialog}>Alterar senha</button>
         <span className="configuration-span">Ao excluir a sua conta, não haverá volta, tenha certeza antes de realizar essa ação</span>
-        <button className="configuration-delete-account-button" onClick={() => setDeleteDialogOpen(true)}>Excluir Conta</button>
+        <button className="configuration-delete-account-button" onClick={openDeleteDialog}>Excluir Conta</button>
       </div>
       {deleteDialogOpen &&
-          <dialog className="delete-newsletter-dialog">
-            <div className="delete-newsletter-dialog-content">
-              <h1>Todos os seus dados serão perdidos permanentemente</h1>
-              <div className="delete-newsletter-dialog-buttons">
-                <button className="delete-button-newsletter-dialog" onClick={() => {}}>Deletar</button>
-                <button className="cancel-button-newsletter-dialog" onClick={() => {}}>Cancelar</button>
-              </div>
-            </div>
+          <DeleteDialog
+            title="Deseja excluir sua conta permanentemente?"
+            callbackDeletion={handleDeleterUserAccount}
+            callbackCancel={closeDeleteDialog}
+          />
+        }
+        {editPasswordOpen &&
+          <dialog className="configuration-edit-password-dialog">
+            <AiFillCloseCircle className="close-edit-password-button" size={25} onClick={closeEditPasswordDialog}/>
+            <form className="configuration-edit-password-form">
+              <label htmlFor="oldPassword" placeholder="Digite a sua senha atual">Senha atual</label>
+              <input
+                className="configuration-edit-input"
+                type="password"
+                name="oldPassword"
+                id="oldPassword"
+                value={oldPassword}
+                onChange={(event) => setOldPassword(event.target.value)}
+              />
+              <label htmlFor="newPassword" placeholder="Digite a sua nova senha">Nova senha</label>
+              <input
+                className="configuration-edit-input"
+                type="password"
+                name="newPassword"
+                id="newPassword"
+                value={newPassword}
+                onChange={(event) => setNewPassword(event.target.value)}
+              />
+              <button type="submit" className="configuration-edit-password-button" onClick={() => { closeEditPasswordDialog() }}>Alterar senha</button>
+            </form>
           </dialog>
         }
     </div>

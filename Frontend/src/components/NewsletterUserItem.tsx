@@ -7,6 +7,7 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import api from "../services/api";
 import { FormEvent, useState } from "react";
 import { newsletterProps } from "./NewsletterItem";
+import DeleteDialog from "./DeleteDialog";
 
 interface newsletterItemProps {
   newsletter: newsletterProps;
@@ -21,6 +22,8 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
   const [description, setDescription] = useState(newsletter.description);
 
   async function deleteNewsletter() {
+    closeDeleteDialog();
+
     await api.delete("/delete_newsletter", {
       data: {"id": newsletter.id},
       withCredentials: true
@@ -109,15 +112,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
             }
         </div>
         {deleteDialogOpen &&
-          <dialog className="delete-newsletter-dialog">
-            <div className="delete-newsletter-dialog-content">
-              <h1>Você tem certeza em deletar sua newsletter</h1>
-              <div className="delete-newsletter-dialog-buttons">
-                <button className="delete-button-newsletter-dialog" onClick={deleteNewsletter}>Deletar</button>
-                <button className="cancel-button-newsletter-dialog" onClick={closeDeleteDialog}>Cancelar</button>
-              </div>
-            </div>
-          </dialog>
+          <DeleteDialog
+            title="Você tem certeza em deletar sua newsletter"
+            callbackDeletion={deleteNewsletter}
+            callbackCancel={closeDeleteDialog}
+          />
         }
     </div>
   )
