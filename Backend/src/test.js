@@ -1,17 +1,10 @@
-require('dotenv').config();
-const sendEmail = require("./email_service");
-const fs = require('fs');
-const path = require('path');
+const databaseManager = require('./components/database_manager.js');
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
-
-const filePath = path.join(__dirname, './htmltest.html');
-const source = fs.readFileSync(filePath, 'utf-8').toString();
-
-let email_options = {
-    from: process.env.EMAIL_USER,
-    to: "fabiooliveira2091@gmail.com",
-    subject: "email confirmation",
-    text: "hello",
-    html: source
+async function main() {
+    let result = await databaseManager.create_post_newsletter(prisma, 1, new Date(), new Date(), "helloo", "dkskdskdkdksdkkdskdks");
+    console.log(result);
 }
-sendEmail(email_options);
+
+main();

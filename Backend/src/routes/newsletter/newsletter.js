@@ -9,6 +9,7 @@ const newsletter_subscribe = require('./newsletter_routes/newsletter_subscribe.j
 const newsletter_unsubscribe = require('./newsletter_routes/newsletter_unsubscribe.js');
 const check_newsletter_subscription = require('./newsletter_routes/check_newsletter_subscription.js');
 const my_subscribed_newsletters = require('./newsletter_routes/my_subscribed_newsletters.js');
+const send_post = require('./newsletter_routes/send_post.js');
 
 
 module.exports = function (app, prisma, http_status) {
@@ -23,4 +24,5 @@ module.exports = function (app, prisma, http_status) {
     newsletter_unsubscribe(app, prisma, http_status);
     check_newsletter_subscription(app, prisma, http_status);
     my_subscribed_newsletters(app, prisma, http_status);
+    send_post(app, prisma, http_status);
 }
