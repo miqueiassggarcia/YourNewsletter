@@ -1,0 +1,16 @@
+.create-newsletter-post-container {
+  min-height: 78vh;
+  width: 100%;
+}
+
+.create-newsletter-post-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-newsletter-post-button {
+  margin: 0.5rem;
+  width: 20%;
+}

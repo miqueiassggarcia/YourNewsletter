@@ -8,14 +8,15 @@ import api from "../services/api";
 import { FormEvent, useState } from "react";
 import { newsletterProps } from "./NewsletterItem";
 import DeleteDialog from "./DeleteDialog";
+import { useNavigate } from "react-router-dom";
 
 interface newsletterItemProps {
   newsletter: newsletterProps;
-  userItem: boolean;
   callbackUpdate?: () => void;
+  callbackOpenPost: (id:number) => void;
 }
 
-const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem, callbackUpdate}) => {
+const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpdate, callbackOpenPost}) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>();
   const [editActive, setEditActive] = useState<boolean>();
   const [name, setName] = useState(newsletter.name);
@@ -78,7 +79,7 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
   const openEdit = () => setEditActive(true);
 
   return (
-    <div className="newsletter-item-container">
+    <div className="newsletter-item-container" onClick={() => callbackOpenPost(newsletter.id)}>
       <div className="content-newsletter-item" style={{width: "95%"}}>
         <div className="header-newsletter-item">
           {editActive ?

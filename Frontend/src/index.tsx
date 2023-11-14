@@ -18,6 +18,7 @@ import StaticSizePage from './pages/root/StaticSizePages';
 import DinamicSizePage from './pages/root/DinamicSizePages';
 import { UserSubscriptions } from './pages/newsletter/userSubscriptions';
 import ConfigurationPage from './pages/configuration/configurationPage';
+import CreateNewsletterPostPage from './pages/newsletter/createNewsletterPostPage';
 
 // const style = {"--primary-color": "white"} as React.CSSProperties;
 
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/user-subscriptions",
         element: <UserSubscriptions />
+      },
+      {
+        path: "/create-newsletter-post",
+        element: <CreateNewsletterPostPage />
       }
     ]
   },
