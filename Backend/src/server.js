@@ -14,6 +14,8 @@ const auth = require('./auth.js');
 
 const http_status = require('./components/http_status.js');
 
+const { ScheduleManager } = require('./components/schedule_manager.js');
+
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
@@ -44,6 +46,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
+
+const Schedule = new ScheduleManager(prisma);
+Schedule.check_unsent_posts();
 
 // rotas
 router_register(app, prisma, http_status);
