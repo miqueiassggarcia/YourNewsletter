@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest --runInBand --forceExit",
     "start": "nodemon ./src/server.js",
-    "start-server": "nodemon ./src/server.js"
+    "start-server": "node ./src/server.js"
   },
   "author": "",
   "license": "MIT",
