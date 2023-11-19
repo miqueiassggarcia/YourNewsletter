@@ -17,7 +17,7 @@ const http_status = require('./components/http_status.js');
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-let whitelist = process.env.WHITELIST.split(" ")
+// let whitelist = process.env.WHITELIST.split(" ")
 let corsOptions = {
   credentials: true,
   origin: function(origin, callback) {
