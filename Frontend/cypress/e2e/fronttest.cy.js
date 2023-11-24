@@ -1,7 +1,7 @@
 describe('template spec', () => {
 
     it ('Deve criar usuario usuario', () => {
-        cy.visit('http://localhost:3000')
+        cy.visit('http://52.67.148.62:3000/')
         
         cy.get('.home-container') 
         .find('.button-container')
@@ -39,7 +39,7 @@ describe('template spec', () => {
     })
 
     it ('Deve realizar login com o usuario', () => {
-        cy.visit('http://localhost:3000/authentication/singup')
+        cy.visit('http://52.67.148.62:3000/authentication/singup')
         
         cy.get('.float-div') 
         .find('.container-text')
@@ -98,7 +98,7 @@ describe('template spec', () => {
         cy.get('.container-search-newsletter') 
         .find('.wrapper-input-search-newsletter')
         .find('input')
-        .type('teste')
+        .type('apenas teste')
 
         cy.get('.container-search-newsletter') 
         .find('.wrapper-input-search-newsletter')
