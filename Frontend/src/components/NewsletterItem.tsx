@@ -87,7 +87,7 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
         </button>
         :
         <button type="button" className="subscribe-button-newsletter-item" onClick={changeSubscription}>
-          Se increver
+          Se inscrever
           <GoCrossReference size={20} style={{marginLeft: ".4rem"}}/>
         </button>
       }
