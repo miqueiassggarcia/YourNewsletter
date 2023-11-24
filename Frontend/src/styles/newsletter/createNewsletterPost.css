@@ -1,6 +1,7 @@
 .create-newsletter-post-container {
   min-height: 78vh;
   width: 100%;
+  background-color: #F9F9F9;
 }
 
 .create-newsletter-post-button-container {
@@ -13,4 +14,12 @@
 .create-newsletter-post-button {
   margin: 0.5rem;
   width: 20%;
+}
+
+.create-newsletter-post-back-button {
+  color: var(--text-dark-color);
+}
+
+.create-newsletter-post-back-button:hover {
+  opacity: .6;
 }
