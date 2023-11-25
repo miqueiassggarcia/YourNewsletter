@@ -8,7 +8,6 @@ import api from "../services/api";
 import { FormEvent, useState } from "react";
 import { newsletterProps } from "./NewsletterItem";
 import DeleteDialog from "./DeleteDialog";
-import { useNavigate } from "react-router-dom";
 
 interface newsletterItemProps {
   newsletter: newsletterProps;
