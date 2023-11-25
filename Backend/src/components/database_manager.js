@@ -5,7 +5,7 @@ async function user_have_newsletter(prisma, user_username, newsletter_id) {
             userUsername: user_username
         }
     })
-
+    
     return response != null;
 }
 
@@ -35,6 +35,16 @@ async function get_unsent_posts(prisma) {
             sent: false
         }
     })
+
+    return posts;
+}
+
+async function get_posts_from_newsletter(prisma, id_newsletter) {
+    let posts = await prisma.post.findMany({
+        where: {
+            id_newsletter: id_newsletter
+        }
+    });
 
     return posts;
 }
@@ -93,5 +103,6 @@ module.exports = {
     create_post_newsletter,
     get_unsent_posts,
     get_email_newsletter_subscribers,
-    mark_sent_post
+    mark_sent_post,
+    get_posts_from_newsletter
 };
