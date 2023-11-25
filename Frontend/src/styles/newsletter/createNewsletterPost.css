@@ -18,6 +18,7 @@
 
 .create-newsletter-post-back-button {
   color: var(--text-dark-color);
+  margin: .3em;
 }
 
 .create-newsletter-post-back-button:hover {

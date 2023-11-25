@@ -6,7 +6,6 @@ import "../../styles/newsletter/createNewsletterPost.css";
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { useNavigate } from "react-router-dom"
 import { relative } from 'path';
-import { postCacheProps } from './userNewslettersPage';
 
 export default function CreateNewsletterPostPage() {
   const navigate = useNavigate();
@@ -26,21 +25,22 @@ export default function CreateNewsletterPostPage() {
 
     unlayer?.exportHtml((data) => {
       const { design } = data;
-      localStorage.setItem("test", JSON.stringify(design));
-      // let localStorageDesign = localStorage.getItem("Newsletter");
-      // let currentDesign: postCacheProps = JSON.parse(localStorageDesign ? localStorageDesign : "");
-
-      // currentDesign.data = design;
-
-      // localStorage.setItem("Newsletter", JSON.stringify(currentDesign));
+      let currentId = localStorage.getItem("NewsletterIdEdited");
+      if(currentId) {
+        localStorage.setItem(`Newsletter-${currentId}`, JSON.stringify(design));
+      }
     });
   };
 
   const onReady: EmailEditorProps['onReady'] = (unlayer) => {
-    let localStorageDesign = localStorage.getItem("Newsletter")!;
-    // let currentDesign: postCacheProps = JSON.parse(localStorageDesign);
-    let currentDesign = JSON.parse(localStorage.getItem("test")!);
-    unlayer.loadDesign(currentDesign);
+    let currentId = localStorage.getItem("NewsletterIdEdited");
+    if(currentId) {
+      let currentDesign = localStorage.getItem(`Newsletter-${currentId}`);
+      if(currentDesign) {
+        let design = JSON.parse(currentDesign);
+        unlayer.loadDesign(design);
+      }
+    }
   };
 
   return (
@@ -48,7 +48,7 @@ export default function CreateNewsletterPostPage() {
       <AiOutlineArrowLeft size={30} className="create-newsletter-post-back-button" onClick={() => {saveDesign(); navigate(-1);}}/>
       <EmailEditor ref={emailEditorRef} onReady={onReady} />
       <div className='create-newsletter-post-button-container'>
-        <button className='create-newsletter-post-button' onClick={exportHtml}>Export HTML</button>
+        <button className='create-newsletter-post-button' onClick={exportHtml}>Definir Design</button>
       </div>
     </div>
   );

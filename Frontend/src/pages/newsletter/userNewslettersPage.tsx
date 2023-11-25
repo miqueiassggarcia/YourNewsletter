@@ -6,12 +6,6 @@ import "../../styles/newsletter/userNewsletters.css"
 import NewsletterUserItem from "../../components/NewsletterUserItem";
 import { AiOutlineArrowLeft, AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router";
-import { JSONTemplate } from "state/types/index";
-
-export interface postCacheProps {
-  newsletter_id?: number,
-  data?: JSONTemplate
-}
 
 export function UserNewslettersPage() {
   const navigate = useNavigate();
@@ -37,12 +31,7 @@ export function UserNewslettersPage() {
   }, [])
 
   function setStateOfTheCurrentPost() {
-    let postData: postCacheProps = {
-      "newsletter_id": newsletterSelectedId,
-      // "data": 
-    }
-    localStorage.setItem("Newsletter", JSON.stringify(postData));
-    console.log(JSON.parse(localStorage.getItem("Newsletter")!));
+    localStorage.setItem("NewsletterIdEdited", `${newsletterSelectedId}`);
   }
 
   return (
