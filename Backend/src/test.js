@@ -4,10 +4,11 @@ const prisma = new PrismaClient();
 
 async function main() {
     try{
-        let response = await dbm.get_posts_from_newsletter(prisma, 1);
-        for (let i = 0; i < response.length; i++) {
-            console.log(response[i]);
-        }
+        const post = await prisma.post.update({
+            
+        })
+
+        console.log(post);
     } catch (error) {
         console.log(error);
     }

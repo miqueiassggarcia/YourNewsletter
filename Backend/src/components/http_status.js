@@ -43,6 +43,18 @@ class HttpStatus {
     get_newsletter_deleted() {
         return this.create_status_return(StatusCodes.OK, "Newsletter deletada com sucesso");
     }
+
+    get_user_not_have_this_post() {
+        return this.create_status_return(StatusCodes.NOT_FOUND, "Usuário não possui o post");
+    }
+
+    get_post_subject_updated() {
+        return this.create_status_return(StatusCodes.OK, "Subject do post atualizado com sucesso");
+    }
+
+    get_post_has_already_been_sent() {
+        return this.create_status_return(StatusCodes.FORBIDDEN, "Permissão negada, pois o post já foi enviado");
+    }
 }
 
 
