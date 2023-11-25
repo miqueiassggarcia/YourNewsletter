@@ -9,7 +9,7 @@ async function user_have_newsletter(prisma, user_username, newsletter_id) {
     return response != null;
 }
 
-async function create_post_newsletter(prisma, newsletter_id, scheduling_date, subject, html) {
+async function create_post_newsletter(prisma, newsletter_id, scheduling_date, subject, style, html) {
     let response = await prisma.post.create({
         data: {
           id_nl: {
@@ -18,6 +18,7 @@ async function create_post_newsletter(prisma, newsletter_id, scheduling_date, su
           scheduling_date: scheduling_date,
           sent: false,
           subject: subject,
+          style: style,
           html: html,
         },
     });

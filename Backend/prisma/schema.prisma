@@ -60,5 +60,6 @@ model Post {
   send_date DateTime?
   sent Boolean
   subject String @db.VarChar(88)
+  style String?
   html String
 }

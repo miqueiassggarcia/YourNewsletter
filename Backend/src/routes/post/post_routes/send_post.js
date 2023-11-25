@@ -35,6 +35,7 @@ module.exports = function (app, prisma, http_status, schedule) {
                 req.body.id_newsletter, 
                 req.body.scheduling_date, 
                 req.body.subject, 
+                req.body.style,
                 req.body.html);
 
 
