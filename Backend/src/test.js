@@ -4,12 +4,7 @@ const prisma = new PrismaClient();
 
 async function main() {
     try{
-        let dayz = [];
-        if (dayz) {
-            console.log(true);
-        } else {
-            console.log(false);
-        }
+        await dbm.create_post_newsletter(prisma, 1, new Date(), new Date(), "test", "teste", "test");
     } catch (error) {
         console.log(error);
     }

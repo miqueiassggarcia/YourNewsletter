@@ -9,25 +9,21 @@ async function user_have_newsletter(prisma, user_username, newsletter_id) {
     return response != null;
 }
 
-async function create_post_newsletter(prisma, newsletter_id, scheduling_date, send_date, subject, html) {
-    await prisma.newsLetter.update({
-        where: {
-            id: newsletter_id
-        },
+async function create_post_newsletter(prisma, newsletter_id, scheduling_date, subject, html) {
+    let response = await prisma.post.create({
         data: {
-            newsletter_posts: {
-                create: {
-                    scheduling_date: scheduling_date,
-                    send_date: send_date,
-                    sent: false,
-                    subject: subject,
-                    html: html
-                }
-            }
-        }
+          id_nl: {
+            connect: { id: newsletter_id },
+          },
+          scheduling_date: scheduling_date,
+          sent: false,
+          subject: subject,
+          html: html,
+        },
     });
 
-    return true;
+
+    return response;
 }
 
 // return 
@@ -75,14 +71,15 @@ async function get_email_newsletter_subscribers(prisma, newsletter_id) {
 }
 
 
-async function mark_sent_post(prisma, id_post) {
+async function mark_sent_post(prisma, id_post, send_date) {
     try {
         await prisma.post.update({
             where: {
                 id: id_post
             },
             data: {
-                sent: true
+                sent: true,
+                send_date, send_date
             }
         });
     } catch (error) {

@@ -57,7 +57,7 @@ model Post {
   id_nl NewsLetter @relation(fields: [id_newsletter], references: [id])
   id_newsletter Int
   scheduling_date DateTime
-  send_date DateTime
+  send_date DateTime?
   sent Boolean
   subject String @db.VarChar(88)
   html String

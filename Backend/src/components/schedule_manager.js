@@ -14,24 +14,7 @@ class ScheduleManager {
         try {
             let posts = await dbm.get_unsent_posts(this.prisma);
             for (let i = 0; i < posts.length; i++) {
-                if (time.is_late(new Date(), posts[i].scheduling_date)) {
-                    await this.send_post(posts[i]);
-                } else {
-                    const task_date = new Date(posts[i].scheduling_date);
-                    const task = schedule.scheduleJob(task_date, async function (post) {
-                        await this.send_post(post);
-                        const id = this.tasks.findIndex((element) => {
-                            return element.id == post.id
-                        });
-                        if (id != -1) {
-                            this.tasks.splice(id, 1);
-                        }
-                    }.bind(null, posts[i]));
-                    this.tasks.push({
-                        id: posts[i].id,
-                        task: task
-                    })
-                }
+                await this.create_schedule(posts[i]);
             }
         } catch (error) {
             console.log(error);
@@ -43,6 +26,7 @@ class ScheduleManager {
         if (emails) {
             if (emails.length > 0) {
                 let to = emails.join(', ');
+                let send_date = new Date();
                 let email_options = {
                     from: process.env.EMAIL_USER,
                     to: to,
@@ -51,8 +35,34 @@ class ScheduleManager {
                 }
         
                 sendEmail(email_options);
-                await dbm.mark_sent_post(this.prisma, post.id);
+                await dbm.mark_sent_post(this.prisma, post.id, send_date);
+                return true;
             }
+        } else {
+            return false;
+        }
+    }
+
+    // espera
+    // {id: int, id_newsletter: int, scheduling_date: DateTime, sent: bool, subject: String, html: String}
+    async create_schedule(post) {
+        if (time.is_late(new Date(), post.scheduling_date)) {
+            await this.send_post(post);
+        } else {
+            const task_date = new Date(post.scheduling_date);
+            const task = schedule.scheduleJob(task_date, async function (_post, _schedule) {
+                await _schedule.send_post(_post);
+                const id = _schedule.tasks.findIndex((element) => {
+                    return element.id == _post.id
+                });
+                if (id != -1) {
+                    _schedule.tasks.splice(id, 1);
+                }
+            }.bind(null, post, this));
+            this.tasks.push({
+                id: post.id,
+                task: task
+            })
         }
     }
 }

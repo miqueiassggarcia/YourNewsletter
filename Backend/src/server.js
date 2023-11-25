@@ -10,6 +10,7 @@ const cookieParser = require('cookie-parser');
 const router_register = require('./routes/register.js');
 const router_login = require('./routes/login.js');
 const router_newsletter = require('./routes/newsletter/newsletter.js');
+const router_post = require('./routes/post/post.js');
 const auth = require('./auth.js');
 
 const http_status = require('./components/http_status.js');
@@ -54,6 +55,7 @@ Schedule.check_unsent_posts();
 router_register(app, prisma, http_status);
 router_login(app, prisma, http_status);
 router_newsletter(app, prisma, http_status);
+router_post(app, prisma, http_status, Schedule);
 auth(app, prisma, http_status);
 
 
