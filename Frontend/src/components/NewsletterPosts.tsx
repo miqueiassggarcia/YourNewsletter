@@ -4,13 +4,14 @@ import { AiFillEdit } from "react-icons/ai";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IoCalendar } from "react-icons/io5";
 import { FaCalendarDay } from "react-icons/fa";
+import { useEffect } from "react";
 
 export interface newsletterPostProps {
   id: number;
-  newsletterId: number;
-  schedulingDate: Date;
-  sendDate?: Date;
-  send: boolean;
+  id_newsletter: number;
+  scheduling_date: Date;
+  send_date: Date | null;
+  sent: boolean;
   subject: string;
   html: string;
   style: string;
@@ -18,14 +19,15 @@ export interface newsletterPostProps {
 
 interface newsletterPostsProps {
   newsletterPost: newsletterPostProps;
-  callbackCreate?: () => void;
 }
 
 interface dayNameProps {
   [key: number]: string
 }
 
-const NewsletterPosts: React.FC<newsletterPostsProps> = ({newsletterPost, callbackCreate}) => {
+const NewsletterPosts: React.FC<newsletterPostsProps> = ({newsletterPost}) => {
+  let date;
+  
   function currentDayName():string {
     let dayName: dayNameProps = {
       0: "Domingo",
@@ -37,26 +39,33 @@ const NewsletterPosts: React.FC<newsletterPostsProps> = ({newsletterPost, callba
       6: "Sábado"
     }
 
-    if(newsletterPost.sendDate) {
-      return dayName[newsletterPost.sendDate.getDay()];
+
+    if(newsletterPost.send_date !== null) {
+      date = new Date(newsletterPost.send_date);
+      return dayName[date.getDay()];
     } else {
-      return dayName[newsletterPost.schedulingDate.getDay()];
+      date = new Date(newsletterPost.scheduling_date);
+      return dayName[date.getDay()];
     }
   }
 
   function getTime() {
-    if(newsletterPost.sendDate) {
-      return `${newsletterPost.sendDate.getHours()}:${newsletterPost.sendDate.getMinutes()}:${newsletterPost.sendDate.getSeconds()}`
+    if(newsletterPost.send_date  !== null) {
+      date = new Date(newsletterPost.send_date);
+      return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`
     } else {
-      return `${newsletterPost.schedulingDate.getHours()}:${newsletterPost.schedulingDate.getMinutes()}:${newsletterPost.schedulingDate.getSeconds()}`
+      date = new Date(newsletterPost.scheduling_date);
+      return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`
     }
   }
 
   function getDate() {
-    if(newsletterPost.sendDate) {
-      return `${newsletterPost.sendDate.getDate()}/${newsletterPost.sendDate.getMonth()}/${newsletterPost.sendDate.getFullYear()}`
+    if(newsletterPost.send_date !== null) {
+      date = new Date(newsletterPost.send_date);
+      return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
     } else {
-      return `${newsletterPost.schedulingDate.getDate()}/${newsletterPost.schedulingDate.getMonth()}/${newsletterPost.schedulingDate.getFullYear()}`
+      date = new Date(newsletterPost.scheduling_date);
+      return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
     }
   }
 
@@ -65,7 +74,7 @@ const NewsletterPosts: React.FC<newsletterPostsProps> = ({newsletterPost, callba
       <h1 className="title-newsletter-post">{newsletterPost.subject}</h1>
       <div className="newsletter-post-content">
         <div className="description-newsletter-post">
-          {newsletterPost.sendDate ?
+          {newsletterPost.send_date ?
             <div className="state-newsletter-post">
               <BsFillCheckCircleFill className="sended-icon-newsletter-post" size={25} />
               <p>Post enviado</p>

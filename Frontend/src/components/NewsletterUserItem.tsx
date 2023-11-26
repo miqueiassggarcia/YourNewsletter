@@ -78,8 +78,8 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
   const openEdit = () => setEditActive(true);
 
   return (
-    <div className="newsletter-item-container" onClick={() => callbackOpenPost(newsletter.id)}>
-      <div className="content-newsletter-item" style={{width: "95%"}}>
+    <div className="newsletter-item-container">
+      <div className="content-newsletter-item" style={{width: "95%"}} onClick={() => callbackOpenPost(newsletter.id)}>
         <div className="header-newsletter-item">
           {editActive ?
               <input

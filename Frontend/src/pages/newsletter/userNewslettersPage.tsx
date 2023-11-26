@@ -5,83 +5,95 @@ import api from "../../services/api";
 import "../../styles/newsletter/userNewsletters.css"
 import NewsletterUserItem from "../../components/NewsletterUserItem";
 import { AiOutlineArrowLeft, AiOutlinePlus } from "react-icons/ai";
-import { useNavigate } from "react-router";
 import NewsletterPosts, { newsletterPostProps } from "../../components/NewsletterPosts";
+import FormCreatePost from "../../components/FormCreatePost";
 
 export function UserNewslettersPage() {
-  const navigate = useNavigate();
   const [newsletters, setNewsletters] = useState<newsletterProps[]>([]);
-  const [postsIsOpen, setPostIsOpen] = useState<boolean>(true);
-  const [newsletterSelectedId, setNewsletterSelectedId] = useState<number>();
+  const [postsIsOpen, setPostIsOpen] = useState<boolean>(false);
+  const [createIsOpen, setCreateIsOpen] = useState<boolean>(false);
+  const [newsletterSelectedId, setNewsletterSelectedId] = useState<number>(-1);
+  const [newsletterPosts, setNewsletterPosts] = useState<newsletterPostProps[]>([]);
 
-  async function getUserNewsletters() {
-    const newsletters = await api.get("get_my_newsletters", {
+  function getUserNewsletters() {
+    api.get("get_my_newsletters", {
       withCredentials: true,
-    });
-    setNewsletters(newsletters.data);
+    }).then((response) => {
+      setNewsletters(response.data);
+    }).catch((error) => {
+      alert(error);
+    })
   }
 
-  const openPosts = (id: number) => {
-    setPostIsOpen(true);
-    setNewsletterSelectedId(id);
-  }
-  const closePosts = () => setPostIsOpen(false);
+  useEffect(() => {
+    getNewsletterPosts(newsletterSelectedId);
+  }, [newsletterSelectedId])
 
+  function getNewsletterPosts(id: number) {
+    if(id !== -1) {
+      api.get(`get_posts_from_newsletter/?id_newsletter=${id}`, {
+        withCredentials: true,
+      }).then((response) => {
+        setNewsletterPosts(response.data);
+      }).catch((error) => {
+        alert(error);
+      })
+    }
+  }
+  
   useEffect(() => {
     getUserNewsletters();
   }, [])
 
-  function setStateOfTheCurrentPost() {
-    localStorage.setItem("NewsletterIdEdited", `${newsletterSelectedId}`);
+  const openPosts = async (id: number) => {
+    setPostIsOpen(true);
+    setNewsletterSelectedId(id);
   }
 
-  const newsletterPostData:newsletterPostProps = {
-    id: 1,
-    newsletterId: 1,
-    schedulingDate: new Date(1995, 11, 25, 20, 30, 0),
-    // sendDate: new Date(2000, 11, 1, 9, 30, 0),
-    send: false,
-    subject: "Minha newsletter",
-    html: "",
-    style: ""
-  }
+  const closePosts = () => setPostIsOpen(false);
 
-  const newsletterPostData1:newsletterPostProps = {
-    id: 1,
-    newsletterId: 1,
-    schedulingDate: new Date(1995, 11, 25, 20, 30, 0),
-    sendDate: new Date(2000, 11, 1, 9, 30, 0),
-    send: false,
-    subject: "Minha newsletter",
-    html: "",
-    style: ""
+  const openCreatePost = () => {
+    setCreateIsOpen(true);
   }
+  const closeCreatePost = () => {
+    setCreateIsOpen(false)
+    getNewsletterPosts(newsletterSelectedId);
+  };
+
 
   return (
-    <div className="container-user-newsletters">
-      {postsIsOpen ? 
-      <div className="create-newsletter-posts-container">
-        <AiOutlineArrowLeft size={30} className="create-newsletter-posts-back-button" onClick={closePosts}/>
-        <div className="list-newsletter-post">
-          {
-            <>
-              <NewsletterPosts newsletterPost={newsletterPostData} callbackCreate={() => {}} />
-              <NewsletterPosts newsletterPost={newsletterPostData1} callbackCreate={() => {}} />
-              <NewsletterPosts newsletterPost={newsletterPostData1} callbackCreate={() => {}} />
-            </>
-          }
-        </div>
-        <button className="create-newsletter-posts-button" onClick={() => {setStateOfTheCurrentPost(); navigate("/create-newsletter-post")}}>
-          Adicionar post
-          <AiOutlinePlus size={25} className="create-newsletter-posts-icon"/>
-        </button>
-      </div>
+    <div className="container-user-newsletters" style={createIsOpen ? {padding: 0}: {}}>
+      {createIsOpen ?
+        <>
+          <FormCreatePost newsletter_id={1} callbackCloseForm={closeCreatePost} />
+        </>
       :
-      <>
-        {newsletters.map((newsletter) => {
-          return <NewsletterUserItem key={newsletter.id} newsletter={newsletter} callbackUpdate={getUserNewsletters} callbackOpenPost={openPosts} />
-        })}
-      </>
+        <>
+          {postsIsOpen ? 
+          <div className="create-newsletter-posts-container">
+            <AiOutlineArrowLeft size={30} className="create-newsletter-posts-back-button" onClick={closePosts}/>
+            <div className="list-newsletter-post">
+              {
+                <>
+                  {newsletterPosts.map((newsletterPost) => {
+                    return <NewsletterPosts key={newsletterPost.id} newsletterPost={newsletterPost} />
+                  })}
+                </>
+              }
+            </div>
+            <button className="create-newsletter-posts-button" onClick={openCreatePost}>
+              Adicionar post
+              <AiOutlinePlus size={25} className="create-newsletter-posts-icon"/>
+            </button>
+          </div>
+          :
+          <>
+            {newsletters.map((newsletter) => {
+              return <NewsletterUserItem key={newsletter.id} newsletter={newsletter} callbackUpdate={getUserNewsletters} callbackOpenPost={openPosts} />
+            })}
+          </>
+          }
+        </>
       }
     </div>
   )

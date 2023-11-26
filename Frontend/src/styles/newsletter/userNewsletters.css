@@ -13,7 +13,8 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  padding-left: 11%;
 }
 
 .edit-newsletter-dialog {
