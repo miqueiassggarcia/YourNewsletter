@@ -1,0 +1,26 @@
+.create-newsletter-post-container {
+  min-height: 78vh;
+  width: 100%;
+  background-color: #F9F9F9;
+}
+
+.create-newsletter-post-button-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-newsletter-post-button {
+  margin: 0.5rem;
+  width: 20%;
+}
+
+.create-newsletter-post-back-button {
+  color: var(--text-dark-color);
+  margin: .3em;
+}
+
+.create-newsletter-post-back-button:hover {
+  opacity: .6;
+}

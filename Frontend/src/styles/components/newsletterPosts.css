@@ -1,0 +1,92 @@
+.newsletter-post-container {
+  width: 40%;
+  min-height: 23vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: start;
+  border-radius: 1rem;
+  margin: 1rem;
+  background-color: var(--secondary-color);
+}
+
+.title-newsletter-post {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.newsletter-post-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 2em;
+  padding-left: 2em;
+  padding-bottom: 2em;
+}
+
+.description-newsletter-post {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: start;
+}
+
+.state-newsletter-post {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.sended-icon-newsletter-post {
+  margin-right: .5em;
+  color: rgb(0, 255, 0);
+}
+
+.not-sended-icon-newsletter-post {
+  margin-right: .5em;
+  color: rgb(0, 0, 255);
+}
+
+.time-newsletter-post {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.time-icon-newsletter-post {
+  margin-right: .5em;
+}
+
+.date-icon-newsletter-post {
+  margin-right: .5em;
+}
+
+.day-newsletter-post {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.date-newsletter-post {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+
+.options-newsletter-post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-button-newsletter-post {
+  color: var(--red-color);
+  margin-bottom: 1rem;
+  &:hover {
+    color: var(--red-hover-color);
+  }
+}
