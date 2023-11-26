@@ -49,7 +49,7 @@ async function get_user_has_post(prisma, username, id_post) {
         },
       });
 
-    return post == true;
+    return post != null;
 }
 
 async function get_posts_from_newsletter(prisma, id_newsletter) {
