@@ -2,12 +2,14 @@ import { MdDeleteForever } from "react-icons/md";
 
 import "../styles/components/newsletterItem.css"
 import "../styles/components/newsletterUserItem.css"
-import { AiFillEdit } from "react-icons/ai";
+import { AiFillCloseCircle, AiFillEdit } from "react-icons/ai";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import api from "../services/api";
 import { FormEvent, useState } from "react";
 import { newsletterProps } from "./NewsletterItem";
 import DeleteDialog from "./DeleteDialog";
+import { FaShareAlt } from "react-icons/fa";
+import { GoCopy } from "react-icons/go";
 
 interface newsletterItemProps {
   newsletter: newsletterProps;
@@ -17,6 +19,7 @@ interface newsletterItemProps {
 
 const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpdate, callbackOpenPost}) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>();
+  const [shareDialogOpen, setShareDialogOpen] = useState<boolean>();
   const [editActive, setEditActive] = useState<boolean>();
   const [name, setName] = useState(newsletter.name);
   const [description, setDescription] = useState(newsletter.description);
@@ -76,6 +79,16 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
   const openDeleteDialog = () => setDeleteDialogOpen(true);
   const closeDeleteDialog = () => setDeleteDialogOpen(false);
   const openEdit = () => setEditActive(true);
+  const openShareDialog = () => setShareDialogOpen(true);
+  const closeShareDialog = () => setShareDialogOpen(false);
+
+  // const getTheCurrentUrl = () => {
+  //   alert(window.location.href);
+  // }
+
+  const generateShareUrl = ():string => {
+    return `http://52.67.148.62:3000/id=${newsletter.id}` 
+  }
 
   return (
     <div className="newsletter-item-container">
@@ -104,6 +117,7 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
           }
       </div>
         <div className="options-newsletter-item">
+            <FaShareAlt className="share-button-newsletter-item" onClick={openShareDialog} />
             <MdDeleteForever className="delete-button-newsletter-item" size={30} onClick={openDeleteDialog}/>
             {editActive ?
               <BsFillCheckCircleFill className="confirm-edit-button-newsletter-item" size={25} onClick={closeEdit} />
@@ -117,6 +131,18 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
             callbackDeletion={deleteNewsletter}
             callbackCancel={closeDeleteDialog}
           />
+        }
+        {shareDialogOpen &&
+          <dialog className="share-newsletter-dialog">
+            <div className="share-newsletter-dialog-content">
+            <AiFillCloseCircle size={24} className="close-button-share-newsletter" onClick={closeShareDialog}/>
+              <h1 className="share-newsletter-title-dialog">Use o link abaixo para compartilhar sua newsletter com quem quiser</h1>
+              <div className="share-newsletter-link-content">
+                <p className="share-newsletter-url">{generateShareUrl()}</p>
+                <GoCopy size={20} className="copy-button-share-newsletter" onClick={() => {navigator.clipboard.writeText(generateShareUrl())}}/>
+              </div>
+            </div>
+          </dialog>
         }
     </div>
   )
