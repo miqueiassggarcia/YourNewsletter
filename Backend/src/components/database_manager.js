@@ -134,6 +134,18 @@ async function update_post_subject(prisma, id_post, new_subject) {
     return true;
 }
 
+async function update_post_html(prisma, id_post, new_style, new_html) {
+    await prisma.post.update({
+        where: {
+            id: id_post
+        },
+        data: {
+            style: new_style,
+            html: new_html
+        }
+    })
+}
+
 module.exports = {
     user_have_newsletter,
     create_post_newsletter,
@@ -143,5 +155,6 @@ module.exports = {
     get_posts_from_newsletter,
     get_user_has_post,
     get_post_from_id,
-    update_post_subject
+    update_post_subject,
+    update_post_html
 };

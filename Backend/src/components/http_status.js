@@ -55,6 +55,10 @@ class HttpStatus {
     get_post_has_already_been_sent() {
         return this.create_status_return(StatusCodes.FORBIDDEN, "Permissão negada, pois o post já foi enviado");
     }
+
+    get_post_html_updated() {
+        return this.create_status_return(StatusCodes.OK, "Html do post atualizado com sucesso");
+    }
 }
 
 
