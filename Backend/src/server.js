@@ -9,10 +9,13 @@ const cookieParser = require('cookie-parser');
 
 const router_register = require('./routes/register.js');
 const router_login = require('./routes/login.js');
-const router_newsletter = require('./routes/newsletter.js');
+const router_newsletter = require('./routes/newsletter/newsletter.js');
+const router_post = require('./routes/post/post.js');
 const auth = require('./auth.js');
 
 const http_status = require('./components/http_status.js');
+
+const { ScheduleManager } = require('./components/schedule_manager.js');
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -45,10 +48,14 @@ app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(cookieParser());
 
+const Schedule = new ScheduleManager(prisma);
+Schedule.check_unsent_posts();
+
 // rotas
 router_register(app, prisma, http_status);
 router_login(app, prisma, http_status);
 router_newsletter(app, prisma, http_status);
+router_post(app, prisma, http_status, Schedule);
 auth(app, prisma, http_status);
 
 

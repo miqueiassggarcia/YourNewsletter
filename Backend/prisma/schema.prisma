@@ -40,6 +40,7 @@ model NewsLetter {
   name String @db.VarChar(255)
   description String @db.VarChar(255)
   newsletter_subscribers NewsletterSubscribers[]
+  newsletter_posts Post[]
 }
 
 model NewsletterSubscribers {
@@ -49,4 +50,16 @@ model NewsletterSubscribers {
   user_username String
 
   @@id([id_newsletter, user_username])
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  id_nl NewsLetter @relation(fields: [id_newsletter], references: [id])
+  id_newsletter Int
+  scheduling_date DateTime
+  send_date DateTime?
+  sent Boolean
+  subject String @db.VarChar(88)
+  style String?
+  html String
 }
