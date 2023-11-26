@@ -5,7 +5,7 @@ async function user_have_newsletter(prisma, user_username, newsletter_id) {
             userUsername: user_username
         }
     })
-
+    
     return response != null;
 }
 
@@ -37,6 +37,39 @@ async function get_unsent_posts(prisma) {
     })
 
     return posts;
+}
+
+async function get_user_has_post(prisma, username, id_post) {
+    const post = await prisma.post.findFirst({
+        where: {
+          id: id_post,
+          id_nl: {
+            userUsername: username,
+          },
+        },
+      });
+
+    return post != null;
+}
+
+async function get_posts_from_newsletter(prisma, id_newsletter) {
+    let posts = await prisma.post.findMany({
+        where: {
+            id_newsletter: id_newsletter
+        }
+    });
+
+    return posts;
+}
+
+async function get_post_from_id(prisma, id_post) {
+    let post = await prisma.post.findUnique({
+        where: {
+            id: id_post
+        }
+    });
+
+    return post;
 }
 
 // return 
@@ -88,10 +121,40 @@ async function mark_sent_post(prisma, id_post, send_date) {
     }
 }
 
+async function update_post_subject(prisma, id_post, new_subject) {
+    await prisma.post.update({
+        where: {
+            id: id_post
+        },
+        data: {
+            subject: new_subject
+        }
+    })
+
+    return true;
+}
+
+async function update_post_html(prisma, id_post, new_style, new_html) {
+    await prisma.post.update({
+        where: {
+            id: id_post
+        },
+        data: {
+            style: new_style,
+            html: new_html
+        }
+    })
+}
+
 module.exports = {
     user_have_newsletter,
     create_post_newsletter,
     get_unsent_posts,
     get_email_newsletter_subscribers,
-    mark_sent_post
+    mark_sent_post,
+    get_posts_from_newsletter,
+    get_user_has_post,
+    get_post_from_id,
+    update_post_subject,
+    update_post_html
 };
