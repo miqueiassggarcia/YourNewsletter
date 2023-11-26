@@ -29,7 +29,7 @@ module.exports = function (app, prisma, http_status, schedule) {
         }
     }, async (req, res, next) => {
         try {
-            let posts = await dbm.get_posts_from_newsletter(prisma, req.body.id_newsletter);
+            let posts = await dbm.get_posts_from_newsletter(prisma, parseInt(req.query.id_newsletter));
             return res.status(200).json(posts);
         } catch (error) {
             console.log(error);

@@ -146,6 +146,32 @@ async function update_post_html(prisma, id_post, new_style, new_html) {
     })
 }
 
+async function get_newsletter_recommendations(prisma, max_newsletters) {
+    const inscricoes = await prisma.newsLetter.findMany({
+        include: {
+            _count: {
+                select: {
+                    newsletter_subscribers: true
+                }
+            } 
+        },
+        orderBy: {
+            newsletter_subscribers: {
+                _count: 'desc'
+            }
+        },
+        take: max_newsletters
+    });
+
+    for (let i = 0; i < inscricoes.length; i++) {
+        let newsletter_subscribers = inscricoes[i]["_count"]["newsletter_subscribers"];
+        delete inscricoes[i]["_count"];
+        inscricoes[i]["newsletter_subscribers"] = newsletter_subscribers;
+    }
+
+    return inscricoes
+}
+
 module.exports = {
     user_have_newsletter,
     create_post_newsletter,
@@ -156,5 +182,6 @@ module.exports = {
     get_user_has_post,
     get_post_from_id,
     update_post_subject,
-    update_post_html
+    update_post_html,
+    get_newsletter_recommendations
 };

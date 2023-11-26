@@ -4,11 +4,27 @@ const prisma = new PrismaClient();
 
 async function main() {
     try{
-        const post = await prisma.post.update({
-            
-        })
+        const inscricoes = await prisma.newsLetter.findMany({
+            include: {
+                _count: {
+                    select: {
+                        newsletter_subscribers: true
+                    }
+                } 
+            },
+            orderBy: {
+                newsletter_subscribers: {
+                    _count: 'desc'
+                }
+            },
+            take: 10
+        });
 
-        console.log(post);
+        console.log(inscricoes)
+        for (let i = 0; i < inscricoes.length; i++) {
+            console.log(inscricoes[i]);
+        }
+        
     } catch (error) {
         console.log(error);
     }
