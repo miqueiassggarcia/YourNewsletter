@@ -14,7 +14,7 @@ module.exports = function (app, prisma, http_status, schedule) {
     }, async (req, res, next) => {
         // verifica se o usuário tem esse post
         try {
-            let result = await dbm.get_user_has_post(prisma, req.user.username, req.body.id_post);
+            let result = await dbm.get_user_has_post(prisma, req.user.username, parseInt(req.body.id_post));
             if (result) {
                 next();
             } else {
