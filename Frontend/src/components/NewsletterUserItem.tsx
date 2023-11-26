@@ -7,16 +7,17 @@ import { BsFillCheckCircleFill } from "react-icons/bs";
 import api from "../services/api";
 import { FormEvent, useState } from "react";
 import { newsletterProps } from "./NewsletterItem";
+import DeleteDialog from "./DeleteDialog";
 import { FaShareAlt } from "react-icons/fa";
 import { GoCopy } from "react-icons/go";
 
 interface newsletterItemProps {
   newsletter: newsletterProps;
-  userItem: boolean;
   callbackUpdate?: () => void;
+  callbackOpenPost: (id:number) => void;
 }
 
-const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem, callbackUpdate}) => {
+const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpdate, callbackOpenPost}) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>();
   const [shareDialogOpen, setShareDialogOpen] = useState<boolean>();
   const [editActive, setEditActive] = useState<boolean>();
@@ -24,6 +25,8 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
   const [description, setDescription] = useState(newsletter.description);
 
   async function deleteNewsletter() {
+    closeDeleteDialog();
+
     await api.delete("/delete_newsletter", {
       data: {"id": newsletter.id},
       withCredentials: true
@@ -89,7 +92,7 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
 
   return (
     <div className="newsletter-item-container">
-      <div className="content-newsletter-item" style={{width: "95%"}}>
+      <div className="content-newsletter-item" style={{width: "95%"}} onClick={() => callbackOpenPost(newsletter.id)}>
         <div className="header-newsletter-item">
           {editActive ?
               <input
@@ -123,15 +126,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
             }
         </div>
         {deleteDialogOpen &&
-          <dialog className="delete-newsletter-dialog">
-            <div className="delete-newsletter-dialog-content">
-              <h1>Você tem certeza em deletar sua newsletter</h1>
-              <div className="delete-newsletter-dialog-buttons">
-                <button className="delete-button-newsletter-dialog" onClick={deleteNewsletter}>Deletar</button>
-                <button className="cancel-button-newsletter-dialog" onClick={closeDeleteDialog}>Cancelar</button>
-              </div>
-            </div>
-          </dialog>
+          <DeleteDialog
+            title="Você tem certeza em deletar sua newsletter"
+            callbackDeletion={deleteNewsletter}
+            callbackCancel={closeDeleteDialog}
+          />
         }
         {shareDialogOpen &&
           <dialog className="share-newsletter-dialog">
