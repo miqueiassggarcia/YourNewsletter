@@ -169,7 +169,7 @@ async function get_newsletter_recommendations(prisma, max_newsletters) {
         newsletters[i]["newsletter_subscribers"] = newsletter_subscribers;
     }
 
-    return inscricoes
+    return newsletters
 }
 
 async function get_newsletter_from_id(prisma, id_newsletter) {
