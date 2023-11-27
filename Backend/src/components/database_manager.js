@@ -146,28 +146,24 @@ async function update_post_html(prisma, id_post, new_style, new_html) {
     })
 }
 
-async function get_newsletter_recommendations(prisma, max_newsletters) {
+async function get_newsletter_recommendations(prisma, max_newsletters, username) {
     const newsletters = await prisma.newsLetter.findMany({
-        include: {
-            _count: {
-                select: {
-                    newsletter_subscribers: true
-                }
-            } 
-        },
-        orderBy: {
-            newsletter_subscribers: {
-                _count: 'desc'
+        where: {
+            NOT: {
+                userUsername: username
             }
         },
+        orderBy: [
+            {
+                subscribers_total: 'desc'
+            },
+            {
+                posts_total: 'desc'
+            }
+        ],
         take: max_newsletters
     });
 
-    for (let i = 0; i < newsletters.length; i++) {
-        let newsletter_subscribers = newsletters[i]["_count"]["newsletter_subscribers"];
-        delete newsletters[i]["_count"];
-        newsletters[i]["newsletter_subscribers"] = newsletter_subscribers;
-    }
 
     return newsletters
 }

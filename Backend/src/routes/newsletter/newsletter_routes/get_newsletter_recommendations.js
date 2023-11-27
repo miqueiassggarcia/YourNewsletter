@@ -13,7 +13,7 @@ module.exports = function (app, prisma, http_status) {
         }
     }, async (req, res, next) => {
         try {
-            let newsletters = await dbm.get_newsletter_recommendations(prisma, parseInt(req.query.max_newsletters));
+            let newsletters = await dbm.get_newsletter_recommendations(prisma, parseInt(req.query.max_newsletters), req.user.username);
             return res.status(200).json(newsletters);
         } catch (error) {
             console.log(error);
