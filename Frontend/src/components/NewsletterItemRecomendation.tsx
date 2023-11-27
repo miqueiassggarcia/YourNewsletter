@@ -11,7 +11,7 @@ export interface newsletterRecomendationProps {
   userUsername: string;
   name: string;
   description: string;
-  newsletter_subscribers: string;
+  newsletter_subscribers: number;
 }
 
 interface newsletterRecomendationItemProps {
@@ -53,6 +53,8 @@ const NewsletterRecomendationItem: React.FC<newsletterRecomendationItemProps> = 
       .then(() => {
         if(callbackSubscribe) {
           callbackSubscribe()
+          setIsSubscribed(false);
+          newsletter.newsletter_subscribers = newsletter.newsletter_subscribers - 1;
         } else {
           setIsSubscribed(false);
         }
@@ -64,7 +66,6 @@ const NewsletterRecomendationItem: React.FC<newsletterRecomendationItemProps> = 
           navigate("/authentication/singin");
         }
       })
-      setIsSubscribed(false);
     } else {
       api.post("newsletter_subscribe",
         {
@@ -76,6 +77,7 @@ const NewsletterRecomendationItem: React.FC<newsletterRecomendationItemProps> = 
       )
       .then(() => {
         setIsSubscribed(true);
+        newsletter.newsletter_subscribers = newsletter.newsletter_subscribers + 1;
       })
       .catch((error) => {
         if(error.response.status === 401) {

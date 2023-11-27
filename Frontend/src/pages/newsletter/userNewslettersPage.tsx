@@ -24,7 +24,7 @@ export function UserNewslettersPage() {
       setNewsletters(response.data);
     }).catch((error) => {
       if(error.response.status === 401) {
-        localStorage.removeItem("logged");
+        localStorage.removeItem("validate");
         alert("Sua sessão expirou");
         navigate("/authentication/singin");
       }
@@ -43,7 +43,7 @@ export function UserNewslettersPage() {
         setNewsletterPosts(response.data);
       }).catch((error) => {
         if(error.response.status === 401) {
-          localStorage.removeItem("logged");
+          localStorage.removeItem("validate");
           alert("Sua sessão expirou");
           navigate("/authentication/singin");
         }

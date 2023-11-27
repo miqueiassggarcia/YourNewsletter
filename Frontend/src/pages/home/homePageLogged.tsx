@@ -23,6 +23,7 @@ export function HomePageLogged() {
       withCredentials: true
     }).then((response) => {
       setNewsletterRecomendations(response.data)
+      console.log(response.data)
     }).catch((error) => {
       alert(error)
     })
@@ -38,10 +39,14 @@ export function HomePageLogged() {
   
   return (
     <div className="home-logged-container">
-      <h1>Encontre as melhores newsletter aqui</h1>
+      <h1 style={{marginTop: "1rem", marginBottom: "1rem"}}>Encontre as melhores newsletter aqui</h1>
       {
         newsletterRecomendations.map((newsletter) => {
-          return <NewsletterRecomendationItem key={newsletter.id} newsletter={newsletter} callbackSubscribe={() => {}}/>
+          if(newsletter.userUsername !== localStorage.getItem("username")) {
+            return <NewsletterRecomendationItem key={newsletter.id} newsletter={newsletter} callbackSubscribe={() => {}}/>
+          } else {
+            return <></>
+          }
         })
       }
     </div>
