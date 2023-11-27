@@ -86,6 +86,9 @@ export function UserNewslettersPage() {
               {
                 <>
                   {newsletterPosts.map((newsletterPost) => {
+                    if (newsletterPost.subject.length > 25) {
+                      newsletterPost.subject = newsletterPost.subject.replace(/(.{25})/g, '$1\n');
+                    }
                     return <NewsletterPosts key={newsletterPost.id} newsletterPost={newsletterPost} />
                   })}
                 </>
@@ -98,6 +101,14 @@ export function UserNewslettersPage() {
           </div>
           :
           <>
+            {newsletters.length < 1 ?
+              <>
+                <h1 style={{marginBottom: "1rem"}}>Aqui aparecerão suas newsletters</h1>
+                <h1>Crie a sua já</h1>
+              </>
+            :
+              <></>
+            }
             {newsletters.map((newsletter) => {
               return <NewsletterUserItem key={newsletter.id} newsletter={newsletter} callbackUpdate={getUserNewsletters} callbackOpenPost={openPosts} />
             })}

@@ -17,7 +17,7 @@ export function UserSubscriptions() {
     })
     .catch((error) => {
       if(error.response.status === 401) {
-        localStorage.removeItem("logged");
+        localStorage.removeItem("validate");
         alert("Sua sessão expirou");
         navigate("/authentication/singin");
       }

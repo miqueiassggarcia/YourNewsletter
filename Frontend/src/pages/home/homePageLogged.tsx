@@ -24,9 +24,13 @@ export function HomePageLogged() {
       setNewsletterRecomendations(response.data)
       console.log(response.data)
     }).catch((error) => {
-      alert(error)
+      if(error.response.status === 401) {
+        localStorage.removeItem("validate");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
+      }
     })
-  }, [])
+  }, [navigate])
   
   return (
     <div className="home-logged-container">

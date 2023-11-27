@@ -18,7 +18,7 @@ export function CreateNewsletterPage() {
     const logged = localStorage.getItem("validate");
 
     if(!logged) {
-      navigate("/")
+      navigate("/authentication/singin");
     }
   }, [navigate])
 
@@ -39,7 +39,7 @@ export function CreateNewsletterPage() {
         setDialogOpen(true);
       }).catch((error) => {
         if(error.response.status === 401) {
-          localStorage.removeItem("logged");
+          localStorage.removeItem("validate");
           alert("Sua sessão expirou");
           navigate("/authentication/singin");
         }

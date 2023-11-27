@@ -5,6 +5,7 @@
   align-items: center;
   flex-direction: column;
   justify-content: start;
+  overflow-wrap: break-word;
   border-radius: 1rem;
   margin: 1rem;
   background-color: var(--secondary-color);

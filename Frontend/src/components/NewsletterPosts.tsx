@@ -70,7 +70,7 @@ const NewsletterPosts: React.FC<newsletterPostsProps> = ({newsletterPost}) => {
 
   return (
     <div className="newsletter-post-container">
-      <h1 className="title-newsletter-post">{newsletterPost.subject}</h1>
+      <h1 className="title-newsletter-post" style={newsletterPost.subject.length > 25 ? {marginLeft: "2rem"} : {}}>{newsletterPost.subject}</h1>
       <div className="newsletter-post-content">
         <div className="description-newsletter-post">
           {newsletterPost.send_date ?
