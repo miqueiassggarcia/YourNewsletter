@@ -9,7 +9,6 @@
   margin-bottom: 1rem;
   background-color: var(--secondary-color);
   overflow-wrap: break-word;
-  cursor: pointer;
 }
 
 .content-newsletter-item {
@@ -34,12 +33,14 @@
 
 .title-newsletter-item {
   color: var(--text-light-color);
+  cursor: pointer;
 }
 
 .description-newsletter-item {
   color: var(--text-light-color);
   margin-top: 1rem;
   font-size: .8rem;
+  cursor: pointer;
 }
 
 .subscribe-button-newsletter-item {
@@ -104,4 +105,13 @@
   &:hover, &:focus, &:active {
     background-color: var(--red-hover-color);
   }
+}
+
+.newsletter-recomendation-content {
+  display: flex;
+  width: 30%;
+  height: 15vh;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
 }

@@ -32,10 +32,6 @@ const router = createBrowserRouter([
         element: <HomePage />
       },
       {
-        path: "/home",
-        element: <HomePageLogged />
-      },
-      {
         path: "/configuration",
         element: <ConfigurationPage />
       }
@@ -46,6 +42,10 @@ const router = createBrowserRouter([
     element: <DinamicSizePage />,
     errorElement: <Error404Page />,
     children: [
+      {
+        path: "/home",
+        element: <HomePageLogged />
+      },
       {
         path: "/create-newsletter",
         element: <CreateNewsletterPage />
