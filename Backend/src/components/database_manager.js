@@ -113,7 +113,7 @@ async function mark_sent_post(prisma, id_post, send_date) {
             },
             data: {
                 sent: true,
-                send_date, send_date
+                send_date: send_date
             }
         });
     } catch (error) {
@@ -183,6 +183,46 @@ async function get_newsletter_from_id(prisma, id_newsletter) {
 }
 
 
+async function increment_newsletter_subscribe(prisma, id_newsletter) {
+    await prisma.newsLetter.update({
+        where: {
+            id: id_newsletter
+        },
+        data: {
+            subscribers_total: {
+                increment: 1
+            }
+        }
+    })
+}
+
+
+async function decrement_newsletter_subscribe(prisma, id_newsletter) {
+    await prisma.newsLetter.update({
+        where: {
+            id: id_newsletter
+        },
+        data: {
+            subscribers_total: {
+                increment: -1
+            }
+        }
+    })
+}
+
+async function increment_newsletter_post(prisma, id_newsletter) {
+    await prisma.newsLetter.update({
+        where: {
+            id: id_newsletter
+        },
+        data: {
+            posts_total: {
+                increment: 1
+            }
+        }
+    })
+}
+
 module.exports = {
     user_have_newsletter,
     create_post_newsletter,
@@ -195,5 +235,8 @@ module.exports = {
     update_post_subject,
     update_post_html,
     get_newsletter_recommendations,
-    get_newsletter_from_id
+    get_newsletter_from_id,
+    increment_newsletter_subscribe,
+    decrement_newsletter_subscribe,
+    increment_newsletter_post
 };

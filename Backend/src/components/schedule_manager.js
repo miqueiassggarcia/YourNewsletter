@@ -38,6 +38,7 @@ class ScheduleManager {
             }
         }
         await dbm.mark_sent_post(this.prisma, post.id, send_date);
+        await dbm.increment_newsletter_post(this.prisma, post.id_newsletter);
     }
 
     // espera
