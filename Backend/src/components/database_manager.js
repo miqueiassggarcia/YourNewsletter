@@ -147,7 +147,7 @@ async function update_post_html(prisma, id_post, new_style, new_html) {
 }
 
 async function get_newsletter_recommendations(prisma, max_newsletters) {
-    const inscricoes = await prisma.newsLetter.findMany({
+    const newsletters = await prisma.newsLetter.findMany({
         include: {
             _count: {
                 select: {
@@ -163,13 +163,23 @@ async function get_newsletter_recommendations(prisma, max_newsletters) {
         take: max_newsletters
     });
 
-    for (let i = 0; i < inscricoes.length; i++) {
-        let newsletter_subscribers = inscricoes[i]["_count"]["newsletter_subscribers"];
-        delete inscricoes[i]["_count"];
-        inscricoes[i]["newsletter_subscribers"] = newsletter_subscribers;
+    for (let i = 0; i < newsletters.length; i++) {
+        let newsletter_subscribers = newsletters[i]["_count"]["newsletter_subscribers"];
+        delete newsletters[i]["_count"];
+        newsletters[i]["newsletter_subscribers"] = newsletter_subscribers;
     }
 
     return inscricoes
+}
+
+async function get_newsletter_from_id(prisma, id_newsletter) {
+    const newsletter = await prisma.newsLetter.findFirst({
+        where: {
+            id: id_newsletter
+        }
+    })
+
+    return newsletter;
 }
 
 module.exports = {
@@ -183,5 +193,6 @@ module.exports = {
     get_post_from_id,
     update_post_subject,
     update_post_html,
-    get_newsletter_recommendations
+    get_newsletter_recommendations,
+    get_newsletter_from_id
 };
