@@ -3,8 +3,10 @@ import "../../styles/newsletter/searchNewsletter.css"
 import { FormEvent, useState } from "react"
 import api from "../../services/api";
 import NewsletterItem, { newsletterProps } from "../../components/NewsletterItem";
+import { useNavigate } from "react-router-dom";
 
 export function SearchNewsletterPage() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [searched, setSearched] = useState(false);
   const [newsletters, setNewsletters] = useState<newsletterProps[]>([]);
@@ -21,7 +23,11 @@ export function SearchNewsletterPage() {
       setNewsletters(response.data);
     })
     .catch((error) => {
-      alert(error);
+      if(error.response.status === 401) {
+        localStorage.removeItem("logged");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
+      }
     });
 
     setSearched(true);

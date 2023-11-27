@@ -15,8 +15,9 @@ export function CreateNewsletterPage() {
   const [newsletterDescriptionFeedback, setNewsletterDescriptionFeedback] = useState("");
 
   useEffect(() => {
-    const validate = localStorage.getItem("validate");
-    if(!validate) {
+    const logged = localStorage.getItem("validate");
+
+    if(!logged) {
       navigate("/")
     }
   }, [navigate])
@@ -37,8 +38,11 @@ export function CreateNewsletterPage() {
       ).then(() => {
         setDialogOpen(true);
       }).catch((error) => {
-        alert(error.response.data.message)
-        alert(error.response.status)
+        if(error.response.status === 401) {
+          localStorage.removeItem("logged");
+          alert("Sua sessão expirou");
+          navigate("/authentication/singin");
+        }
       })
     }
   }

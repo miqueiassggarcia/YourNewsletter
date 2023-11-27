@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import "../../styles/newsletter/userSubscriptions.css"
 import NewsletterItem, { newsletterProps } from "../../components/NewsletterItem";
 import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 export function UserSubscriptions() {
+  const navigate = useNavigate();
   const [newsletters, setNewsletters] = useState<newsletterProps[]>([]);
 
   function getUserSubscriptionsNewsletters() {
@@ -14,7 +16,11 @@ export function UserSubscriptions() {
       setNewsletters(response.data);
     })
     .catch((error) => {
-      alert(error);
+      if(error.response.status === 401) {
+        localStorage.removeItem("logged");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
+      }
     })
   }
 

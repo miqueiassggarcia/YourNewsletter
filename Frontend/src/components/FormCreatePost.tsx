@@ -3,6 +3,7 @@ import { FaCheckCircle, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import "../styles/components/formCreatePost.css";
 import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
 import api from "../services/api";
+import { useNavigate } from "react-router-dom";
 
 interface formCreatePostProps {
   newsletter_id: number;
@@ -10,6 +11,7 @@ interface formCreatePostProps {
 }
 
 const FormCreatePost: React.FC<formCreatePostProps> = ({newsletter_id, callbackCloseForm}) => {
+  const navigate = useNavigate();
   const formatTime = (date: Date) => {
     const hours = date.getHours().toString().padStart(2, '0');
     const minutes = date.getMinutes().toString().padStart(2, '0');
@@ -93,10 +95,13 @@ const FormCreatePost: React.FC<formCreatePostProps> = ({newsletter_id, callbackC
     {
       withCredentials: true
     }).then((response) => {
-      alert(response.data);
       callbackCloseForm();
     }).catch((error) => {
-      alert(error.response.statusText);
+      if(error.response.status === 401) {
+        localStorage.removeItem("validate");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
+      }
     })
   }
 

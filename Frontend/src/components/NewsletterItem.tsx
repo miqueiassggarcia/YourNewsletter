@@ -4,6 +4,7 @@ import "../styles/components/newsletterItem.css"
 import { AiFillCheckCircle } from "react-icons/ai";
 import api from "../services/api";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export interface newsletterProps {
   id: number;
@@ -18,6 +19,7 @@ interface newsletterItemProps {
 }
 
 const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpdate}) => {
+  const navigate = useNavigate();
   const [unsubscribeDialogOpen, setUnsubscribeDialogOpen] = useState<boolean>(false);
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
 
@@ -29,7 +31,11 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
       setIsSubscribed(response.data.message)
     })
     .catch((error) => {
-      alert(error)
+      if(error.response.status === 401) {
+        localStorage.removeItem("validate");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
+      }
     })
   }, [newsletter.id]);
 
@@ -51,7 +57,11 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
         }
       })
       .catch((error) => {
-        alert(error);
+        if(error.response.status === 401) {
+          localStorage.removeItem("validate");
+          alert("Sua sessão expirou");
+          navigate("/authentication/singin");
+        }
       })
       setIsSubscribed(false);
     } else {
@@ -67,7 +77,11 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
         setIsSubscribed(true);
       })
       .catch((error) => {
-        alert(error);
+        if(error.response.status === 401) {
+          localStorage.removeItem("validate");
+          alert("Sua sessão expirou");
+          navigate("/authentication/singin");
+        }
       })  
     }
   }

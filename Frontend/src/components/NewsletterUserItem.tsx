@@ -8,6 +8,7 @@ import api from "../services/api";
 import { FormEvent, useState } from "react";
 import { newsletterProps } from "./NewsletterItem";
 import DeleteDialog from "./DeleteDialog";
+import { useNavigate } from "react-router-dom";
 
 interface newsletterItemProps {
   newsletter: newsletterProps;
@@ -16,6 +17,7 @@ interface newsletterItemProps {
 }
 
 const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpdate, callbackOpenPost}) => {
+  const navigate = useNavigate();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>();
   const [editActive, setEditActive] = useState<boolean>();
   const [name, setName] = useState(newsletter.name);
@@ -33,7 +35,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
       callbackUpdate!();
     })
     .catch((error) => {
-      alert(error);
+      if(error.response.status === 401) {
+        localStorage.removeItem("validate");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
+      }
     });
   }
 
@@ -51,7 +57,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
       ).then(() => {
         callbackUpdate!();
       }).catch((error) => {
-        alert(error)
+        if(error.response.status === 401) {
+          localStorage.removeItem("validate");
+          alert("Sua sessão expirou");
+          navigate("/authentication/singin");
+        }
       })
     }
     
@@ -66,7 +76,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
       ).then(() => {
         callbackUpdate!();
       }).catch((error) => {
-        alert(error)
+        if(error.response.status === 401) {
+          localStorage.removeItem("validate");
+          alert("Sua sessão expirou");
+          navigate("/authentication/singin");
+        }
       })
     }
 
@@ -79,7 +93,7 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
 
   return (
     <div className="newsletter-item-container">
-      <div className="content-newsletter-item" style={{width: "95%"}} onClick={() => callbackOpenPost(newsletter.id)}>
+      <div className="content-newsletter-item" style={{width: "95%"}}>
         <div className="header-newsletter-item">
           {editActive ?
               <input
@@ -89,7 +103,7 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
                 onChange={(event) => setName(event.target.value)}
               />
             :
-              <h1 className="title-newsletter-item title-newsletter-item-edit">{newsletter.name}</h1>
+              <h1 className="title-newsletter-item title-newsletter-item-edit" onClick={() => callbackOpenPost(newsletter.id)}>{newsletter.name}</h1>
           }
         </div>
           {editActive ?
@@ -100,7 +114,7 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
               onChange={(event) => setDescription(event.target.value)}
             />
           :
-            <p className="description-newsletter-item  description-newsletter-item-edit">{newsletter.description}</p>
+            <p className="description-newsletter-item  description-newsletter-item-edit" onClick={() => callbackOpenPost(newsletter.id)}>{newsletter.description}</p>
           }
       </div>
         <div className="options-newsletter-item">

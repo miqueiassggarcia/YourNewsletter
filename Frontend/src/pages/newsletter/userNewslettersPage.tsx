@@ -7,8 +7,10 @@ import NewsletterUserItem from "../../components/NewsletterUserItem";
 import { AiOutlineArrowLeft, AiOutlinePlus } from "react-icons/ai";
 import NewsletterPosts, { newsletterPostProps } from "../../components/NewsletterPosts";
 import FormCreatePost from "../../components/FormCreatePost";
+import { useNavigate } from "react-router-dom";
 
 export function UserNewslettersPage() {
+  const navigate = useNavigate();
   const [newsletters, setNewsletters] = useState<newsletterProps[]>([]);
   const [postsIsOpen, setPostIsOpen] = useState<boolean>(false);
   const [createIsOpen, setCreateIsOpen] = useState<boolean>(false);
@@ -21,7 +23,11 @@ export function UserNewslettersPage() {
     }).then((response) => {
       setNewsletters(response.data);
     }).catch((error) => {
-      alert(error);
+      if(error.response.status === 401) {
+        localStorage.removeItem("logged");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
+      }
     })
   }
 
@@ -36,7 +42,11 @@ export function UserNewslettersPage() {
       }).then((response) => {
         setNewsletterPosts(response.data);
       }).catch((error) => {
-        alert(error);
+        if(error.response.status === 401) {
+          localStorage.removeItem("logged");
+          alert("Sua sessão expirou");
+          navigate("/authentication/singin");
+        }
       })
     }
   }
@@ -65,7 +75,7 @@ export function UserNewslettersPage() {
     <div className="container-user-newsletters" style={createIsOpen ? {padding: 0}: {}}>
       {createIsOpen ?
         <>
-          <FormCreatePost newsletter_id={1} callbackCloseForm={closeCreatePost} />
+          <FormCreatePost newsletter_id={newsletterSelectedId} callbackCloseForm={closeCreatePost} />
         </>
       :
         <>

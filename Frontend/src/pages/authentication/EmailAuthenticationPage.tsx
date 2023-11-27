@@ -50,6 +50,10 @@ export function EmailAuthentication() {
       if(!dialogOpen) {
         setDialogOpen(true);
         localStorage.setItem("validate", "validated user")
+        localStorage.removeItem("username")
+        localStorage.removeItem("first_name")
+        localStorage.removeItem("last_name")
+        localStorage.removeItem("email")
         await delay(1500);
         navigate("/");
       } else {

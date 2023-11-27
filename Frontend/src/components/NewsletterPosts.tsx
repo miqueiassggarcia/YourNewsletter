@@ -4,7 +4,6 @@ import { AiFillEdit } from "react-icons/ai";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IoCalendar } from "react-icons/io5";
 import { FaCalendarDay } from "react-icons/fa";
-import { useEffect } from "react";
 
 export interface newsletterPostProps {
   id: number;

@@ -17,17 +17,15 @@ export function SideBar({ active }: activeProps) {
   async function handleLogout() {
     await api.get("/logout")
     .then(() => {
-      localStorage.removeItem("username")
-      localStorage.removeItem("first_name")
-      localStorage.removeItem("last_name")
-      localStorage.removeItem("email")
-      localStorage.removeItem("validate")
+      localStorage.removeItem("validate");
       active()
       navigate("/")
     })
     .catch((error) => {
       if(error.response.status === 401) {
-        alert("Erro ao fazer logout, por favor, tente novamente")
+        localStorage.removeItem("validate");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
       }
     })
   }
