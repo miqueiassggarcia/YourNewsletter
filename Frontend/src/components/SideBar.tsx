@@ -1,11 +1,13 @@
 import { AiFillCloseCircle, AiFillHome, AiFillSetting } from "react-icons/ai"
 import { BiLogOut } from "react-icons/bi"
 import { IoNewspaperSharp } from "react-icons/io5"
+import { IoIosAddCircle } from "react-icons/io";
 import { MdMarkEmailRead } from "react-icons/md"
 
 import "../styles/components/sidebar.css"
 import api from "../services/api"
 import { useNavigate } from "react-router-dom"
+import { FaSearch } from "react-icons/fa";
 
 type activeProps = {
   active: () => void
@@ -17,17 +19,15 @@ export function SideBar({ active }: activeProps) {
   async function handleLogout() {
     await api.get("/logout")
     .then(() => {
-      localStorage.removeItem("username")
-      localStorage.removeItem("first_name")
-      localStorage.removeItem("last_name")
-      localStorage.removeItem("email")
-      localStorage.removeItem("validate")
+      localStorage.removeItem("validate");
       active()
       navigate("/")
     })
     .catch((error) => {
       if(error.response.status === 401) {
-        alert("Erro ao fazer logout, por favor, tente novamente")
+        localStorage.removeItem("validate");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
       }
     })
   }
@@ -45,6 +45,14 @@ export function SideBar({ active }: activeProps) {
         <div className="items-elements" onClick={() => {active(); navigate("/home")}}>
           <span>Home</span>
           <AiFillHome className="sidebar-items-icons" size={25}/>
+        </div>
+        <div className="items-elements" onClick={() => {active();  navigate("/create-newsletter")}}>
+          <span>Criar</span>
+          <IoIosAddCircle className="sidebar-items-icons" size={25}/>
+        </div>
+        <div className="items-elements" onClick={() => {active();  navigate("/search-newsletter")}}>
+          <span>Pesquisar</span>
+          <FaSearch className="sidebar-items-icons" size={25}/>
         </div>
         <div className="items-elements" onClick={() => {active();  navigate("/user-subscriptions")}}>
           <span>Inscrições</span>

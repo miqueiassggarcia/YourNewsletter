@@ -4,7 +4,6 @@ import { AiFillEdit } from "react-icons/ai";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import { IoCalendar } from "react-icons/io5";
 import { FaCalendarDay } from "react-icons/fa";
-import { useEffect } from "react";
 
 export interface newsletterPostProps {
   id: number;
@@ -71,7 +70,7 @@ const NewsletterPosts: React.FC<newsletterPostsProps> = ({newsletterPost}) => {
 
   return (
     <div className="newsletter-post-container">
-      <h1 className="title-newsletter-post">{newsletterPost.subject}</h1>
+      <h1 className="title-newsletter-post" style={newsletterPost.subject.length > 25 ? {marginLeft: "2rem"} : {}}>{newsletterPost.subject}</h1>
       <div className="newsletter-post-content">
         <div className="description-newsletter-post">
           {newsletterPost.send_date ?

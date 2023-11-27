@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import "../../styles/newsletter/userSubscriptions.css"
 import NewsletterItem, { newsletterProps } from "../../components/NewsletterItem";
 import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 export function UserSubscriptions() {
+  const navigate = useNavigate();
   const [newsletters, setNewsletters] = useState<newsletterProps[]>([]);
 
   function getUserSubscriptionsNewsletters() {
@@ -14,7 +16,11 @@ export function UserSubscriptions() {
       setNewsletters(response.data);
     })
     .catch((error) => {
-      alert(error);
+      if(error.response.status === 401) {
+        localStorage.removeItem("validate");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
+      }
     })
   }
 
@@ -24,6 +30,14 @@ export function UserSubscriptions() {
 
   return (
     <div className="container-subscriptions-newsletters">
+      {newsletters.length < 1 ?
+      <>
+        <h1 style={{marginBottom: "1rem"}}>Suas inscrições aparecerão aqui</h1>
+        <h1>Pesquise e encontre as melhores newsletters</h1>
+      </>
+        :
+        <></>
+      }
       {newsletters.map((newsletter) => {
         return <NewsletterItem key={newsletter.id} newsletter={newsletter} callbackUpdate={getUserSubscriptionsNewsletters} />
       })}

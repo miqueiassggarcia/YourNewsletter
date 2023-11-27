@@ -6,19 +6,21 @@ import api from "../services/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export interface newsletterProps {
+export interface newsletterRecomendationProps {
   id: number;
   userUsername: string;
   name: string;
   description: string;
+  posts_total: number;
+  subscribers_total: number;
 }
 
-interface newsletterItemProps {
-  newsletter: newsletterProps;
-  callbackUpdate?: () => void;
+interface newsletterRecomendationItemProps {
+  newsletter: newsletterRecomendationProps;
+  callbackSubscribe?: () => void;
 }
 
-const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpdate}) => {
+const NewsletterRecomendationItem: React.FC<newsletterRecomendationItemProps> = ({newsletter, callbackSubscribe}) => {
   const navigate = useNavigate();
   const [unsubscribeDialogOpen, setUnsubscribeDialogOpen] = useState<boolean>(false);
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
@@ -50,8 +52,10 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
         }
       )
       .then(() => {
-        if(callbackUpdate) {
-          callbackUpdate()
+        if(callbackSubscribe) {
+          callbackSubscribe()
+          setIsSubscribed(false);
+          newsletter.subscribers_total = newsletter.subscribers_total - 1;
         } else {
           setIsSubscribed(false);
         }
@@ -63,7 +67,6 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
           navigate("/authentication/singin");
         }
       })
-      setIsSubscribed(false);
     } else {
       api.post("newsletter_subscribe",
         {
@@ -75,6 +78,7 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
       )
       .then(() => {
         setIsSubscribed(true);
+        newsletter.subscribers_total = newsletter.subscribers_total + 1;
       })
       .catch((error) => {
         if(error.response.status === 401) {
@@ -87,25 +91,28 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
   }
 
   return (
-    <div className="newsletter-item-container">
+    <div className="newsletter-item-container" style={{marginLeft: "7%", width: "40%"}}>
       <div className="content-newsletter-item">
         <div className="header-newsletter-item">
           <h1 className="title-newsletter-item">{newsletter.name}</h1>
         </div>
         <p className="description-newsletter-item">{newsletter.description}</p>
-      </div>  
-      {isSubscribed ?
-        <button type="button" className="subscribed-button-newsletter-item" onClick={() => setUnsubscribeDialogOpen(true)}>
-          Inscrito
-          <AiFillCheckCircle size={20} style={{marginLeft: ".4rem"}}/>
-        </button>
-        :
-        <button type="button" className="subscribe-button-newsletter-item" onClick={changeSubscription}>
-          Se increver
-          <GoCrossReference size={20} style={{marginLeft: ".4rem"}}/>
-        </button>
-      }
-      {unsubscribeDialogOpen &&
+      </div>
+      <div className="newsletter-recomendation-content">
+        <p className="subscribers-newsletter-recomendation">{newsletter.subscribers_total} {newsletter.subscribers_total !== 1 ? "inscritos" : "inscrito"}</p>
+        <p className="posts-newsletter-recomendation">{newsletter.posts_total} {newsletter.posts_total !== 1 ? "posts" : "post"}</p>
+        {isSubscribed ?
+          <button type="button" className="subscribed-button-newsletter-item" onClick={() => setUnsubscribeDialogOpen(true)} style={{width: "100%"}} >
+            Inscrito
+            <AiFillCheckCircle size={20} style={{marginLeft: ".4rem"}}/>
+          </button>
+          :
+          <button type="button" className="subscribe-button-newsletter-item" onClick={changeSubscription} style={{width: "100%"}}>
+            Se increver
+            <GoCrossReference size={20} style={{marginLeft: ".4rem"}}/>
+          </button>
+        }
+        {unsubscribeDialogOpen &&
           <dialog className="unsubscribe-newsletter-dialog">
             <div className="unsubscribe-newsletter-dialog-content">
               <h1>Desinscrever da newsletter</h1>
@@ -116,8 +123,9 @@ const NewsletterItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpda
             </div>
           </dialog>
         }
+      </div>
     </div>
   )
 }
 
-export default NewsletterItem;
+export default NewsletterRecomendationItem;
