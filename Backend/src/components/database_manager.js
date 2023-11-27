@@ -182,6 +182,7 @@ async function get_newsletter_from_id(prisma, id_newsletter) {
     return newsletter;
 }
 
+
 module.exports = {
     user_have_newsletter,
     create_post_newsletter,

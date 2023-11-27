@@ -43,6 +43,7 @@ module.exports = function (app, prisma, http_status, schedule) {
                 await schedule.send_post(post);
                 return res.status(200).json({"message": "Post enviado com sucesso"});
             } else if (req.body.send_immediately == false) {
+
                 await schedule.create_schedule(post);
                 return res.status(200).json({"message": "Post agendado com sucesso"});
             }

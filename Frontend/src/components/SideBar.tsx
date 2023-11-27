@@ -54,7 +54,7 @@ export function SideBar({ active }: activeProps) {
           <span>Newsletters</span>
           <IoNewspaperSharp className="sidebar-items-icons" size={25}/>
         </div>
-        <div className="items-elements">
+        <div className="items-elements" onClick={() => {active(); navigate("/configuration")}}>
           <span>Configurações</span>
           <AiFillSetting className="sidebar-items-icons" size={25}/>
         </div>
