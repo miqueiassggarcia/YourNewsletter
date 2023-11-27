@@ -23,10 +23,10 @@ class ScheduleManager {
 
     async send_post(post) {
         let emails = await dbm.get_email_newsletter_subscribers(this.prisma, post.id_newsletter);
+        let send_date = new Date();
         if (emails) {
             if (emails.length > 0) {
                 let to = emails.join(', ');
-                let send_date = new Date();
                 let email_options = {
                     from: process.env.EMAIL_USER,
                     to: to,
@@ -35,12 +35,9 @@ class ScheduleManager {
                 }
         
                 sendEmail(email_options);
-                await dbm.mark_sent_post(this.prisma, post.id, send_date);
-                return true;
             }
-        } else {
-            return false;
         }
+        await dbm.mark_sent_post(this.prisma, post.id, send_date);
     }
 
     // espera
