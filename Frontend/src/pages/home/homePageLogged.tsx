@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ConfirmButton } from "../../components/ConfirmButton";
 import "../../styles/home/homePageLogged.css"
 import api from "../../services/api";
 import NewsletterRecomendationItem, { newsletterRecomendationProps } from "../../components/NewsletterItemRecomendation";
@@ -28,27 +27,30 @@ export function HomePageLogged() {
       alert(error)
     })
   }, [])
-
-  function navigateToCreateNewsletter() {
-    navigate("/create-newsletter")
-  }
-
-  function navigateToSeachNewsletter() {
-    navigate("/search-newsletter")
-  }
   
   return (
     <div className="home-logged-container">
-      <h1 style={{marginTop: "1rem", marginBottom: "1rem"}}>Encontre as melhores newsletter aqui</h1>
-      {
-        newsletterRecomendations.map((newsletter) => {
-          if(newsletter.userUsername !== localStorage.getItem("username")) {
-            return <NewsletterRecomendationItem key={newsletter.id} newsletter={newsletter} callbackSubscribe={() => {}}/>
-          } else {
-            return <></>
-          }
-        })
+      {newsletterRecomendations.length > 0 ?
+        <h1 style={{marginTop: "1rem", marginBottom: "1rem"}}>Encontre as melhores newsletter aqui</h1>  
+        :
+        <>
+          <h1 style={{marginTop: "1rem", marginBottom: "1rem"}}>Ainda não temos nenhuma newsletter para lhe recomendar</h1>  
+          <h1 style={{marginTop: "1rem", marginBottom: "1rem"}}>Acesse o menu lateral para procurar e criar suas próprias newsletter</h1>  
+        </>
       }
+      <div className="home-newsletter-recomendations">
+        {
+          newsletterRecomendations.map((newsletter) => {
+            if (newsletter.name.length > 20) {
+              newsletter.name = newsletter.name.replace(/(.{20})/g, '$1\n');
+            }
+            if (newsletter.description.length > 45) {
+              newsletter.description = newsletter.description.replace(/(.{45})/g, '$1\n');
+            }
+            return <NewsletterRecomendationItem key={newsletter.id} newsletter={newsletter} callbackSubscribe={() => {}}/>
+          })
+        }
+      </div>
     </div>
   );
 }

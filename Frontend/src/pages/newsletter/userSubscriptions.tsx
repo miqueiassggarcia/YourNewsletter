@@ -30,6 +30,14 @@ export function UserSubscriptions() {
 
   return (
     <div className="container-subscriptions-newsletters">
+      {newsletters.length < 1 ?
+      <>
+        <h1 style={{marginBottom: "1rem"}}>Suas inscrições aparecerão aqui</h1>
+        <h1>Pesquise e encontre as melhores newsletters</h1>
+      </>
+        :
+        <></>
+      }
       {newsletters.map((newsletter) => {
         return <NewsletterItem key={newsletter.id} newsletter={newsletter} callbackUpdate={getUserSubscriptionsNewsletters} />
       })}

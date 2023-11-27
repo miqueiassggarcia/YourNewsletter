@@ -11,7 +11,8 @@ export interface newsletterRecomendationProps {
   userUsername: string;
   name: string;
   description: string;
-  newsletter_subscribers: number;
+  posts_total: number;
+  subscribers_total: number;
 }
 
 interface newsletterRecomendationItemProps {
@@ -54,7 +55,7 @@ const NewsletterRecomendationItem: React.FC<newsletterRecomendationItemProps> = 
         if(callbackSubscribe) {
           callbackSubscribe()
           setIsSubscribed(false);
-          newsletter.newsletter_subscribers = newsletter.newsletter_subscribers - 1;
+          newsletter.subscribers_total = newsletter.subscribers_total - 1;
         } else {
           setIsSubscribed(false);
         }
@@ -77,7 +78,7 @@ const NewsletterRecomendationItem: React.FC<newsletterRecomendationItemProps> = 
       )
       .then(() => {
         setIsSubscribed(true);
-        newsletter.newsletter_subscribers = newsletter.newsletter_subscribers + 1;
+        newsletter.subscribers_total = newsletter.subscribers_total + 1;
       })
       .catch((error) => {
         if(error.response.status === 401) {
@@ -90,7 +91,7 @@ const NewsletterRecomendationItem: React.FC<newsletterRecomendationItemProps> = 
   }
 
   return (
-    <div className="newsletter-item-container">
+    <div className="newsletter-item-container" style={{marginLeft: "7%", width: "40%"}}>
       <div className="content-newsletter-item">
         <div className="header-newsletter-item">
           <h1 className="title-newsletter-item">{newsletter.name}</h1>
@@ -98,14 +99,15 @@ const NewsletterRecomendationItem: React.FC<newsletterRecomendationItemProps> = 
         <p className="description-newsletter-item">{newsletter.description}</p>
       </div>
       <div className="newsletter-recomendation-content">
-        <p>Número de incritos: {newsletter.newsletter_subscribers}</p>
+        <p className="subscribers-newsletter-recomendation">{newsletter.subscribers_total} {newsletter.subscribers_total !== 1 ? "inscritos" : "inscrito"}</p>
+        <p className="posts-newsletter-recomendation">{newsletter.posts_total} {newsletter.posts_total !== 1 ? "posts" : "post"}</p>
         {isSubscribed ?
-          <button type="button" className="subscribed-button-newsletter-item" onClick={() => setUnsubscribeDialogOpen(true)}>
+          <button type="button" className="subscribed-button-newsletter-item" onClick={() => setUnsubscribeDialogOpen(true)} style={{width: "100%"}} >
             Inscrito
             <AiFillCheckCircle size={20} style={{marginLeft: ".4rem"}}/>
           </button>
           :
-          <button type="button" className="subscribe-button-newsletter-item" onClick={changeSubscription}>
+          <button type="button" className="subscribe-button-newsletter-item" onClick={changeSubscription} style={{width: "100%"}}>
             Se increver
             <GoCrossReference size={20} style={{marginLeft: ".4rem"}}/>
           </button>
