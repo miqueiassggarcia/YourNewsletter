@@ -32,9 +32,6 @@ export default function ConfigurationPage() {
     // }).catch((error) => {
     //   alert(error);
     // })
-    setUserName("miqueias");
-    setUserLastName("Garcia");
-    setUserEmail("miqueiassllucena@gmail.com")
   }
 
   function handleEditUserData(event: FormEvent) {
