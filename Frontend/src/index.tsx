@@ -18,7 +18,6 @@ import StaticSizePage from './pages/root/StaticSizePages';
 import DinamicSizePage from './pages/root/DinamicSizePages';
 import { UserSubscriptions } from './pages/newsletter/userSubscriptions';
 import ConfigurationPage from './pages/configuration/configurationPage';
-import SharePage from './pages/root/SharePage';
 
 // const style = {"--primary-color": "white"} as React.CSSProperties;
 
@@ -82,12 +81,7 @@ const router = createBrowserRouter([
       path: "email-authentication",
       element: <EmailAuthentication />
     }
-  ]},
-  {
-    path: "/share",
-    element: <SharePage />
-  }
-
+  ]}
 ])
 
 const root = ReactDOM.createRoot(
