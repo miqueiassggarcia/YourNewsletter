@@ -96,17 +96,13 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
   const openShareDialog = () => setShareDialogOpen(true);
   const closeShareDialog = () => setShareDialogOpen(false);
 
-  // const getTheCurrentUrl = () => {
-  //   alert(window.location.href);
-  // }
-
   const generateShareUrl = ():string => {
-    return `http://52.67.148.62:3000/id=${newsletter.id}` 
+    return `http://52.67.148.62:3000/share/?id=${newsletter.id}` 
   }
 
   return (
     <div className="newsletter-item-container">
-      <div className="content-newsletter-item" style={{width: "95%"}} onClick={() => callbackOpenPost(newsletter.id)}>
+      <div className="content-newsletter-item" style={{width: "95%"}}>
         <div className="header-newsletter-item">
           {editActive ?
               <input
@@ -153,7 +149,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callback
               <h1 className="share-newsletter-title-dialog">Use o link abaixo para compartilhar sua newsletter com quem quiser</h1>
               <div className="share-newsletter-link-content">
                 <p className="share-newsletter-url">{generateShareUrl()}</p>
-                <GoCopy size={20} className="copy-button-share-newsletter" onClick={() => {navigator.clipboard.writeText(generateShareUrl())}}/>
+                <GoCopy size={20} className="copy-button-share-newsletter" onClick={() => {
+                  if(navigator.clipboard) {
+                    navigator.clipboard.writeText(generateShareUrl())
+                  }
+                }}/>
               </div>
             </div>
           </dialog>
