@@ -113,7 +113,7 @@ async function mark_sent_post(prisma, id_post, send_date) {
             },
             data: {
                 sent: true,
-                send_date, send_date
+                send_date: send_date
             }
         });
     } catch (error) {
@@ -146,6 +146,79 @@ async function update_post_html(prisma, id_post, new_style, new_html) {
     })
 }
 
+async function get_newsletter_recommendations(prisma, max_newsletters, username) {
+    const newsletters = await prisma.newsLetter.findMany({
+        where: {
+            NOT: {
+                userUsername: username
+            }
+        },
+        orderBy: [
+            {
+                subscribers_total: 'desc'
+            },
+            {
+                posts_total: 'desc'
+            }
+        ],
+        take: max_newsletters
+    });
+
+
+    return newsletters
+}
+
+async function get_newsletter_from_id(prisma, id_newsletter) {
+    const newsletter = await prisma.newsLetter.findFirst({
+        where: {
+            id: id_newsletter
+        }
+    })
+
+    return newsletter;
+}
+
+
+async function increment_newsletter_subscribe(prisma, id_newsletter) {
+    await prisma.newsLetter.update({
+        where: {
+            id: id_newsletter
+        },
+        data: {
+            subscribers_total: {
+                increment: 1
+            }
+        }
+    })
+}
+
+
+async function decrement_newsletter_subscribe(prisma, id_newsletter) {
+    await prisma.newsLetter.update({
+        where: {
+            id: id_newsletter
+        },
+        data: {
+            subscribers_total: {
+                increment: -1
+            }
+        }
+    })
+}
+
+async function increment_newsletter_post(prisma, id_newsletter) {
+    await prisma.newsLetter.update({
+        where: {
+            id: id_newsletter
+        },
+        data: {
+            posts_total: {
+                increment: 1
+            }
+        }
+    })
+}
+
 module.exports = {
     user_have_newsletter,
     create_post_newsletter,
@@ -156,5 +229,10 @@ module.exports = {
     get_user_has_post,
     get_post_from_id,
     update_post_subject,
-    update_post_html
+    update_post_html,
+    get_newsletter_recommendations,
+    get_newsletter_from_id,
+    increment_newsletter_subscribe,
+    decrement_newsletter_subscribe,
+    increment_newsletter_post
 };

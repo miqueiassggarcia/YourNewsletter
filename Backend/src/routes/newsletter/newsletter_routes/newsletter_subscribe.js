@@ -1,5 +1,6 @@
 const ensureAuthenticated = require('../../../components/ensure_authenticated.js');
 const newsletter_subscribe_schema = require('../../../validation/newsletter_subscribe.js');
+const dbm = require('../../../components/database_manager.js');
 
 module.exports = function (app, prisma, http_status) {
     app.post('/newsletter_subscribe', ensureAuthenticated,
@@ -59,6 +60,7 @@ module.exports = function (app, prisma, http_status) {
                     user_username: req.user.username
                 }
             });
+            await dbm.increment_newsletter_subscribe(prisma, req.body.id_newsletter);
 
             const {code, message} = http_status.get_user_subscribed_newsletter();
             return res.status(code).json({"message": message});
