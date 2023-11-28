@@ -49,7 +49,6 @@ export function EmailAuthentication() {
     ).then(async () => {
       if(!dialogOpen) {
         setDialogOpen(true);
-        localStorage.setItem("validate", "validated user")
         localStorage.removeItem("username")
         localStorage.removeItem("first_name")
         localStorage.removeItem("last_name")
