@@ -2,25 +2,33 @@ import { MdDeleteForever } from "react-icons/md";
 
 import "../styles/components/newsletterItem.css"
 import "../styles/components/newsletterUserItem.css"
-import { AiFillEdit } from "react-icons/ai";
+import { AiFillCloseCircle, AiFillEdit } from "react-icons/ai";
 import { BsFillCheckCircleFill } from "react-icons/bs";
 import api from "../services/api";
 import { FormEvent, useState } from "react";
 import { newsletterProps } from "./NewsletterItem";
+import DeleteDialog from "./DeleteDialog";
+import { FaShareAlt } from "react-icons/fa";
+import { GoCopy } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 interface newsletterItemProps {
   newsletter: newsletterProps;
-  userItem: boolean;
   callbackUpdate?: () => void;
+  callbackOpenPost: (id:number) => void;
 }
 
-const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem, callbackUpdate}) => {
+const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, callbackUpdate, callbackOpenPost}) => {
+  const navigate = useNavigate();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>();
+  const [shareDialogOpen, setShareDialogOpen] = useState<boolean>();
   const [editActive, setEditActive] = useState<boolean>();
   const [name, setName] = useState(newsletter.name);
   const [description, setDescription] = useState(newsletter.description);
 
   async function deleteNewsletter() {
+    closeDeleteDialog();
+
     await api.delete("/delete_newsletter", {
       data: {"id": newsletter.id},
       withCredentials: true
@@ -30,7 +38,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
       callbackUpdate!();
     })
     .catch((error) => {
-      alert(error);
+      if(error.response.status === 401) {
+        localStorage.removeItem("validate");
+        alert("Sua sessão expirou");
+        navigate("/authentication/singin");
+      }
     });
   }
 
@@ -48,7 +60,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
       ).then(() => {
         callbackUpdate!();
       }).catch((error) => {
-        alert(error)
+        if(error.response.status === 401) {
+          localStorage.removeItem("validate");
+          alert("Sua sessão expirou");
+          navigate("/authentication/singin");
+        }
       })
     }
     
@@ -63,7 +79,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
       ).then(() => {
         callbackUpdate!();
       }).catch((error) => {
-        alert(error)
+        if(error.response.status === 401) {
+          localStorage.removeItem("validate");
+          alert("Sua sessão expirou");
+          navigate("/authentication/singin");
+        }
       })
     }
 
@@ -73,6 +93,12 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
   const openDeleteDialog = () => setDeleteDialogOpen(true);
   const closeDeleteDialog = () => setDeleteDialogOpen(false);
   const openEdit = () => setEditActive(true);
+  const openShareDialog = () => setShareDialogOpen(true);
+  const closeShareDialog = () => setShareDialogOpen(false);
+
+  const generateShareUrl = ():string => {
+    return `http://52.67.148.62:3000/share/?id=${newsletter.id}` 
+  }
 
   return (
     <div className="newsletter-item-container">
@@ -86,7 +112,7 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
                 onChange={(event) => setName(event.target.value)}
               />
             :
-              <h1 className="title-newsletter-item title-newsletter-item-edit">{newsletter.name}</h1>
+              <h1 className="title-newsletter-item title-newsletter-item-edit" onClick={() => callbackOpenPost(newsletter.id)}>{newsletter.name}</h1>
           }
         </div>
           {editActive ?
@@ -97,10 +123,11 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
               onChange={(event) => setDescription(event.target.value)}
             />
           :
-            <p className="description-newsletter-item  description-newsletter-item-edit">{newsletter.description}</p>
+            <p className="description-newsletter-item  description-newsletter-item-edit" onClick={() => callbackOpenPost(newsletter.id)}>{newsletter.description}</p>
           }
       </div>
         <div className="options-newsletter-item">
+            <FaShareAlt className="share-button-newsletter-item" onClick={openShareDialog} />
             <MdDeleteForever className="delete-button-newsletter-item" size={30} onClick={openDeleteDialog}/>
             {editActive ?
               <BsFillCheckCircleFill className="confirm-edit-button-newsletter-item" size={25} onClick={closeEdit} />
@@ -109,12 +136,24 @@ const NewsletterUserItem: React.FC<newsletterItemProps> = ({newsletter, userItem
             }
         </div>
         {deleteDialogOpen &&
-          <dialog className="delete-newsletter-dialog">
-            <div className="delete-newsletter-dialog-content">
-              <h1>Você tem certeza em deletar sua newsletter</h1>
-              <div className="delete-newsletter-dialog-buttons">
-                <button className="delete-button-newsletter-dialog" onClick={deleteNewsletter}>Deletar</button>
-                <button className="cancel-button-newsletter-dialog" onClick={closeDeleteDialog}>Cancelar</button>
+          <DeleteDialog
+            title="Você tem certeza em deletar sua newsletter"
+            callbackDeletion={deleteNewsletter}
+            callbackCancel={closeDeleteDialog}
+          />
+        }
+        {shareDialogOpen &&
+          <dialog className="share-newsletter-dialog">
+            <div className="share-newsletter-dialog-content">
+            <AiFillCloseCircle size={24} className="close-button-share-newsletter" onClick={closeShareDialog}/>
+              <h1 className="share-newsletter-title-dialog">Use o link abaixo para compartilhar sua newsletter com quem quiser</h1>
+              <div className="share-newsletter-link-content">
+                <p className="share-newsletter-url">{generateShareUrl()}</p>
+                <GoCopy size={20} className="copy-button-share-newsletter" onClick={() => {
+                  if(navigator.clipboard) {
+                    navigator.clipboard.writeText(generateShareUrl())
+                  }
+                }}/>
               </div>
             </div>
           </dialog>

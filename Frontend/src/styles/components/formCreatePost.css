@@ -1,0 +1,94 @@
+.form-create-post-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-light-color);
+}
+
+.form-create-post {
+  width: 100%;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-create-post-content {
+  padding-top: 2rem;
+  display: flex;
+  width: 70%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.email-editor-form-create-post {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.subject-form-create-post {
+  border-color: var(--text-light-color);
+  color: var(--text-light-color);
+  margin-top: .4em;
+  margin-bottom: 1rem;
+}
+
+.checkbox-form-create-post-container {
+  margin-bottom: 1rem;
+}
+
+.checkbox-form-create-post {
+  margin: 0;
+  width: auto;
+}
+
+.text-checkbox-form-create-post {
+  font-size: .7rem;
+  margin-left: .3em;
+}
+
+.time-form-create-post {
+  width: 30%;
+  color: var(--text-light-color);
+  border-color: var(--text-light-color);
+  margin: 0;
+  margin-top: .4rem;
+  margin-bottom: 1rem;
+}
+
+.date-form-create-post {
+  width: 30%;
+  color: var(--text-light-color);
+  border-color: var(--text-light-color);
+  margin: 0;
+  margin-top: .4rem;
+}
+
+.bottom-button-form-create-post {
+  padding-bottom: 1rem;
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button-form-create-post {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: var(--text-light-color);
+}
+
+.button-left-icon-form-create-post {
+  margin-right: .5em;
+}
+
+.button-right-icon-form-create-post {
+  margin-left: .5em;
+}

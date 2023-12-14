@@ -1,5 +1,9 @@
+.share-button-newsletter-item {
+  margin-bottom: .5em;
+}
+
 .edit-button-newsletter-item {
-  margin-top: 1rem;
+  margin-top: .5rem;
 }
 
 .edit-button-newsletter-item:hover {
@@ -8,6 +12,7 @@
 
 .delete-button-newsletter-item {
   color: var(--red-color);
+  margin-bottom: 0;
 }
 
 .delete-button-newsletter-item:hover {
@@ -39,7 +44,7 @@
 
 .confirm-edit-button-newsletter-item {
   color: rgb(0, 255, 0);
-  margin-top: 1rem;
+  margin-top: .5rem;
 }
 
 .title-newsletter-item-edit {
@@ -48,4 +53,66 @@
 
 .description-newsletter-item-edit {
   padding-left: .2rem;
+}
+
+.share-newsletter-dialog {
+  width: 40vw;
+  height: 30vh;
+  max-width: 100%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: var(--background-light-color);
+  padding: 2em;
+  border-radius: .6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.share-newsletter-dialog-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.share-newsletter-title-dialog {
+  color: var(--text-dark-color);
+  font-size: 1rem;
+  margin-bottom: .8em;
+}
+
+.share-newsletter-link-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: silver;
+  padding: .5em;
+  border-radius: .5em;
+}
+
+.share-newsletter-url {
+  margin-right: 1em;
+  color: var(--text-dark-color);
+}
+
+.copy-button-share-newsletter {
+  color: var(--text-dark-color);
+  cursor: pointer;
+}
+
+.copy-button-share-newsletter:hover {
+  opacity: .5;
+}
+
+.close-button-share-newsletter {
+  align-self: flex-end;
+  cursor: pointer;
+}
+
+.close-button-share-newsletter:hover {
+  opacity: .6;
 }

@@ -1,0 +1,106 @@
+.configuration-container {
+  height: 78vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.configuration-form {
+  height: 100%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.configuration-label-form {
+  color: var(--text-light-color);
+  margin-bottom: 0.3rem;
+}
+
+.configuration-form label:not(:first-child) {
+  margin-top: 1rem;
+}
+
+.configuration-input {
+  margin: 0;
+  border-color: var(--text-light-color);
+  border-radius: .6rem;
+  border-width: 2px;
+  color: var(--text-light-color);
+  text-align: start;
+}
+
+.configuration-options {
+  display: flex;
+  width: 30%;
+  height: 100%;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+}
+
+.configuration-span {
+  font-size: .8rem;
+  margin: 0;
+}
+
+.configuration-change-password-button {
+  margin-top: .5rem;
+  width: 50%;
+}
+
+.configuration-delete-account-button {
+  margin-top: .5rem;
+  width: 50%;
+  background-color: var(--red-color);
+  &:hover {
+    background-color: var(--red-hover-color);
+  }
+}
+
+.configuration-edit-password-dialog {
+  width: 40vw;
+  height: 50vh;
+  max-width: 100%;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: var(--background-light-color);
+  padding: 1.5em;
+  border-radius: .6em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.configuration-edit-password-form {
+  display: flex;
+  width: 100%;
+  height: 90%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.configuration-edit-input {
+  width: 80%;
+  margin-bottom: .8rem;
+}
+
+.configuration-edit-password-button {
+  margin: 0;
+}
+
+.close-edit-password-button {
+  display: flex;
+  align-self: flex-end;
+  cursor: pointer;
+}

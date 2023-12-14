@@ -5,60 +5,17 @@
   align-items: center;
   flex-direction: column;
   padding: 1rem;
+  color: var(--text-light-color);
 }
 
-.delete-newsletter-dialog {
-  width: 40vw;
-  height: 35vh;
-  max-width: 100%;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%,-50%);
-  background-color: var(--background-light-color);
-  padding: 2em;
-  border-radius: .6em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-}
-
-.delete-newsletter-dialog-content {
-  display: flex;
-  height: 100%;
+.list-newsletter-post {
   width: 100%;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.delete-newsletter-dialog-buttons {
   display: flex;
-  height: 100%;
-  width: 80%;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: start;
+  padding-left: 11%;
 }
-
-.delete-newsletter-dialog h1 {
-  color: var(--text-dark-color);
-  font-size: 1rem;
-  margin-top: 1rem;
-}
-
-.delete-button-newsletter-dialog {
-  color: var(--text-light-color);
-  background-color: var(--red-color);
-  &:hover, &:focus, &:active {
-    background-color: var(--red-hover-color);
-  }
-}
-
-.cancel-button-newsletter-dialog {
-  color: var(--text-light-color);
-}
-
 
 .edit-newsletter-dialog {
   width: 40vw;
@@ -115,7 +72,7 @@
 
 .button-edit-newsletter {
   margin: 0;
-  margin-top: .8rem;
+  margin-top: .5rem;
   width: 25%;
 }
 
@@ -123,4 +80,35 @@
   display: flex;
   align-self: flex-end;
   cursor: pointer;
+}
+
+.create-newsletter-posts-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+.create-newsletter-posts-back-button {
+  align-self: flex-start;
+  color: var(--text-light-color);
+}
+
+.create-newsletter-posts-back-button:hover {
+  opacity: .7;
+}
+
+.create-newsletter-posts-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  width: 20%;
+  margin: 0;
+}
+
+.create-newsletter-posts-icon {
+  margin-left: .5em;
 }
