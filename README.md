@@ -13,7 +13,7 @@
 </div>
 
 <h2 id="sobre">Sobre</h2>
-<p>Este projeto tem como foco a criação de um site criação de newsletters, realizando o envio automático dos posts criados</p>
+<p>Um site para criação de newsletters, onde o usuário criará a sua conta e posteriormente poderá criar, configurar e gerenciar sua própria newsletter, enquanto também tem a possibilidade de se inscrever em newsletters previamente criadas para acompanhar informações relevantes.</p>
 
 <h2 id="tecnologias">Tecnologias</h2>
 <div class="tecnologias-div">
